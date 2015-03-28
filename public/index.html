@@ -1,82 +1,103 @@
 <!doctype html>
-
 <html ng-app="scotchTodo">
 <head>
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1"><!-- Optimize mobile viewport -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<title>Node/Angular Todo App</title>
-
-	<!-- SCROLLS -->
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"><!-- load bootstrap -->
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+	<title>Schorr Eats</title>
 	<link rel="stylesheet" href="styles/main.css">
+	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+	  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+	  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
 </head>
-<!-- SET THE CONTROLLER -->
 <body ng-controller="mainController">
-	<div class="container">
-		<!-- TODO LIST -->
-		<div id="todo-list" class="row">
-			<div class="col-sm-4 col-sm-offset-4">
+	<div class="content">
+		<header>
+			<h1 class="text-center">Schorr Eats</h1>
+		</header>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Average Rating</th>
+					<th>Location</th>
+					<th>Notes</th>
+					<th>Pictures</th>
+					<th>Delete?</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="todo in todos">
+					<td>
+						{{ todo.text }}
+					</td>
+					<td>
+						{{ todo.location }}
+					</td>
+					<td>hi</td>
+					<td>hi</td>
+					<td>hi</td>
+					<td><input type="checkbox" ng-click="deleteTodo(todo._id)"></td>
+				</tr>
+			</tbody>
+		</table>
+		<p class="text-center" ng-show="loading">
+			<span class="fa fa-spinner fa-spin fa-3x"></span>
+		</p>
 
-				
-				<table>
-				<!-- LOOP OVER THE TODOS IN $scope.todos -->
-					<tr ng-repeat="todo in todos">
-						<td>
-							<div class="checkbox">
-								<label>
-									<input type="checkbox" ng-click="deleteTodo(todo._id)"> {{ todo.text }}
-								</label>
-							</div>
-						</td>
-						<td>
-							<p>location is: {{ todo.location }}</p>
-						</td>
-					</tr>
-				</table>
-
-				<p class="text-center" ng-show="loading">
-					<span class="fa fa-spinner fa-spin fa-3x"></span>
-				</p>
-
+		<form>
+			<table>
+				<tr>
+					<td>
+						<input type="text" placeholder="I want to buy a puppy that will love me forever" ng-model="formData.text">          
+					</td>
+					<td>
+						<input type="text" placeholder="132 Allen St!" ng-model="formData.location">                
+					</td>
+				</tr>
+			</table>
+			<button type="submit" ng-click="createTodo()">Add</button>
+		</form>
+		<div class="row">
+			 <div class="col-md-6">
+				<button type="button" class="btn btn-primary">Add Restaurant</button>
+			 </div>
+			<div class="col-md-6">
+				<!-- Button trigger modal -->
+				<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+				  Launch demo modal
+				</button>
 			</div>
 		</div>
 
-		<!-- FORM TO CREATE TODOS -->
-		<div id="todo-form" class="row">
-			<div class="col-sm-8 col-sm-offset-2 text-center">
-				<form>
-					<div class="form-group">
-						<table>
-							<tr>
-								<td>
-									<!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
-									<input type="text" class="form-control input-lg text-center" placeholder="I want to buy a puppy that will love me forever" ng-model="formData.text">			
-								</td>
-								<td>
-									<input type="text" class="form-control input-lg text-center" placeholder="132 Allen St!" ng-model="formData.location">				
-								</td>
-							</tr>
-						</table>
-						
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="myModalLabel">Modal title</h4>
 					</div>
-
-					<!-- createToDo() WILL CREATE NEW TODOS -->
-					<button type="submit" class="btn btn-primary btn-lg" ng-click="createTodo()">Add</button>
-				</form>
+					<div class="modal-body">
+					
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary">Save changes</button>
+					</div>
+				</div>
 			</div>
-		</div>
-
-		<div class="text-center text-muted">
-			<p>A demo by <a href="http://scotch.io">Scotch</a>.</p>
-			<p>Read the <a href="http://scotch.io/tutorials/javascript/creating-a-single-page-todo-app-with-node-and-angular">tutorial</a>.</p>
 		</div>
 
 	</div>
-	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script><!-- load angular -->
-	<script src="js/controllers/main.js"></script> <!-- load up our controller -->
-	<script src="js/services/todos.js"></script> <!-- load our todo service -->
-	<script src="js/core.js"></script> <!-- load our main application -->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script> 
+
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
+	<script src="js/controllers/main.js"></script> 
+	<script src="js/services/todos.js"></script> 
+	<script src="js/core.js"></script> 
 </body>
 </html>

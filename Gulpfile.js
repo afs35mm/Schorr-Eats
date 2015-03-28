@@ -32,7 +32,7 @@ gulp.task('server', function() {
 
 gulp.task('sass', function(){
 	gulp.src('./assets/scss/*.scss')
-	.pipe(sass())
+	.pipe(sass({errLogToConsole: true}))
 	.pipe(gulp.dest('./public/styles'));
 });
 
