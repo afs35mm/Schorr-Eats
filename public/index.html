@@ -1,5 +1,5 @@
 <!doctype html>
-<html ng-app="scotchTodo">
+<html ng-app="eatsTodo">
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -47,57 +47,37 @@
 		<p class="text-center" ng-show="loading">
 			<span class="fa fa-spinner fa-spin fa-3x"></span>
 		</p>
-
-		<form>
-			<table>
-				<tr>
-					<td>
-						<input type="text" placeholder="I want to buy a puppy that will love me forever" ng-model="formData.text">          
-					</td>
-					<td>
-						<input type="text" placeholder="132 Allen St!" ng-model="formData.location">                
-					</td>
-				</tr>
-			</table>
-			<button type="submit" ng-click="createTodo()">Add</button>
-		</form>
 		<div class="row">
-			 <div class="col-md-6">
-				<button type="button" class="btn btn-primary">Add Restaurant</button>
-			 </div>
 			<div class="col-md-6">
-				<!-- Button trigger modal -->
-				<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-				  Launch demo modal
-				</button>
+				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModal">Add Restaurant</button>
 			</div>
+			<div class="col-md-6">
 		</div>
 
-		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						<h4 class="modal-title" id="myModalLabel">Modal title</h4>
+						<h4 class="modal-title" id="myModalLabel">Add Resturant</h4>
 					</div>
-					<div class="modal-body">
-					
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-						<button type="button" class="btn btn-primary">Save changes</button>
-					</div>
+					<form>
+						<div class="modal-body">
+							<input type="text" placeholder="I want to buy a puppy that will love me forever" ng-model="formData.text">
+							<input type="text" placeholder="132 Allen St!" ng-model="formData.location">
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+							<button type="button" class="btn btn-primary" ng-click="createTodo()">Save changes</button>
+						</div>
+					</form>
 				</div>
 			</div>
 		</div>
 
 	</div>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-	<script src="js/bootstrap.min.js"></script> 
-
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
-	<script src="js/controllers/main.js"></script> 
-	<script src="js/services/todos.js"></script> 
-	<script src="js/core.js"></script> 
+	<script src="js/main.js"></script>
 </body>
 </html>

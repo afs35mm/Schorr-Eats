@@ -1,6 +1,7 @@
 var gulp = require('gulp'),
 	watch = require('gulp-watch'),
-	sass = require('gulp-sass');
+	sass = require('gulp-sass'),
+	uglify = require('gulp-uglifyjs');
 
 gulp.task('server', function() {
 	var express  = require('express');
@@ -36,8 +37,17 @@ gulp.task('sass', function(){
 	.pipe(gulp.dest('./public/styles'));
 });
 
-gulp.task('watch', function() {
-	gulp.watch('./assets/scss/*.scss', ['sass']);
+gulp.task('uglify', function() {
+	gulp.src('./assets/js/**/*.js')
+	.pipe(uglify('main.js', {
+		outSourceMap: true
+	}))
+	.pipe(gulp.dest('./public/js'))
 });
 
-gulp.task('default', ['sass', 'server', 'watch'], function() {});
+gulp.task('watch', function() {
+	gulp.watch('./assets/scss/**/*.scss', ['sass']);
+	gulp.watch('./assets/js/**/*.js', ['uglify']);
+});
+
+gulp.task('default', ['sass', 'uglify', 'server', 'watch'], function() {});
