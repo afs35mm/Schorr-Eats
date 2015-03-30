@@ -1,4 +1,4 @@
-var Todo = require('./models/todo');
+var Todo = require('./models/restaurant');
 
 function getTodos(res){
 	Todo.find(function(err, todos) {

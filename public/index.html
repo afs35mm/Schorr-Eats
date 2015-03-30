@@ -63,8 +63,14 @@
 					</div>
 					<form>
 						<div class="modal-body">
-							<input type="text" placeholder="I want to buy a puppy that will love me forever" ng-model="formData.text">
-							<input type="text" placeholder="132 Allen St!" ng-model="formData.location">
+						<div class="form-group">
+						    <label for="nameField">Resturant Name</label>
+							<input ng-model="formData.text" type="text" class="form-control" id="nameField" placeholder="Resturant Name">
+						</div>
+						<div class="form-group">
+						    <label for="locationField">Location</label>
+							<input ng-model="formData.location" type="text" class="form-control" id="locationField" placeholder="Location">
+						</div>
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
