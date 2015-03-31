@@ -1,4 +1,6 @@
 var Todo = require('./models/restaurant');
+var User = require('./models/user');
+
 
 function getTodos(res){
 	Todo.find(function(err, todos) {
@@ -13,6 +15,23 @@ function getTodos(res){
 
 module.exports = function(app) {
 
+	app.post('/users/submit', function(req, res) {
+		console.log(req.body.username);
+		console.log(req.body.password);
+	});
+	// app.get('/signup', function(req, res) {
+	// 	res.render('signup.ejs', { message: req.flash('signupMessage') });
+	// });
+	
+	// app.post('/signup', passport.authenticate('local-signup', {
+	// 	successRedirect : '/profile', // redirect to the secure profile section
+	// 	failureRedirect : '/signup', // redirect back to the signup page if there is an error
+	// 	failureFlash : true // allow flash messages
+	// }));
+
+
+
+
 	// api ---------------------------------------------------------------------
 	// get all todos
 	app.get('/api/todos', function(req, res) {
@@ -20,7 +39,6 @@ module.exports = function(app) {
 		// use mongoose to get all todos in the database
 		getTodos(res);
 	});
-
 	// create todo and send back all todos after creation
 	app.post('/api/todos', function(req, res) {
 
@@ -53,6 +71,7 @@ module.exports = function(app) {
 
 	// application -------------------------------------------------------------
 	app.get('*', function(req, res) {
-		res.sendfile('./public/index.html'); // load the single view file (angular will handle the page changes on the front-end)
+		//res.sendfile('./public/index.ejs'); // load the single view file (angular will handle the page changes on the front-end)
+		res.render('index.ejs');
 	});
 };

@@ -19,6 +19,7 @@ gulp.task('server', function() {
 	app.use(bodyParser.json({ type: 'application/vnd.api+json' })); // parse application/vnd.api+json as json
 	app.use(methodOverride('X-HTTP-Method-Override')); // override with the X-HTTP-Method-Override header in the request
 
+	app.set('view engine', 'ejs'); // set up ejs for templating
 
 	require('./app/routes.js')(app);
 	// listen (start app with node server.js) ======================================

@@ -5226,8 +5226,20 @@ button.close {
     display: none !important; } }
 
 .content {
-  width: 900px;
+  max-width: 1200px;
+  box-sizing: border-box;
+  padding: 0 40px;
   margin: 0 auto; }
   .content h1 {
     border-bottom: 1px solid #ddd;
-    padding-bottom: 10px; }
+    padding-bottom: 10px;
+    position: relative; }
+    .content h1 small {
+      position: absolute;
+      right: 0;
+      bottom: 10px; }
+  .content .row .col-md-6:last-child {
+    text-align: right; }
+
+label[for="username"] {
+  display: block; }
