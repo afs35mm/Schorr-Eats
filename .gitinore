@@ -1,3 +1,4 @@
+#this is my git ignore
 .DS_Store
 node_modules
 node_modules/**/*
