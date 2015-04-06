@@ -1,9 +1,9 @@
 var mongoose = require('mongoose');
 var database = require('../../config/database');
 
-var restaurantsConn = mongoose.createConnection('mongodb://localhost/' + database.resturants.url);
+var usersConn = mongoose.createConnection('mongodb://localhost/' + database.users.url);
 
-module.exports = mongoose.model('User', {
+module.exports = usersConn.model('User', {
     username : {type : String },
     password : {type : String },
 });

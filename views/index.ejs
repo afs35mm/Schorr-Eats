@@ -17,9 +17,16 @@
 	<div class="content">
 		<header>
 			<h1>Schorr Eats 
-				<small>Hi there, Andrew!</small>
+				<% if(user){ %>
+					<small>Hi there, <%= user.username %></small> 
+				<% } else{ %>  
+					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">Login</button>
+				<% } %>
 			</h1>
 		</header>
+		<% if (message.length > 0) { %>
+			<div class="alert alert-danger"><%= message %></div>
+		<% } %>
 		<table class="table">
 			<thead>
 				<tr>
@@ -49,14 +56,21 @@
 		<p class="text-center" ng-show="loading">
 			<span class="fa fa-spinner fa-spin fa-3x"></span>
 		</p>
+		<% if(user){ %>
+		<!-- <div class="row">
+		  <div class="col-md-8">.col-md-8</div>
+		  <div class="col-md-4">.col-md-4</div>
+		</div> -->
 		<div class="row">
 			<div class="col-md-6">
 				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModal">Add Restaurant</button>
 			</div>
 			<div class="col-md-6">
-				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">Login</button>
+				<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">Logout</button> -->
+				<a class="btn btn-default" href="/logout">Logout</a>
 			</div>
 		</div>
+		<% } %>  
 		<!--ADD RESTUARANT-->
 		<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addResturant" aria-hidden="true">
 			<div class="modal-dialog">
@@ -92,22 +106,26 @@
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 						<h4 class="modal-title" id="myModalLabel">Login</h4>
 					</div>
-					<form action="/users/submit" method="post">
+					<form action="/users/login" method="post">
 						<div class="modal-body">
-						<div class="form-group">
+<!-- 						<div class="form-group">
 						    <label for="username">Who Are you?</label>
 							<label class="radio-inline">
-								<input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"> Mom
+								<input type="radio" name="username" id="" value="mom"> Mom
 							</label>
 							<label class="radio-inline">
-								<input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> Dad
+								<input type="radio" name="username" id="" value="dad"> Dad
 							</label>
 							<label class="radio-inline">
-								<input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3"> Allison
+								<input type="radio" name="username" id="" value="allison"> Allison
 							</label>
 							<label class="radio-inline">
-								<input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3"> Andrew
+								<input type="radio" name="username" id="" value="andrew"> Andrew
 							</label>
+						</div> -->
+						<div class="form-group">
+						    <label for="username">What's the username?</label>
+							<input type="text" name="username" class="form-control" id="username" placeholder="username">
 						</div>
 						<div class="form-group">
 						    <label for="password">What's the password?</label>

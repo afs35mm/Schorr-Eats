@@ -8,10 +8,10 @@
 		border-bottom: 1px solid $lt-grey;
 		padding-bottom: 10px; 
 		position: relative;
-		small {
+		small, .btn {
 			position:absolute; right:0; bottom: 10px;
 		}
-	}
+	} 
 	.row .col-md-6:last-child{
 		text-align: right;
 	}

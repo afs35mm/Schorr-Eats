@@ -5234,7 +5234,7 @@ button.close {
     border-bottom: 1px solid #ddd;
     padding-bottom: 10px;
     position: relative; }
-    .content h1 small {
+    .content h1 small, .content h1 .btn {
       position: absolute;
       right: 0;
       bottom: 10px; }

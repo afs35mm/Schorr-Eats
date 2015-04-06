@@ -3,6 +3,6 @@ module.exports = {
 		url : 'restaurants-db'
 	},
 	users: {
-		url : 'users-db'
+		url : 'users-db1'
 	},
 }
