@@ -2,14 +2,14 @@ var gulp = require('gulp'),
 	watch = require('gulp-watch'),
 	sass = require('gulp-sass'),
 	uglify = require('gulp-uglifyjs'),
-	nodemon = require('gulp-nodemon');
+	nodemon = require('gulp-nodemon'),
+	shell = require('gulp-shell');
 
-gulp.task('server', function() {
-	nodemon({ script: './app/server.js'
+gulp.task('nodemon', function() {
+		nodemon({ script: './app/server.js',
+		env: { 'NODE_ENV': 'development' },
+    	//ignore: ['/assets/js/main', '/assets/js/main.js']
 	})
-    .on('restart', function () {
-    	console.log('restarted!')
-    })
 });
 
 
@@ -27,12 +27,19 @@ gulp.task('uglify', function() {
 	.pipe(gulp.dest('./public/js'))
 });
 
-gulp.task('watch', function() {
+gulp.task('assets', function() {
 	gulp.watch('./assets/scss/**/*.scss', ['sass']);
 	gulp.watch('./assets/js/**/*.js', ['uglify']);
 });
 
+gulp.task('server', shell.task([
+	'node app/server.js'
+]))
 
-gulp.task('default', ['sass', 'uglify', 'server', 'watch' ]);
+gulp.task('default', ['sass', 'uglify', 'serve' ]);
+
+gulp.task('watch-server', ['sass', 'uglify', 'nodemon', 'assets' ]);
+
+gulp.task('watch', ['sass', 'uglify', 'server', 'assets' ]);
 
 

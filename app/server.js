@@ -8,7 +8,7 @@ var methodOverride = require('method-override');
 var passport = require('passport');
 var expressSession = require('express-session');
 var flash = require('connect-flash');
-var cookieParser = require('cookie-parser');
+var cookieParser = require('cookie-parser'); 
 
 app.use(express.static( __dirname + '/../public'));
 app.use(morgan('dev')); 

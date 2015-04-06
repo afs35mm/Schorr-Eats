@@ -8,12 +8,12 @@ angular.module('todoController', [])
 		// GET =====================================================================
 		// when landing on the page, get all todos and show them
 		// use the service to get all the todos 
-		Todos.get()
-			.success(function(data) {
-				$scope.todos = data;
+		Todos.get() 
+			.success(function(data) {   
+				$scope.todos = data;  
 				$scope.loading = false;
 			});  
-
+ 
 		// CREATE ==================================================================
 		// when submitting the add form, send the text to the node API
 		$scope.createTodo = function() {
@@ -21,8 +21,8 @@ angular.module('todoController', [])
 			// if form is empty, nothing will happen
 			if ($scope.formData.text != undefined) {
 				$scope.loading = true;
-
-				// call the create function from our service (returns a promise object)
+ 
+				// call the  create function from our service (returns a promise object)
 				Todos.create($scope.formData)
 
 					// if successful creation, call our get function to get all the new todos
@@ -34,13 +34,18 @@ angular.module('todoController', [])
 						$(function () {
 						   $('#addModal').modal('toggle');
 						});
-					});
+					}); 
 			}
 		};
 
 		// DELETE ==================================================================
 		// delete a todo after checking it
 		$scope.deleteTodo = function(id) {
+			
+			var result = window.confirm('Are you absolutely positively sure you want to delete this!???'); 
+
+			if(!result) return;
+
 			$scope.loading = true;
 
 			Todos.delete(id)

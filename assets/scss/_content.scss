@@ -12,8 +12,14 @@
 			position:absolute; right:0; bottom: 10px;
 		}
 	} 
-	.row .col-md-6:last-child{
-		text-align: right;
+	.row .logout {
+		float: right;
+	}
+	table .align-right{
+		text-align: right; 
+	}
+	.row {
+		margin: 0;
 	}
 }
 label[for="username"]{

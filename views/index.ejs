@@ -35,7 +35,9 @@
 					<th>Location</th>
 					<th>Notes</th>
 					<th>Pictures</th>
-					<th>Delete?</th>
+					<% if(user){ %>
+					<th class="align-right"></th>
+					<% } %>   
 				</tr>
 			</thead>
 			<tbody>
@@ -49,26 +51,19 @@
 					<td>hi</td>
 					<td>hi</td>
 					<td>hi</td>
-					<td><input type="checkbox" ng-click="deleteTodo(todo._id)"></td>
+					<% if(user){ %>
+					<td class="align-right">
+						<button type="button" class="btn btn-danger" ng-click="deleteTodo(todo._id)">Delete</button>
+					</td>
+					<% } %>  
 				</tr>
 			</tbody>
 		</table>
-		<p class="text-center" ng-show="loading">
-			<span class="fa fa-spinner fa-spin fa-3x"></span>
-		</p>
 		<% if(user){ %>
-		<!-- <div class="row">
-		  <div class="col-md-8">.col-md-8</div>
-		  <div class="col-md-4">.col-md-4</div>
-		</div> -->
 		<div class="row">
-			<div class="col-md-6">
-				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModal">Add Restaurant</button>
-			</div>
-			<div class="col-md-6">
-				<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">Logout</button> -->
-				<a class="btn btn-default" href="/logout">Logout</a>
-			</div>
+			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModal">Add Restaurant</button>
+			<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">Logout</button> -->
+			<a class="btn btn-default logout" href="/logout">Logout</a>
 		</div>
 		<% } %>  
 		<!--ADD RESTUARANT-->

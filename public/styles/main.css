@@ -5238,8 +5238,12 @@ button.close {
       position: absolute;
       right: 0;
       bottom: 10px; }
-  .content .row .col-md-6:last-child {
+  .content .row .logout {
+    float: right; }
+  .content table .align-right {
     text-align: right; }
+  .content .row {
+    margin: 0; }
 
 label[for="username"] {
   display: block; }
