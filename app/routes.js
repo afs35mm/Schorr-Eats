@@ -20,7 +20,7 @@ function ensureAuthenticated (req, res, next) {
 	}
 
 	return next();
-}
+};
 
 module.exports = function(app, passport) { 
 
@@ -31,7 +31,11 @@ module.exports = function(app, passport) {
 	}));
 
 	app.get('/signup', function(req, res) {
-		res.render('signup.ejs', { message: req.flash('signupMessage') });
+		if (req.user) {
+			res.render('signup.ejs', { message: 'You\'re signed in already!' });
+		}else{
+			res.render('signup.ejs', { message: req.flash('signupMessage') });	
+		}
 	});
 
 	app.post('/users/login', passport.authenticate('local-login', {

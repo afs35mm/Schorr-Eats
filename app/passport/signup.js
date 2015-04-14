@@ -1,10 +1,23 @@
-var LocalStrategy   = require('passport-local').Strategy;
-var User = require('../models/user');
-var bCrypt = require('bcrypt-nodejs');
-
+var LocalStrategy   = require('passport-local').Strategy,
+    User = require('../models/user'),
+    bCrypt = require('bcrypt-nodejs'),
+    doubleSecretPassCode = require('../../config/doubleSecretPassCode');
 
 function createHash(password){
     return bCrypt.hashSync(password, bCrypt.genSaltSync(10), null);
+};
+
+function makeSexyName(name){
+    name = name.toLowerCase();
+    var nameArr = name.split(' ');
+    var totalString = '';
+    nameArr.forEach(function(elm){
+        console.log(elm);
+        capitalizedFirst = elm.charAt(0).toUpperCase() + elm.slice(1);
+        console.log(capitalizedFirst);
+        totalString += capitalizedFirst + ' ';
+    });
+    return totalString.slice(0,-1);
 };
 
 module.exports = function(passport){
@@ -12,7 +25,6 @@ module.exports = function(passport){
             passReqToCallback : true // allows us to pass back the entire request to the callback
         },
         function(req, username, password, done) {
-            console.log(username, password);
             findOrCreateUser = function(){
                 // find a user in Mongo with provided username
                 User.findOne({ 'username' :  username }, function(err, user) {
@@ -20,6 +32,9 @@ module.exports = function(passport){
                     if (err){
                         console.log('Error in SignUp: '+err);
                         return done(err);
+                    }
+                    if (req.body.code !== doubleSecretPassCode.passCode){
+                         return done(null, false, req.flash('signupMessage','You\'re not a Schorr!'));
                     }
                     // already exists
                     if (user) {
@@ -31,8 +46,9 @@ module.exports = function(passport){
                         var newUser = new User();
 
                         // set the user's local credentials 
-                        newUser.username = username;
+                        newUser.username = username.toLowerCase();
                         newUser.password = createHash(password);
+                        newUser.prettyUsername = makeSexyName(username);
 
                         // save the user
                         newUser.save(function(err) {

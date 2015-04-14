@@ -14,7 +14,7 @@ module.exports = function(passport){
     function(req, username, password, done) {
         // asynchronous
         process.nextTick(function() {
-            User.findOne({ 'username' :  username }, function(err, user) {
+            User.findOne({ 'username' :  username.toLowerCase() }, function(err, user) {
                 // if there are any errors, return the error
                 if (err)
                     return done(err);
@@ -32,7 +32,6 @@ module.exports = function(passport){
                 
                 // all is well, return user
                 else{
-                	console.log('SUCCESSSS');
                     return done(null, user);
                 }
             });

@@ -4,11 +4,12 @@
   "description": "Resturant tally-keeping app",
   "author": "Andrew Schorr",
   "dependencies": {
-    "express": "~4.6.1",
-    "mongoose": "~3.8.13",
-    "morgan": "~1.1.1",
+    "basic-auth": "^1.0.0",
     "body-parser": "~1.4.3",
-    "method-override": "~2.1.1"
+    "express": "~4.6.1",
+    "method-override": "~2.1.1",
+    "mongoose": "~3.8.13",
+    "morgan": "~1.1.1"
   },
   "devDependencies": {
     "bcrypt-nodejs": "0.0.3",
