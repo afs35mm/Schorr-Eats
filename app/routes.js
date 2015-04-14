@@ -31,11 +31,8 @@ module.exports = function(app, passport) {
 	}));
 
 	app.get('/signup', function(req, res) {
-		if (req.user) {
-			res.render('signup.ejs', { message: 'You\'re signed in already!' });
-		}else{
-			res.render('signup.ejs', { message: req.flash('signupMessage') });	
-		}
+		var messageBody = req.user ? 'You\'re signed in already!' : req.flash('signupMessage');
+		res.render('signup.ejs', { message: messageBody });
 	});
 
 	app.post('/users/login', passport.authenticate('local-login', {

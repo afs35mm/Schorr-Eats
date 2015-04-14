@@ -56,10 +56,9 @@ angular.module('todoController', [])
 				});
 		};
 
-		$scope.editTodo = function(todo) {
+		$scope.editTodo = function(id) {
 			
-			console.log(todo);
-			console.log(this);
+			Todos.edit(id);
 
 		};
 	}]);

@@ -27,12 +27,15 @@ module.exports = function(passport){
         function(req, username, password, done) {
             findOrCreateUser = function(){
                 // find a user in Mongo with provided username
-                User.findOne({ 'username' :  username }, function(err, user) {
+                User.findOne({ 'username' :  username.toLowerCase() }, function(err, user) {
                     // In case of any error, return using the done method
                     if (err){
                         console.log('Error in SignUp: '+err);
                         return done(err);
                     }
+                    // if (req.body.username === ''){
+                    //      return done(null, false, req.flash('signupMessage','Username, password, or secret code are blank!'));
+                    // }
                     if (req.body.code !== doubleSecretPassCode.passCode){
                          return done(null, false, req.flash('signupMessage','You\'re not a Schorr!'));
                     }
