@@ -19,7 +19,7 @@
 		<% if (message.length > 0) { %>
 			<div class="alert alert-danger"><%= message %></div>
 		<% } %>
-		<form action="/signup" method="post">
+		<form action="/signup" method="post" class="signup-form">
 			<div class="form-group">
 			    <label for="username">Username</label>
 				<input type="text" name="username" class="form-control" id="username" placeholder="username">
@@ -32,12 +32,10 @@
 			    <label for="code">What's the secret code? (case sensitive)</label>
 				<input type="text" name="code" class="form-control" id="code" placeholder="what's the secret code?">
 			</div>
-			<button type="submit" class="btn btn-primary">Submit</button>
+			<button type="submit" class="btn btn-primary btnSubmit">Submit</button>
 			<a href="/" class="btn btn-default">Cancel</a>
 		</form>
 	</div>
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
-	<script src="js/main.js"></script>
+	<script src="js/bundle.js"></script>
 </body>
 </html>

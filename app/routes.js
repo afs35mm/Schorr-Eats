@@ -48,8 +48,7 @@ module.exports = function(app, passport) {
 	
 	app.post('/api/todos', function(req, res) {
 		Todo.create({
-			text : req.body.text,
-			done : false,
+			name : req.body.name,
 			location : req.body.location,
 		}, function(err, todo) {
 			if (err)
@@ -66,6 +65,16 @@ module.exports = function(app, passport) {
 				res.send(err);
 
 			getTodos(res);
+		});
+	});
+
+	app.get('/api/todos/:todo_id', function(req, res) {
+		Todo.findOne({ _id: req.params.todo_id}, function(err, todo){
+			if (err){
+	            console.log('error occured in the database');
+	        }
+	        console.log(res.json(todo));
+	        res.json(todo);
 		});
 	});
 	

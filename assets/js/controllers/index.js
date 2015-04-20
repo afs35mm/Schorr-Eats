@@ -9,7 +9,7 @@ angular.module('todoController', [])
 		// when landing on the page, get all todos and show them
 		// use the service to get all the todos 
 		Todos.get() 
-			.success(function(data) {   
+			.success(function(data) {    
 				$scope.todos = data;  
 				$scope.loading = false;
 			});  
@@ -19,7 +19,7 @@ angular.module('todoController', [])
 		$scope.createTodo = function() {
 			// validate the formData to make sure that something is there
 			// if form is empty, nothing will happen
-			if ($scope.formData.text != undefined) {
+			if ($scope.formData.name != undefined) {
 				$scope.loading = true;
  
 				// call the  create function from our service (returns a promise object)
@@ -54,11 +54,23 @@ angular.module('todoController', [])
 					$scope.loading = false;
 					$scope.todos = data; // assign our new list of todos
 				});
+		}; 
+ 
+		$scope.editTodo = function(id) { 
+			$scope.editedTodo = $scope.todos[id];
+			console.log($scope);
+			// $('input','.editResturant' ).each(function(index, value){
+			// 	var fieldName = $(value).data('field');
+			// 	for (key in todo) {
+			// 		if( key == fieldName) {
+			// 			$(value).val(todo[key]);	
+			// 		}
+			// 	}
+			// });
 		};
 
-		$scope.editTodo = function(id) {
-			
-			Todos.edit(id);
-
+		$scope.updateTodo = function(todo) { 
+			console.log(todo);
 		};
+
 	}]);

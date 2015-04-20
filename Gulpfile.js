@@ -51,9 +51,14 @@ b.on('update', function(){
 }); 
  
 gulp.task('bundle', function(){
-	console.log('bundlin!');
 	return b.bundle()
-    .on('error', gutil.log.bind(gutil, 'Browserify Error'))
+    //.on('error', gutil.log.bind(gutil, 'Browserify Error'))
+	.on('error', function(err){
+		// print the error (can replace with gulp-util)
+		console.log(err.message);
+		this.emit('end');
+	})
+
     .pipe(source('bundle.js'))
     .pipe(buffer())
     .pipe(sourcemaps.init({loadMaps: true})) 
