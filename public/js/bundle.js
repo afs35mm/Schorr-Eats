@@ -57,7 +57,7 @@ app.controller('mainController', ['$scope', '$rootScope', '$http','Todos', funct
 
 	// DELETE ==================================================================
 	// delete a todo after checking it
-	$scope.deleteTodo = function(id) {
+	$scope.deleteTodo = function() {
 		
 		var result = window.confirm('Are you absolutely positively sure you want to delete this!???'); 
 
@@ -65,11 +65,14 @@ app.controller('mainController', ['$scope', '$rootScope', '$http','Todos', funct
 
 		$scope.loading = true;
 
-		Todos.delete(id)
+		Todos.delete($scope.originalItem._id)
 			// if successful creation, call our get function to get all the new todos
 			.success(function(data) {
 				$scope.loading = false;
-				$scope.todos = data; // assign our new list of todos
+				$scope.todos = data; 
+				$(function () {
+				   $('#editModal').modal('toggle');
+				});
 			});
 	}; 
 
@@ -152,12 +155,10 @@ angular.module('todoService', [])
 			return $http.delete('/api/todos/' + id);
 		},
 		update : function(todoData) {
-			console.log(todoData);
 			return $http.put('/api/todos/' + todoData._id, todoData);
-			//console.log($http); 
 		}
 	}
-}]);
+}]); 
 },{}],6:[function(require,module,exports){
 /**
  * @license AngularJS v1.3.15

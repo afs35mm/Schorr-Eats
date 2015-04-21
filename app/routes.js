@@ -78,14 +78,12 @@ module.exports = function(app, passport) {
 			options = { 
 				upsert: true 
 		};
-
 		Todo.update({
 			_id : req.params.todo_id,
 		}, 
 		update, 
 		options,
 		function(err, todo) {
-			console.log('SUCCESS???');
 			if (err)
 				res.send(err);
 			getTodos(res);

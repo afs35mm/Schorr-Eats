@@ -5247,3 +5247,6 @@ button.close {
 
 label[for="username"] {
   display: block; }
+
+.editResturant .modal-footer .btn-default {
+  float: left; }
