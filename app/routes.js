@@ -68,12 +68,35 @@ module.exports = function(app, passport) {
 		});
 	});
 
+	app.put('/api/todos/:todo_id', function(req, res) {
+		var update = { 
+			$set: { 
+				name : req.body.name,
+				location : req.body.location
+			}
+		},
+			options = { 
+				upsert: true 
+		};
+
+		Todo.update({
+			_id : req.params.todo_id,
+		}, 
+		update, 
+		options,
+		function(err, todo) {
+			console.log('SUCCESS???');
+			if (err)
+				res.send(err);
+			getTodos(res);
+		});
+	});
+
 	app.get('/api/todos/:todo_id', function(req, res) {
 		Todo.findOne({ _id: req.params.todo_id}, function(err, todo){
 			if (err){
 	            console.log('error occured in the database');
 	        }
-	        console.log(res.json(todo));
 	        res.json(todo);
 		});
 	});
