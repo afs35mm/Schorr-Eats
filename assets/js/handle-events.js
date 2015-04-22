@@ -5,13 +5,18 @@ window.$ = window.jQuery = require('jquery');
 module.exports = {
 
 	'$signupForm' : $('.signup-form'),
+	'$addForm' : $('.add-restaurant-form'),
 
 	init: function (){
-		var formEl = this.$signupForm;
-		this.$signupForm.on('submit', this.validateForm);
+		var self = this;
+		this.$signupForm.on('submit', this.validateSingupForm);
+		this.$addForm.on('click .btn-primary', function(){
+			self.validateAddForm();
+		});
 	},
 
-	validateForm: function(e){ 
+	//TO DO - put each validation in a helper method
+	validateSingupForm: function(e){ 
 		
 		var preventSubmit = false;
 
@@ -22,11 +27,25 @@ module.exports = {
 				preventSubmit = true;
 			}
 			if($textInput.parent('.form-group').hasClass('has-error') && $textInput.val().trim() !== ''){
-				console.log('removing class');
 				$textInput.parent('.form-group').removeClass('has-error');	
 			}
 		});
 		if(preventSubmit) e.preventDefault();
-	}
+	},
 
+	validateAddForm: function() {
+		var preventSubmit = false;
+		this.$addForm.find('.required').each(function(index, value){
+			console.log(this);
+			var $textInput = $(this);
+			if($textInput.val().trim() === ''){
+				$textInput.parent('.form-group').addClass('has-error');
+				preventSubmit = true;
+			}
+			if($textInput.parent('.form-group').hasClass('has-error') && $textInput.val().trim() !== ''){
+				$textInput.parent('.form-group').removeClass('has-error');	
+			}
+		});
+		if(preventSubmit) return false;
+	}
 } 

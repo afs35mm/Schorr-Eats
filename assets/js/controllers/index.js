@@ -29,10 +29,10 @@ app.controller('mainController', ['$scope', '$rootScope', '$http','Todos', funct
 					$scope.loading = false;
 					$scope.formData = {}; // clear the form so our user is ready to enter another
 					$scope.todos = data; // assign our new list of todos
-					//close the bootstrap modal
 					$(function () {
 					   $('#addModal').modal('toggle');
 					});
+
 				}); 
 		}
 	};

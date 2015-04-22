@@ -67,6 +67,7 @@
 			<a class="btn btn-default logout" href="/logout">Logout</a>
 		</div>
 		<% } %>  
+
 		<!--ADD RESTUARANT-->
 		<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addResturant" aria-hidden="true">
 			<div class="modal-dialog">
@@ -75,17 +76,133 @@
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 						<h4 class="modal-title" id="myModalLabel">Add Resturant</h4>
 					</div>
-					<form>
+					<form class="add-restaurant-form">
 						<div class="modal-body">
-						<div class="form-group">
-						    <label for="nameField">Resturant Name</label>
-							<input ng-model="formData.name" type="text" class="form-control" id="nameField" placeholder="Resturant Name">
+							<div class="form-group">
+							    <label for="nameField">Resturant Name</label>
+								<input ng-model="formData.name" type="text" class="form-control required" id="nameField" placeholder="Resturant Name">
+							</div>
+							<div class="form-group">
+							    <label for="locationField">Location</label>
+								<input ng-model="formData.location" type="text" class="form-control required" id="locationField" placeholder="Location">
+							</div>
+							<div class="form-group">
+								<label for="cuisine">Cuisine</label>
+								<select ng-model="formData.cuisine" id="cuisine" class="form-control">
+									<option>African</option>
+									<option>American</option>
+									<option>Argentinian</option>
+									<option>Bagels</option>
+									<option>BBQ</option>
+									<option>Belgian</option>
+									<option>Brazilian</option>
+									<option>Breakfast</option>
+									<option>Brunch</option>
+									<option>Bubble Tea</option>
+									<option>Burgers</option>
+									<option>Cajun and Creole</option>
+									<option>Californian Cuisine</option>
+									<option>Cambodian</option>
+									<option>Caribbean</option>
+									<option>Cheesesteaks</option>
+									<option>Chinese</option>
+									<option>Churrascaria</option>
+									<option>Costa Rican</option>
+									<option>Crepes</option>
+									<option>Cuban</option>
+									<option>Deli</option>
+									<option>Dessert</option>
+									<option>Dim Sum &amp; Dumplings</option>
+									<option>Diner</option>
+									<option>English</option>
+									<option>Farm to Table</option>
+									<option>Filipino</option>
+									<option>French</option>
+									<option>Frozen Yogurt Dessert</option>
+									<option>German</option>
+									<option>Gluten-Free</option>
+									<option>Greek</option>
+									<option>Grocery Items</option>
+									<option>Haitian</option>
+									<option>Halal</option>
+									<option>Hawaiian</option>
+									<option>Healthy</option>
+									<option>Hot Dogs</option>
+									<option>Indian</option>
+									<option>Indonesian</option>
+									<option>Irish</option>
+									<option>Italian</option>
+									<option>Jamaican</option>
+									<option>Japanese</option>
+									<option>Juices</option>
+									<option>Korean</option>
+									<option>Kosher</option>
+									<option>Late-Night</option>
+									<option>Latin-American</option>
+									<option>Lebanese</option>
+									<option>Lunch-Specials</option>
+									<option>Malaysian</option>
+									<option>Mediterranean</option>
+									<option>Mexican</option>
+									<option>Middle-Eastern</option>
+									<option>Moroccan</option>
+									<option>MOST POPULAR</option>
+									<option>Noodle-Shops</option>
+									<option>Organic</option>
+									<option>Pakistani</option>
+									<option>Peruvian</option>
+									<option>Pizza</option>
+									<option>Polish</option>
+									<option>Portuguese</option>
+									<option>Russian</option>
+									<option>Salads</option>
+									<option>Sandwiches-Wraps</option>
+									<option>Scandinavian</option>
+									<option>Seafood</option>
+									<option>Smoothies-Shakes</option>
+									<option>Soup</option>
+									<option>Southern and Soul</option>
+									<option>Spanish</option>
+									<option>Sri-Lankan</option>
+									<option>Steakhouse</option>
+									<option>Sushi</option>
+									<option>Sweets and Candy</option>
+									<option>Taiwanese</option>
+									<option>Thai</option>
+									<option>Turkish</option>
+									<option>Vegan</option>
+									<option>Vegetarian</option>
+									<option>Venezuelan</option>
+									<option>Vietnamese</option>
+									<option>Wings</option>
+								</select>
+							</div>
+							<div class="form-group">
+							    <label for="">Rating</label>
+								<input id="input-id" type="number" class="rating required" min=0 max=5 step=0.5 data-size="xs" >
+							</div>
+							<div class="form-group">
+							    <label for="comments">Comments</label>
+								<textarea id="comments" ng-model="formData.comments" class="form-control" rows="3"></textarea>
+							</div>
 						</div>
-						<div class="form-group">
-						    <label for="locationField">Location</label>
-							<input ng-model="formData.location" type="text" class="form-control" id="locationField" placeholder="Location">
-						</div>
-						</div>
+ 						<!--<div class="map-container">
+							<input id="pac-input" ng-model="formData.name" class="controls" type="text"placeholder="Enter a location">
+							<div id="type-selector" class="controls">
+								<input type="radio" name="type" id="changetype-all" checked="checked">
+								<label for="changetype-all">All</label>
+
+								<input type="radio" name="type" id="changetype-establishment">
+								<label for="changetype-establishment">Establishments</label>
+
+								<input type="radio" name="type" id="changetype-address">
+								<label for="changetype-address">Addresses</label>
+
+								<input type="radio" name="type" id="changetype-geocode">
+								<label for="changetype-geocode">Geocodes</label> 
+							</div>
+							<div id="map-canvas"></div>
+						</div> -->
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
 							<button type="button" class="btn btn-primary" ng-click="createTodo()">Add Restaurant!</button>
@@ -105,14 +222,14 @@
 					</div>
 					<form>
 						<div class="modal-body"> 
-						<div class="form-group">
-						    <label for="nameField">Resturant Name</label>
-							<input ng-model="editingItem.name" type="text" class="form-control" data-field="name" id="nameField" placeholder="">
-						</div>
-						<div class="form-group">
-						    <label for="locationField">Location</label>
-							<input ng-model="editingItem.location" type="text" class="form-control" data-field="location" id="locationField" placeholder="">
-						</div> 
+							<div class="form-group">
+							    <label for="nameField">Resturant Name</label>
+								<input ng-model="editingItem.name" type="text" class="form-control" data-field="name" id="nameField" placeholder="">
+							</div>
+							<div class="form-group">
+							    <label for="locationField">Location</label>
+								<input ng-model="editingItem.location" type="text" class="form-control" data-field="location" id="locationField" placeholder="">
+							</div> 
 						</div> 
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -134,14 +251,14 @@
 					</div>
 					<form action="/users/login" method="post">
 						<div class="modal-body">
-						<div class="form-group">
-						    <label for="username">What's your username?</label>
-							<input type="text" name="username" class="form-control" id="username" placeholder="username">
-						</div>
-						<div class="form-group">
-						    <label for="password">What's your password? (case sensitive)</label>
-							<input type="password" name="password" class="form-control" id="password" placeholder="Password">
-						</div>
+							<div class="form-group">
+							    <label for="username">What's your username?</label>
+								<input type="text" name="username" class="form-control" id="username" placeholder="username">
+							</div>
+							<div class="form-group">
+							    <label for="password">What's your password? (case sensitive)</label>
+								<input type="password" name="password" class="form-control" id="password" placeholder="Password">
+							</div>
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -152,6 +269,7 @@
 			</div>
 		</div>
 	</div>
+	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
 	<script src="js/bundle.js"></script>
 </body>
 </html>
