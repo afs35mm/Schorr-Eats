@@ -22,17 +22,17 @@
 		<form action="/signup" method="post" class="signup-form">
 			<div class="form-group">
 			    <label for="username">Username</label>
-				<input type="text" name="username" class="form-control" id="username" placeholder="username">
+				<input type="text" name="username" class="form-control required" id="username" placeholder="username">
 			</div>
 			<div class="form-group">
 			    <label for="password">What do you want your password to be?</label>
-				<input type="password" name="password" class="form-control" id="password" placeholder="Password">
+				<input type="password" name="password" class="form-control required" id="password" placeholder="Password">
 			</div>
 			<div class="form-group">
 			    <label for="code">What's the secret code? (case sensitive)</label>
-				<input type="text" name="code" class="form-control" id="code" placeholder="what's the secret code?">
+				<input type="text" name="code" class="form-control required" id="code" placeholder="what's the secret code?">
 			</div>
-			<button type="submit" class="btn btn-primary btnSubmit">Submit</button>
+			<button type="submit" class="btn btn-primary btnSubmit validate-form">Submit</button>
 			<a href="/" class="btn btn-default">Cancel</a>
 		</form>
 	</div>

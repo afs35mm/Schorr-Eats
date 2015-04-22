@@ -41,7 +41,6 @@ app.controller('mainController', ['$scope', '$rootScope', '$http','Todos', funct
 		// if form is empty, nothing will happen
 		if ($scope.formData.name != undefined) {
 			$scope.loading = true;
-
 			// call the  create function from our service (returns a promise object)
 			Todos.create($scope.formData)
 
@@ -107,41 +106,18 @@ window.$ = window.jQuery = require('jquery');
 
 module.exports = {
 
-	'$signupForm' : $('.signup-form'),
-	'$addForm' : $('.add-restaurant-form'),
-
 	init: function (){
-		var self = this;
-		this.$signupForm.on('submit', this.validateSingupForm);
-		this.$addForm.on('click .btn-primary', function(){
-			self.validateAddForm();
-		});
+		$('.validate-form').on('click', this.validateForm);
 	},
 
-	//TO DO - put each validation in a helper method
-	validateSingupForm: function(e){ 
-		
-		var preventSubmit = false;
 
-		$(this).find('.form-control').each(function(index, value){
-			var $textInput = $(this);
-			if($textInput.val().trim() === ''){
-				$textInput.parent('.form-group').addClass('has-error');
-				preventSubmit = true;
-			}
-			if($textInput.parent('.form-group').hasClass('has-error') && $textInput.val().trim() !== ''){
-				$textInput.parent('.form-group').removeClass('has-error');	
-			}
-		});
-		if(preventSubmit) e.preventDefault();
-	},
+	validateForm : function(){
+		var $parentForm = $(this).parents('form'),
+			preventSubmit = false;
 
-	validateAddForm: function() {
-		var preventSubmit = false;
-		this.$addForm.find('.required').each(function(index, value){
-			console.log(this);
+		$parentForm.find('.required').each(function(index, value){
 			var $textInput = $(this);
-			if($textInput.val().trim() === ''){
+			if($textInput.val().trim() == ''){
 				$textInput.parent('.form-group').addClass('has-error');
 				preventSubmit = true;
 			}
@@ -150,7 +126,8 @@ module.exports = {
 			}
 		});
 		if(preventSubmit) return false;
-	}
+	},
+
 } 
 },{"jquery":9}],4:[function(require,module,exports){
 /*!

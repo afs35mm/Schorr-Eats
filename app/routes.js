@@ -50,6 +50,9 @@ module.exports = function(app, passport) {
 		Todo.create({
 			name : req.body.name,
 			location : req.body.location,
+			cuisine : req.body.cuisine,
+			comments : req.body.comments,
+			rating : req.body.rating,
 		}, function(err, todo) {
 			if (err)
 				res.send(err);
@@ -72,7 +75,10 @@ module.exports = function(app, passport) {
 		var update = { 
 			$set: { 
 				name : req.body.name,
-				location : req.body.location
+				location : req.body.location,
+				cuisine : req.body.cuisine,
+				comments : req.body.comments,
+				rating : req.body.rating,
 			}
 		},
 			options = { 

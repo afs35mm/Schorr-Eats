@@ -20,7 +20,6 @@ app.controller('mainController', ['$scope', '$rootScope', '$http','Todos', funct
 		// if form is empty, nothing will happen
 		if ($scope.formData.name != undefined) {
 			$scope.loading = true;
-
 			// call the  create function from our service (returns a promise object)
 			Todos.create($scope.formData)
 
