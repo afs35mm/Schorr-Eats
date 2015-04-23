@@ -5275,7 +5275,7 @@ button.close {
 
 /*!
  * @copyright &copy; Kartik Visweswaran, Krajee.com, 2013 - 2015
- * @version 3.5.1
+ * @version 3.5.2
  *
  * A simple yet powerful JQuery star rating plugin that allows rendering
  * fractional star ratings and supports Right to Left (RTL) input.
@@ -5286,13 +5286,16 @@ button.close {
 .rating-loading {
   width: 25px;
   height: 25px;
-  font-size: 0;
+  font-size: 0px;
   color: #fff;
-  background: transparent url(../img/loading.gif) top left no-repeat;
+  background: transparent url('../img/loading.gif') top left no-repeat;
   border: none; }
 
+/*
+ * Stars
+ */
 .rating-fa {
-  font-family: FontAwesome;
+  font-family: 'FontAwesome';
   padding-left: 1px; }
 
 .rating-fa .rating-stars:before {
@@ -5317,9 +5320,6 @@ button.close {
 .rating-active {
   cursor: default; }
 
-.rating-disabled {
-  cursor: not-allowed; }
-
 .rating-uni {
   font-size: 1.2em;
   margin-top: -5px; }
@@ -5341,10 +5341,10 @@ button.close {
   white-space: nowrap;
   overflow: hidden;
   color: #fde16d;
-  transition: all .25s ease-out;
-  -o-transition: all .25s ease-out;
-  -moz-transition: all .25s ease-out;
-  -webkit-transition: all .25s ease-out; }
+  transition: all 0.25s ease-out;
+  -o-transition: all 0.25s ease-out;
+  -moz-transition: all 0.25s ease-out;
+  -webkit-transition: all 0.25s ease-out; }
 
 .rating-container .rating-stars:before {
   content: attr(data-content);
@@ -5368,14 +5368,17 @@ button.close {
   white-space: nowrap;
   overflow: hidden;
   color: #e3e3e3;
-  transition: all .25s ease-out;
-  -o-transition: all .25s ease-out;
-  -moz-transition: all .25s ease-out;
-  -webkit-transition: all .25s ease-out; }
+  transition: all 0.25s ease-out;
+  -o-transition: all 0.25s ease-out;
+  -moz-transition: all 0.25s ease-out;
+  -webkit-transition: all 0.25s ease-out; }
 
 .rating-container-rtl .rating-stars:before {
   content: attr(data-content); }
 
+/**
+ * Rating sizes
+ */
 .rating-xl {
   font-size: 4.89em; }
 
@@ -5391,6 +5394,9 @@ button.close {
 .rating-xs {
   font-size: 2em; }
 
+/**
+ * Clear rating button
+ */
 .star-rating .clear-rating, .star-rating-rtl .clear-rating {
   color: #aaa;
   cursor: not-allowed;
@@ -5407,6 +5413,9 @@ button.close {
 .star-rating .clear-rating {
   padding-right: 5px; }
 
+/**
+ * Caption
+ */
 .star-rating .caption, .star-rating-rtl .caption {
   color: #999;
   display: inline-block;

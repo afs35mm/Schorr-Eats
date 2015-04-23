@@ -15,5 +15,9 @@ var events = require('./handle-events.js');
 //var map = require('./google-maps.js');
 
 events.init();
-//map.init();
-$("#input-id").rating();
+//map.init(); 
+// $('.starRating').each(function(){
+// 	console.log(this);
+// });
+
+// $('.starRating').rating();

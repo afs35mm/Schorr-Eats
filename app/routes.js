@@ -12,11 +12,11 @@ function getTodos(res){
 };
 
 function ensureAuthenticated (req, res, next) {
-	console.log("Cookies: ", req.cookies)
+	//console.log("Cookies: ", req.cookies)
 	if(req.isAuthenticated()){
-		console.log('is AUTHETNTICED!');
+		//console.log('is AUTHETNTICED!');
 	}else{ 
-		console.log('is not :<');
+		//console.log('is not :<');
 	}
 
 	return next();
