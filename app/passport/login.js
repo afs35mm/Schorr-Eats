@@ -9,8 +9,10 @@ function isValidPassword (user, password){
 module.exports = function(passport){
 
 	passport.use('local-login', new LocalStrategy({
-        passReqToCallback : true
-    },
+        passReqToCallback : true, // allows us to pass back the entire request to the callback
+        usernameField: 'email',
+        passwordField: 'password'
+    }, 
     function(req, username, password, done) {
         // asynchronous
         process.nextTick(function() {

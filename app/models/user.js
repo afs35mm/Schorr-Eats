@@ -5,6 +5,7 @@ var usersConn = mongoose.createConnection('mongodb://localhost/' + database.user
 
 module.exports = usersConn.model('User', {
     username : {type : String },
+    shortName : {type : String },
     password : {type : String },
     prettyUsername : {type : String },
 });

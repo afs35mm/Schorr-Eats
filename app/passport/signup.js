@@ -12,9 +12,7 @@ function makeSexyName(name){
     var nameArr = name.split(' ');
     var totalString = '';
     nameArr.forEach(function(elm){
-        console.log(elm);
         capitalizedFirst = elm.charAt(0).toUpperCase() + elm.slice(1);
-        console.log(capitalizedFirst);
         totalString += capitalizedFirst + ' ';
     });
     return totalString.slice(0,-1);
@@ -22,7 +20,9 @@ function makeSexyName(name){
 
 module.exports = function(passport){
     passport.use('signup', new LocalStrategy({
-            passReqToCallback : true // allows us to pass back the entire request to the callback
+            passReqToCallback : true, // allows us to pass back the entire request to the callback
+            usernameField: 'email',
+            passwordField: 'password'
         },
         function(req, username, password, done) {
             findOrCreateUser = function(){
@@ -46,15 +46,16 @@ module.exports = function(passport){
                     } else {
                         // if there is no user with that email
                         // create the user
-                        var newUser = new User();
-
+                        var newUser = new User(); 
+                        
                         // set the user's local credentials 
                         newUser.username = username.toLowerCase();
                         newUser.password = createHash(password);
-                        newUser.prettyUsername = makeSexyName(username);
+                        newUser.shortName = req.body.name;
+                        newUser.prettyUsername = makeSexyName(newUser.shortName);
 
                         // save the user
-                        newUser.save(function(err) {
+                        newUser.save(function(err) { 
                             if (err){
                                 console.log('Error in Saving user: '+err);  
                                 throw err;  
