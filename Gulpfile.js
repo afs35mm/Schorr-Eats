@@ -14,27 +14,27 @@ var gulp = require('gulp'),
 gulp.task('nodemon', function() {
 		nodemon({ script: './app/server.js',
 		env: { 'NODE_ENV': 'development' },
-    	//ignore: ['/assets/js/main', '/assets/js/main.js']
+    	//ignore: ['/client/js/main', '/client/js/main.js']
 	})
 });
 
 gulp.task('sass', function(){
-	gulp.src('./assets/scss/*.scss')
+	gulp.src('./client/scss/*.scss')
 	.pipe(sass({errLogToConsole: true}))
 	.pipe(gulp.dest('./public/styles'));
 });
 
 gulp.task('uglify', function() {
-	gulp.src('./assets/js/**/*.js')
-	.pipe(uglify('main.js', {
+	gulp.src('./client/js/**/*.js')
+	.pipe(uglify('main.js', { 
 		outSourceMap: true
 	}))
 	.pipe(gulp.dest('./public/js'))
 });
 
-gulp.task('assets', function() {
-	gulp.watch('./assets/scss/**/*.scss', ['sass']);
-	//gulp.watch('./assets/js/**/*.js', ['uglify']);
+gulp.task('client', function() {
+	gulp.watch('./client/scss/**/*.scss', ['sass']);
+	//gulp.watch('./client/js/**/*.js', ['uglify']);
 });
 
 gulp.task('server', shell.task([
@@ -42,7 +42,7 @@ gulp.task('server', shell.task([
 ]))
 
 var b = watchify(browserify({
-	entries: ['./assets/js/main.js'],
+	entries: ['./client/js/main.js'],
 	debug: true
 }));
 
@@ -68,9 +68,9 @@ gulp.task('bundle', function(){
 
 gulp.task('default', ['sass', 'uglify', 'serve', 'bundle' ]);
 
-gulp.task('watch-server', ['sass', 'uglify', 'nodemon', 'assets', 'bundle' ]);
+gulp.task('watch-server', ['sass', 'uglify', 'nodemon', 'client', 'bundle' ]);
 
-gulp.task('watch', ['sass', 'uglify', 'server', 'assets', 'bundle' ]);
+gulp.task('watch', ['sass', 'uglify', 'server', 'client', 'bundle' ]);
 
 gulp.task('js', ['bundle'])
 

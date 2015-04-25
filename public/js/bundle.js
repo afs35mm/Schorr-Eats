@@ -41,7 +41,6 @@ app.controller('mainController', ['$scope', '$rootScope', '$http','Todos', funct
 	
 	$scope.$watch('userName', function () {
 	    $scope.userName = $scope.userName;
-	    console.log($scope.userName);
 	});
 
 	Todos.get() .success(function(data) {    
@@ -52,8 +51,12 @@ app.controller('mainController', ['$scope', '$rootScope', '$http','Todos', funct
 	$scope.createTodo = function() {
 		if ($scope.formData.name != undefined) {
 			$scope.loading = true;
+			
+			$scope.formData.addedBy = $scope.userName;
+
 			Todos.create($scope.formData)
 				.success(function(data) {
+					console.log(data);
 					$scope.loading = false;
 					$scope.formData = {}; 
 					$scope.todos = data; 

@@ -34,6 +34,7 @@
 					<th>Name</th>
 					<th>Location</th>
 					<th>Cuisine</th>
+					<th>added by</th>
 					<th>Comments</th>
 					<th>Rating</th>
 					<% if(user){ %>
@@ -51,6 +52,9 @@
 					</td>
 					<td>
 						{{ todo.cuisine }}
+					</td>
+					<td>
+						{{ todo.addedBy }}
 					</td>
 					<td>
 						{{ todo.comments }}
@@ -100,6 +104,7 @@
 									<option>African</option>
 									<option>American</option>
 									<option>Argentinian</option>
+									<option>Asian</option>
 									<option>Bagels</option>
 									<option>BBQ</option>
 									<option>Belgian</option>
@@ -154,7 +159,6 @@
 									<option>Mexican</option>
 									<option>Middle-Eastern</option>
 									<option>Moroccan</option>
-									<option>MOST POPULAR</option>
 									<option>Noodle-Shops</option>
 									<option>Organic</option>
 									<option>Pakistani</option>
@@ -245,6 +249,7 @@
 									<option>African</option>
 									<option>American</option>
 									<option>Argentinian</option>
+									<option>Asian</option>
 									<option>Bagels</option>
 									<option>BBQ</option>
 									<option>Belgian</option>
@@ -299,7 +304,6 @@
 									<option>Mexican</option>
 									<option>Middle-Eastern</option>
 									<option>Moroccan</option>
-									<option>MOST POPULAR</option>
 									<option>Noodle-Shops</option>
 									<option>Organic</option>
 									<option>Pakistani</option>

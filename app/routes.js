@@ -47,15 +47,24 @@ module.exports = function(app, passport) {
 	});
 	
 	app.post('/api/todos', function(req, res) {
+
 		Todo.create({
 			name : req.body.name,
 			location : req.body.location,
 			cuisine : req.body.cuisine,
 			comments : req.body.comments,
 			rating : req.body.rating,
-		}, function(err, todo) {
-			if (err)
+			addedBy : req.body.addedBy,
+			commentsArr : [{ 
+				author: req.body.addedBy,
+				notes: req.body.comments
+			}]
+		},
+		function(err, todo) {
+			if (err) {
 				res.send(err);
+			}
+			console.log(todo);
 			getTodos(res);
 		});
 	});
@@ -79,6 +88,7 @@ module.exports = function(app, passport) {
 				cuisine : req.body.cuisine,
 				comments : req.body.comments,
 				rating : req.body.rating,
+				addedBy : req.body.addedBy
 			}
 		},
 			options = { 
