@@ -18,8 +18,9 @@ app.controller('mainController', ['$scope', '$rootScope', '$http','Todos', funct
 	    $scope.userName = $scope.userName;
 	});
 
-	Todos.get() .success(function(data) {    
+	Todos.get().success(function(data) {    
 		$scope.todos = data;  
+		console.log(data);
 		$scope.loading = false;
 	});  
 
@@ -85,7 +86,7 @@ app.controller('mainController', ['$scope', '$rootScope', '$http','Todos', funct
 			}
 			i++;
 		}
-
+		console.log(todo);
 	};
 
 	$scope.updateTodo = function() { 

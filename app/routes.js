@@ -72,12 +72,14 @@ module.exports = function(app, passport) {
 
 	app.put('/api/todos/:todo_id', function(req, res) {
 		
-		var update = { 
+		//console.log(req.body);
+
+		var update = {  
 			$set: { 
-				name : req.body.name,
+				name : req.body.name, 
 				location : req.body.location,
-				cuisine : req.body.cuisine,
-				addedBy : req.body.addedBy,
+				cuisine : req.body.cuisine || '',
+				addedBy : req.body.addedBy || '',
 			},
 		};
 		
@@ -99,17 +101,17 @@ module.exports = function(app, passport) {
 				'ratings' : {
 					author : req.body.author,
 					notes : req.body.currentUserRating.notes,
-					rating : req.body.currentUserRating.rating, 
+					rating : req.body.currentUserRating.rating,  
 				}	
 			}
 		} else {
-			var updateIndex = {};
 			//no idea why I have to do it like this it doesn't work when I try string concatenation in the update.$set object :(
 			//http://stackoverflow.com/questions/18156336/setting-value-of-an-array-element-in-mongoose-using-index
-			updateIndex['ratings.' + ratingArrayPosition + '.notes'] = req.body.currentUserRating.notes;
-			updateIndex['ratings.' + ratingArrayPosition + '.rating'] = req.body.currentUserRating.rating;
-			update.$set = updateIndex;
+			update.$set['ratings.' + ratingArrayPosition + '.notes'] = req.body.currentUserRating.notes || '';
+			update.$set['ratings.' + ratingArrayPosition + '.rating'] = req.body.currentUserRating.rating || '';
 		}
+
+		console.log(update);
 
 		var options = { 
 			upsert: true 

@@ -51,16 +51,19 @@
 					<td>
 						{{ todo.cuisine }}
 					</td>
-					<td>
+					<td class="rating-table">
 						<table>
 							<tr ng-repeat="rating in todo.ratings">
-								<td>
+								<td ng-if="rating.notes != undefined || rating.rating != undefined">
 									{{rating.author}}:
 								</td>
-								<td>
-									&nbsp;&nbsp;{{rating.notes}}	
+								<td ng-if="rating.notes == undefined && rating.rating == undefined">
+									
 								</td>
 								<td>
+									{{rating.notes}}	
+								</td>
+								<td class="star-cell">
 									<input type="number" value="{{rating.rating}}" class="starRatingView"  data-size="xs"  data-rtl="false">
 								</td>
 							</tr>
