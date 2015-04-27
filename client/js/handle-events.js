@@ -6,8 +6,13 @@ module.exports = {
 
 	init: function (){
 		$('.validate-form').on('click', this.validateForm);
+		$('document').ready(function(){
+			$('.starRatingEdit').add('.starRatingAdd').rating({
+				'showClear' : false,
+				'showCaption' : false, 
+			});
+		});
 	},
-
 
 	validateForm : function(){
 		var $parentForm = $(this).parents('form'),

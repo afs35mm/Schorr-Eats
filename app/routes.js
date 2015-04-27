@@ -12,13 +12,7 @@ function getTodos(res){
 };
 
 function ensureAuthenticated (req, res, next) {
-	//console.log("Cookies: ", req.cookies)
-	if(req.isAuthenticated()){
-		//console.log('is AUTHETNTICED!');
-	}else{ 
-		//console.log('is not :<');
-	}
-
+	req.isAuthenticated()
 	return next();
 };
 
@@ -47,24 +41,20 @@ module.exports = function(app, passport) {
 	});
 	
 	app.post('/api/todos', function(req, res) {
-
 		Todo.create({
 			name : req.body.name,
 			location : req.body.location,
 			cuisine : req.body.cuisine,
-			comments : req.body.comments,
-			rating : req.body.rating,
-			addedBy : req.body.addedBy,
-			commentsArr : [{ 
-				author: req.body.addedBy,
-				notes: req.body.comments
-			}]
+			ratings : [{ 
+				author: req.body.user,
+				notes: req.body.comments,
+				rating: req.body.rating,
+			}] 
 		},
 		function(err, todo) {
 			if (err) {
 				res.send(err);
 			}
-			console.log(todo);
 			getTodos(res);
 		});
 	});
@@ -81,18 +71,48 @@ module.exports = function(app, passport) {
 	});
 
 	app.put('/api/todos/:todo_id', function(req, res) {
+		
 		var update = { 
 			$set: { 
 				name : req.body.name,
 				location : req.body.location,
 				cuisine : req.body.cuisine,
-				comments : req.body.comments,
-				rating : req.body.rating,
-				addedBy : req.body.addedBy
+				addedBy : req.body.addedBy,
+			},
+		};
+		
+		var authorFound = false,
+			idToUpdate = null,
+			ratingArrayPosition = null;
+		
+		for( var i = 0; i <  req.body.ratings.length; i++){
+			console.log(req.body.ratings[i].author);
+			if (req.body.ratings[i].author === req.body.author && !authorFound) {
+				authorFound = !authorFound;
+				idToUpdate = req.body.ratings[i]._id;
+				ratingArrayPosition = i;
 			}
-		},
-			options = { 
-				upsert: true 
+		} 
+
+		if(!authorFound){
+			update.$push = {
+				'ratings' : {
+					author : req.body.author,
+					notes : req.body.currentUserRating.notes,
+					rating : req.body.currentUserRating.rating, 
+				}	
+			}
+		} else {
+			var updateIndex = {};
+			//no idea why I have to do it like this it doesn't work when I try string concatenation in the update.$set object :(
+			//http://stackoverflow.com/questions/18156336/setting-value-of-an-array-element-in-mongoose-using-index
+			updateIndex['ratings.' + ratingArrayPosition + '.notes'] = req.body.currentUserRating.notes;
+			updateIndex['ratings.' + ratingArrayPosition + '.rating'] = req.body.currentUserRating.rating;
+			update.$set = updateIndex;
+		}
+
+		var options = { 
+			upsert: true 
 		};
 		Todo.update({
 			_id : req.params.todo_id,

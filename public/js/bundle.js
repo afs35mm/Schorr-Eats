@@ -52,11 +52,10 @@ app.controller('mainController', ['$scope', '$rootScope', '$http','Todos', funct
 		if ($scope.formData.name != undefined) {
 			$scope.loading = true;
 			
-			$scope.formData.addedBy = $scope.userName;
+			$scope.formData.user = $scope.userName;
 
 			Todos.create($scope.formData)
 				.success(function(data) {
-					console.log(data);
 					$scope.loading = false;
 					$scope.formData = {}; 
 					$scope.todos = data; 
@@ -79,11 +78,6 @@ app.controller('mainController', ['$scope', '$rootScope', '$http','Todos', funct
 				'readonly': true,
 			});
 		});
-		
-		$('.starRatingEdit').add('.starRatingAdd').rating({
-			'showClear' : false,
-			'showCaption' : false, 
-		});
 	};
 
 	$scope.deleteTodo = function() {
@@ -104,11 +98,24 @@ app.controller('mainController', ['$scope', '$rootScope', '$http','Todos', funct
 	$scope.editTodo = function(todo) {
 		$scope.editingItem = angular.copy(todo);
 		$scope.originalItem = todo;
-		console.log($scope.editingItem.rating);
-		$('#editModal').find('.starRatingEdit').rating('update', $scope.editingItem.rating);
+		$scope.editingItem.author = $scope.userName;
+		//loop through the restaurant ratings array and see if the person has rated already
+		var i = 0;
+		while( i <  $scope.editingItem.ratings.length){
+			$scope.editingItem.currentUserRating = {}
+			if($scope.editingItem.ratings[i].author === $scope.userName){
+				$scope.editingItem.currentUserRating = $scope.editingItem.ratings[i];
+				$('#editModal').find('.starRatingEdit').rating('update', $scope.editingItem.currentUserRating.rating);
+				break;
+			}
+			i++;
+		}
+
 	};
 
 	$scope.updateTodo = function() { 
+		console.log($scope.editingItem);
+
 		Todos.update($scope.editingItem)
 			.success(function(data) {
 				$scope.todos = data;   
@@ -132,8 +139,13 @@ module.exports = {
 
 	init: function (){
 		$('.validate-form').on('click', this.validateForm);
+		$('document').ready(function(){
+			$('.starRatingEdit').add('.starRatingAdd').rating({
+				'showClear' : false,
+				'showCaption' : false, 
+			});
+		});
 	},
-
 
 	validateForm : function(){
 		var $parentForm = $(this).parents('form'),
