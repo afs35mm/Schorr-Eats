@@ -1,3 +1,5 @@
 #this is my git ignore
 .DS_Store
 node_modules
+/config/doubleSecretPassCode.js
+/config/databse.js
