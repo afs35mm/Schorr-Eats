@@ -14,8 +14,13 @@ var gulp = require('gulp'),
 gulp.task('nodemon', function() {
 		nodemon({ script: './app/server.js',
 		env: { 'NODE_ENV': 'development' },
+		ext: 'json js',
     	//ignore: ['/client/js/main', '/client/js/main.js']
+    	ignore: ['client/*']
 	})
+	.on('restart', function () {
+		console.log('Restarted webserver')
+	});
 });
 
 gulp.task('sass', function(){

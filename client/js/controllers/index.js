@@ -8,7 +8,7 @@ app.directive('onLastRepeat', function($timeout) {
             });
         }
     };
-});
+}); 
 	
 app.controller('mainController', ['$scope', '$rootScope', '$http','Todos', function($scope, $rootScope, $http, Todos) {
 	$scope.formData = {};
@@ -20,15 +20,15 @@ app.controller('mainController', ['$scope', '$rootScope', '$http','Todos', funct
 
 	Todos.get().success(function(data) {    
 		$scope.todos = data;  
-		console.log(data);
 		$scope.loading = false;
 	});  
 
 	$scope.createTodo = function() {
 		if ($scope.formData.name != undefined) {
-			$scope.loading = true;
-			
+			$scope.loading = true;			
 			$scope.formData.user = $scope.userName;
+
+			$('#addModal').find('.starRatingAdd').rating('clear');
 
 			Todos.create($scope.formData)
 				.success(function(data) {
@@ -86,12 +86,9 @@ app.controller('mainController', ['$scope', '$rootScope', '$http','Todos', funct
 			}
 			i++;
 		}
-		console.log(todo);
 	};
 
 	$scope.updateTodo = function() { 
-		console.log($scope.editingItem);
-
 		Todos.update($scope.editingItem)
 			.success(function(data) {
 				$scope.todos = data;   

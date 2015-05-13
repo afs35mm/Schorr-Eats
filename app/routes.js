@@ -12,7 +12,7 @@ function getTodos(res){
 };
 
 function ensureAuthenticated (req, res, next) {
-	req.isAuthenticated()
+	req.isAuthenticated() 
 	return next();
 };
 

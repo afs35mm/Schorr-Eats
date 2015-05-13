@@ -1,7 +1,13 @@
 var mongoose = require('mongoose');
-var database = require('../../config/database');
 
-var restaurantsConn = mongoose.createConnection('mongodb://localhost/' + database.resturants.url);
+if (global.ENV === 'development') {
+	var devDb = require('../../config/database_DEV').resturants.url;
+	var restaurantDbUrl = 'mongodb://localhost/' + devDb;	
+}else{
+	var restaurantDbUrl = require('../../config/database').resturants.url;	
+}
+
+var restaurantsConn = mongoose.createConnection(restaurantDbUrl);
 
 var ratingsSchema = new mongoose.Schema ({
 	author : { type: String },
