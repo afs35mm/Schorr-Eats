@@ -2,4 +2,4 @@
 .DS_Store
 node_modules
 /config/doubleSecretPassCode.js
-/config/databse.js
+/config/database.js
