@@ -5456,6 +5456,11 @@ button.close {
       width: 140px; }
     .content .rating-table table td:first-child {
       width: 105px; }
+  .content .contentRow {
+    display: none; }
+  .content .loaderGif {
+    padding: 15px;
+    text-align: center; }
 
 label[for="username"] {
   display: block; }

@@ -54,6 +54,9 @@ app.controller('mainController', ['$scope', '$rootScope', '$http','Todos', funct
 				'readonly': true,
 			});
 		});
+		$('.contentRow').each(function(){
+			$(this).fadeIn();
+		});
 	};
 
 	$scope.deleteTodo = function() {

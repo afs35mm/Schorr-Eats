@@ -41,7 +41,12 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="todo in todos" on-last-repeat="finishedRepeat()">
+				<tr ng-hide="loading == false">
+					<td colspan="10" class="loaderGif">
+						<img src="/img/ajax-loader.gif">
+					</td>
+				</tr>
+				<tr ng-repeat="todo in todos" class="contentRow" on-last-repeat="finishedRepeat()">
 					<td>
 						{{ todo.name }}
 					</td>
