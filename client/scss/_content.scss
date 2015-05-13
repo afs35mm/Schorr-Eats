@@ -21,6 +21,14 @@
 	.row {
 		margin: 0;
 	}
+	.restaurantName {
+		font-weight:600;
+		padding-left:0;
+		width:135px;
+	}
+	.restaurantLocation {
+		width:110px;
+	}
 	.rating-table table{ 
 		width:100%;
 		td {
@@ -29,6 +37,7 @@
 		.star-cell {
 			text-align:right;
 			width:140px;
+			padding-left:10px;
 		}
 		td:first-child {
 			width:105px;
