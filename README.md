@@ -1,8 +1,10 @@
 # Schorr Eats
  
-Web app to keep a running tally of resturants around NYC. (world?)
+Web app to keep a running tally of resturants around NYC. NodeJs on the back and Angular on the front.
 
 ###Highlights Include:
+- Node
+- Angular
 - Express
 - Mongo
 - Gulp
