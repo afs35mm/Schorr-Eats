@@ -8,7 +8,6 @@ Web app to keep a running tally of resturants around NYC. (world?)
 - Gulp
 - Browserify
 - Passport
-- And many many more
 
 ###Instructions
 - Install Gulp, NPM, and Mongo
@@ -18,6 +17,3 @@ Web app to keep a running tally of resturants around NYC. (world?)
 - Run `gulp watch` which should start the server
 - Navigate to `http://localhost:8080` 
 
-
-
-Lots of learning from [Scotch.io Easy Node Authentication Tutorial](https://github.com/scotch-io/easy-node-authentication)
