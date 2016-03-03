@@ -1,7 +1,14 @@
-var mongoose = require('mongoose');
-var database = require('../../config/database');
+var mongoose = require('mongoose'),
+    databaseUrl;
+//var database = require('../../config/database').users.url;
 
-var usersConn = mongoose.createConnection(database.users.url);
+if(process.env.NODE_ENV === 'development') {
+    databaseUrl = require('../../config/database').users.url
+} else {
+    databaseUrl = 'mongodb://localhost/users';
+}
+
+var usersConn = mongoose.createConnection(databaseUrl);
 
 module.exports = usersConn.model('User', {
     username : {type : String },
