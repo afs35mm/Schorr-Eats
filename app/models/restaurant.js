@@ -1,10 +1,19 @@
-var mongoose = require('mongoose');
+var mongoose = require('mongoose'),
+	restaurantDbUrl;
 
-if (global.ENV === 'development') {
+//console.log('----', process.env.NODE_ENV);
+
+if (process.env.USER_DB === 'mod') {
+	restaurantDbUrl = require('../../config/database').resturantsMod.url;
+	console.log('This is the Modulus.io DB');
+} else if (process.env.USER_DB === 'do') {
+	restaurantDbUrl = require('../../config/database').resturantsDo.url;
+	console.log('This is the digital Ocean DB');
+} else {
 	var devDb = require('../../config/database_DEV').resturants.url;
-	var restaurantDbUrl = 'mongodb://localhost/' + devDb;	
-}else{
-	var restaurantDbUrl = require('../../config/database').resturants.url;	
+	restaurantDbUrl = 'mongodb://localhost/' + devDb;
+	console.log('this is the local DB!');
+	console.log(restaurantDbUrl);
 }
 
 var restaurantsConn = mongoose.createConnection(restaurantDbUrl);
@@ -21,5 +30,4 @@ module.exports = restaurantsConn.model('Restaurant', new mongoose.Schema ({
 	cuisine  : {type : String, default: ''},
 	rating   : {type : Number},
 	ratings  : [ ratingsSchema ],
-
 }));

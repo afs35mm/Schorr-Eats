@@ -3,13 +3,14 @@ var gulp = require('gulp'),
 	sass = require('gulp-sass'),
 	uglify = require('gulp-uglifyjs'),
 	nodemon = require('gulp-nodemon'),
-	shell = require('gulp-shell'),
+	exec = require('gulp-exec'),
 	watchify = require('watchify'),
 	browserify = require('browserify'),
 	source = require('vinyl-source-stream'),
 	buffer = require('vinyl-buffer'),
 	gutil = require('gulp-util'),
-	sourcemaps = require('gulp-sourcemaps');
+	sourcemaps = require('gulp-sourcemaps'),
+	argv = require('yargs').argv;
 
 gulp.task('nodemon', function() {
 		nodemon({ script: './app/server.js',
@@ -31,7 +32,7 @@ gulp.task('sass', function(){
 
 gulp.task('uglify', function() {
 	gulp.src('./client/js/**/*.js')
-	.pipe(uglify('main.js', { 
+	.pipe(uglify('main.js', {
 		outSourceMap: true
 	}))
 	.pipe(gulp.dest('./public/js'))
@@ -42,19 +43,28 @@ gulp.task('client', function() {
 	//gulp.watch('./client/js/**/*.js', ['uglify']);
 });
 
-gulp.task('server', shell.task([
-	'node app/server.js'
-]))
+gulp.task('server', function () {
+	console.log('+++');
+	var db = (argv.db === 'do' || argv.db === 'mod') ? argv.db : '';
+	nodemon({
+		script: 'app/server.js',
+		env: {
+			'USER_DB': db,
+			'NODE_ENV': 'development'
+		}
+	});
+	console.log(db);
+})
 
 var b = watchify(browserify({
 	entries: ['./client/js/main.js'],
 	debug: true
 }));
 
-b.on('update', function(){ 
+b.on('update', function(){
 	gulp.start('bundle');
-}); 
- 
+});
+
 gulp.task('bundle', function(){
 	return b.bundle()
     //.on('error', gutil.log.bind(gutil, 'Browserify Error'))
@@ -66,7 +76,7 @@ gulp.task('bundle', function(){
 
     .pipe(source('bundle.js'))
     .pipe(buffer())
-    .pipe(sourcemaps.init({loadMaps: true})) 
+    .pipe(sourcemaps.init({loadMaps: true}))
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('./public/js'));
 });
@@ -75,7 +85,7 @@ gulp.task('default', ['sass', 'uglify', 'serve', 'bundle' ]);
 
 gulp.task('watch-server', ['sass', 'uglify', 'nodemon', 'client', 'bundle' ]);
 
-gulp.task('watch', ['sass', 'uglify', 'server', 'client', 'bundle' ]);
+gulp.task('watch', ['sass', 'uglify', 'serve', 'client', 'bundle' ]);
 
 gulp.task('js', ['bundle'])
 

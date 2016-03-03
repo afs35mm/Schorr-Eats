@@ -7,21 +7,21 @@ function getTodos(res){
 	Todo.find(function(err, todos) {
 			if (err)
 				res.send(err)
-			res.json(todos); 
+			res.json(todos);
 	});
 };
 
 function ensureAuthenticated (req, res, next) {
-	req.isAuthenticated() 
+	req.isAuthenticated()
 	return next();
 };
 
-module.exports = function(app, passport) { 
+module.exports = function(app, passport) {
 
 	app.post('/signup', passport.authenticate('signup', {
 		successRedirect: '/',
-		failureRedirect: '/signup', 
-		failureFlash : true  
+		failureRedirect: '/signup',
+		failureFlash : true
 	}));
 
 	app.get('/signup', function(req, res) {
@@ -32,24 +32,24 @@ module.exports = function(app, passport) {
 	app.post('/users/login', passport.authenticate('local-login', {
 		successRedirect: '/',
 		failureRedirect: '/',
-		failureFlash : true  
+		failureFlash : true
 	}));
 
-	
+
 	app.get('/api/todos', function(req, res) {
 		getTodos(res);
 	});
-	
+
 	app.post('/api/todos', function(req, res) {
 		Todo.create({
 			name : req.body.name,
 			location : req.body.location,
 			cuisine : req.body.cuisine,
-			ratings : [{ 
+			ratings : [{
 				author: req.body.user,
 				notes: req.body.comments,
 				rating: req.body.rating,
-			}] 
+			}]
 		},
 		function(err, todo) {
 			if (err) {
@@ -71,22 +71,19 @@ module.exports = function(app, passport) {
 	});
 
 	app.put('/api/todos/:todo_id', function(req, res) {
-		
-		//console.log(req.body);
-
-		var update = {  
-			$set: { 
-				name : req.body.name, 
+		var update = {
+			$set: {
+				name : req.body.name,
 				location : req.body.location,
 				cuisine : req.body.cuisine || '',
 				addedBy : req.body.addedBy || '',
 			},
 		};
-		
+
 		var authorFound = false,
 			idToUpdate = null,
 			ratingArrayPosition = null;
-		
+
 		for( var i = 0; i <  req.body.ratings.length; i++){
 			console.log(req.body.ratings[i].author);
 			if (req.body.ratings[i].author === req.body.author && !authorFound) {
@@ -94,15 +91,15 @@ module.exports = function(app, passport) {
 				idToUpdate = req.body.ratings[i]._id;
 				ratingArrayPosition = i;
 			}
-		} 
+		}
 
 		if(!authorFound){
 			update.$push = {
 				'ratings' : {
 					author : req.body.author,
 					notes : req.body.currentUserRating.notes,
-					rating : req.body.currentUserRating.rating,  
-				}	
+					rating : req.body.currentUserRating.rating,
+				}
 			}
 		} else {
 			//no idea why I have to do it like this it doesn't work when I try string concatenation in the update.$set object :(
@@ -113,13 +110,13 @@ module.exports = function(app, passport) {
 
 		console.log(update);
 
-		var options = { 
-			upsert: true 
+		var options = {
+			upsert: true
 		};
 		Todo.update({
 			_id : req.params.todo_id,
-		}, 
-		update, 
+		},
+		update,
 		options,
 		function(err, todo) {
 			if (err)
@@ -136,16 +133,16 @@ module.exports = function(app, passport) {
 	        res.json(todo);
 		});
 	});
-	
+
 	app.get('/logout', function(req, res) {
 		req.logout();
 		res.redirect('/');
 	});
 
 	app.get('/', ensureAuthenticated, function(req, res) {
-		res.render('index.ejs', { 
+		res.render('index.ejs', {
 			user: req.user,
 			message: req.flash('loginMessage')
 		});
-	}); 
+	});
 };
