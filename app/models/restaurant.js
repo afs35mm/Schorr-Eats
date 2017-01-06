@@ -16,9 +16,9 @@ if(process.env.NODE_ENV === 'development') {
 		console.log(restaurantDbUrl);
 	}
 } else {
-	restaurantDbUrl = 'mongodb://localhost/restaurants';
+	console.log(require('../../config/database').resturantsMod.url);
+	restaurantDbUrl = require('../../config/database').resturantsMod.url;
 }
-
 
 var restaurantsConn = mongoose.createConnection(restaurantDbUrl);
 

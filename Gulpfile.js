@@ -43,7 +43,6 @@ gulp.task('client', function() {
 });
 
 gulp.task('serve', function () {
-	console.log('+++');
 	var db = (argv.db === 'do' || argv.db === 'mod') ? argv.db : '';
 	nodemon({
 		script: 'app/server.js',

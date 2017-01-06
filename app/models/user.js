@@ -5,7 +5,7 @@ var mongoose = require('mongoose'),
 if(process.env.NODE_ENV === 'development') {
     databaseUrl = require('../../config/database').users.url
 } else {
-    databaseUrl = 'mongodb://localhost/users';
+    databaseUrl = require('../../config/database').users.url
 }
 
 var usersConn = mongoose.createConnection(databaseUrl);
