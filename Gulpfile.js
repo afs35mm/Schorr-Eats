@@ -3,7 +3,6 @@ var gulp = require('gulp'),
 	sass = require('gulp-sass'),
 	uglify = require('gulp-uglifyjs'),
 	nodemon = require('gulp-nodemon'),
-	exec = require('gulp-exec'),
 	watchify = require('watchify'),
 	browserify = require('browserify'),
 	source = require('vinyl-source-stream'),
@@ -43,7 +42,7 @@ gulp.task('client', function() {
 	//gulp.watch('./client/js/**/*.js', ['uglify']);
 });
 
-gulp.task('server', function () {
+gulp.task('serve', function () {
 	console.log('+++');
 	var db = (argv.db === 'do' || argv.db === 'mod') ? argv.db : '';
 	nodemon({

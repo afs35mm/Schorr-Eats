@@ -11,8 +11,7 @@ require('./services/todos.js');
 
 angular.module('eatsTodo', ['todoController', 'todoService']);
 
-var events = require('./handle-events.js');
-//var map = require('./google-maps.js');
+var events = require('./handle-events.js'); 
 
 events.init();
 //map.init(); 
