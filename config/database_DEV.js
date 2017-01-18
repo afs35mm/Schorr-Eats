@@ -1,5 +1,5 @@
 module.exports = {
 	resturants : {
-		url : 'restaurants-db'
+		url : 'restaurants'
 	}
 }

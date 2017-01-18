@@ -5,20 +5,21 @@ console.log('----', process.env.NODE_ENV);
 if(process.env.NODE_ENV === 'development') {
 	if (process.env.USER_DB === 'mod') {
 		restaurantDbUrl = require('../../config/database').resturantsMod.url;
-		console.log('This is the Modulus.io DB');
+		console.log('This is the Modulus.io DB!!!', restaurantDbUrl);
 	} else if (process.env.USER_DB === 'do') {
 		restaurantDbUrl = require('../../config/database').resturantsDo.url;
 		console.log('This is the digital Ocean DB');
 	} else {
 		var devDb = require('../../config/database_DEV').resturants.url;
 		restaurantDbUrl = 'mongodb://localhost/' + devDb;
-		console.log('this is the local DB!');
+		console.log('this is the local DB!!!');
 		console.log(restaurantDbUrl);
 	}
 } else {
-	console.log(require('../../config/database').resturantsMod.url);
 	restaurantDbUrl = require('../../config/database').resturantsMod.url;
 }
+
+console.log(restaurantDbUrl);
 
 var restaurantsConn = mongoose.createConnection(restaurantDbUrl);
 
