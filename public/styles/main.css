@@ -6205,7 +6205,7 @@ button.close {
   max-width: 1200px;
   box-sizing: border-box;
   padding: 0 40px;
-  margin: 0 auto; }
+  margin: 0 auto 60px; }
   .content h1 {
     border-bottom: 1px solid #ddd;
     padding-bottom: 10px;

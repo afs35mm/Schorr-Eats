@@ -1,22 +1,22 @@
 .content {
-	max-width: 1200px; 
+	max-width: 1200px;
 	box-sizing: border-box;
 	padding: 0 40px;
-	margin: 0 auto;
+	margin: 0 auto 60px;
 
 	h1 {
 		border-bottom: 1px solid $lt-grey;
-		padding-bottom: 10px; 
+		padding-bottom: 10px;
 		position: relative;
 		small, .btn {
 			position:absolute; right:0; bottom: 10px;
 		}
-	} 
+	}
 	.row .logout {
 		float: right;
 	}
 	table .align-right{
-		text-align: right; 
+		text-align: right;
 	}
 	.row {
 		margin: 0;
@@ -29,7 +29,7 @@
 	.restaurantLocation {
 		width:110px;
 	}
-	.rating-table table{ 
+	.rating-table table{
 		width:100%;
 		td {
 			vertical-align: top;

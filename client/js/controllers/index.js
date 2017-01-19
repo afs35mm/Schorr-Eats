@@ -31,11 +31,10 @@ app.controller('mainController', ['$scope', '$rootScope', '$http','Todos', funct
 			$('#addModal').find('.starRatingAdd').rating('clear');
 
 			Todos.create($scope.formData)
-				.success(function(data) {
+				.then(function(data) {
 					$scope.loading = false;
 					$scope.formData = {};
-					$scope.todos = data;
-
+					$scope.todos = data.data;
 					$(function () {
 					   $('#addModal').modal('toggle');
 					});
@@ -65,9 +64,9 @@ app.controller('mainController', ['$scope', '$rootScope', '$http','Todos', funct
 		if(!result) return;
 		$scope.loading = true;
 		Todos.delete($scope.originalItem._id)
-			.success(function(data) {
+			.then(function(data) {
 				$scope.loading = false;
-				$scope.todos = data;
+				$scope.todos = data.data;
 				$(function () {
 				   $('#editModal').modal('toggle');
 				});
@@ -93,8 +92,8 @@ app.controller('mainController', ['$scope', '$rootScope', '$http','Todos', funct
 
 	$scope.updateTodo = function() {
 		Todos.update($scope.editingItem)
-			.success(function(data) {
-				$scope.todos = data;
+			.then(function(data) {
+				$scope.todos = data.data;
 				$scope.loading = false;
 				$(function () {
 				   $('#editModal').modal('toggle');

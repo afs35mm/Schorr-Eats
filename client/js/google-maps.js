@@ -12,7 +12,7 @@ module.exports = {
 		var map = new google.maps.Map(document.getElementById('map-canvas'),
 			mapOptions);
 
-		var input = /** @type {HTMLInputElement} */( 
+		var input = /** @type {HTMLInputElement} */(
 				document.getElementById('pac-input'));
 
 		var types = document.getElementById('type-selector');
@@ -78,12 +78,12 @@ module.exports = {
 		// setupClickListener('changetype-all', []);
 		// setupClickListener('changetype-address', ['address']);
 		// setupClickListener('changetype-establishment', ['establishment']);
-		
+
 		$('#addModal').on('shown.bs.modal', function() {
-			google.maps.event.trigger(map, "resize");      
+			google.maps.event.trigger(map, "resize");
 			var reCenter = new google.maps.LatLng(40.726706, -73.994122);
 			map.setCenter(reCenter);
 		})
 
 	}
-} 
+}

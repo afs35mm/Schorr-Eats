@@ -37,7 +37,7 @@ gulp.task('uglify', function() {
 	.pipe(gulp.dest('./public/js'))
 });
 
-gulp.task('client', function() {
+gulp.task('sass-watch', function() {
 	gulp.watch('./client/scss/**/*.scss', ['sass']);
 	//gulp.watch('./client/js/**/*.js', ['uglify']);
 });
@@ -45,11 +45,18 @@ gulp.task('client', function() {
 gulp.task('serve', function () {
 	var db = (argv.db === 'do' || argv.db === 'mod') ? argv.db : '';
 	nodemon({
-		script: 'app/server.js',
+		watch: 'app/server.js',
 		env: {
 			'USER_DB': db,
 			'NODE_ENV': 'development'
-		}
+		},
+		ignore: [
+			'client/*',
+			'dist/*',
+			'public/*',
+		],
+	}).on('restart', function () {
+		console.log('Restarted webserver')
 	});
 	console.log(db);
 })
@@ -81,9 +88,9 @@ gulp.task('bundle', function(){
 
 gulp.task('default', ['sass', 'uglify', 'serve', 'bundle' ]);
 
-gulp.task('watch-server', ['sass', 'uglify', 'nodemon', 'client', 'bundle' ]);
+gulp.task('watch-server', ['sass', 'uglify', 'serve', 'client', 'bundle' ]);
 
-gulp.task('watch', ['sass', 'uglify', 'serve', 'client', 'bundle' ]);
+gulp.task('client', ['sass', 'uglify', 'sass-watch', 'bundle' ]);
 
 gulp.task('js', ['bundle'])
 
