@@ -45,7 +45,9 @@ gulp.task('sass-watch', function() {
 gulp.task('serve', function () {
 	var db = (argv.db === 'do' || argv.db === 'mod') ? argv.db : '';
 	nodemon({
-		watch: 'app/server.js',
+		// watch: 'app/*',
+		script: './app/server.js',
+		ext: 'json js',
 		env: {
 			'USER_DB': db,
 			'NODE_ENV': 'development'
@@ -56,7 +58,7 @@ gulp.task('serve', function () {
 			'public/*',
 		],
 	}).on('restart', function () {
-		console.log('Restarted webserver')
+		console.log('Restarted webserver');
 	});
 	console.log(db);
 })

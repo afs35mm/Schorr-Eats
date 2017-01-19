@@ -71,58 +71,94 @@ module.exports = function(app, passport) {
 	});
 
 	app.put('/api/todos/:todo_id', function(req, res) {
-		var update = {
-			$set: {
-				name : req.body.name,
-				location : req.body.location,
-				cuisine : req.body.cuisine || '',
-				addedBy : req.body.addedBy || '',
-			},
+		var updatedRating = {
+			rating: req.body.currentUserRating.rating,
+			notes: req.body.currentUserRating.notes,
+			author: req.body.author,
 		};
 
-		var authorFound = false,
-			idToUpdate = null,
-			ratingArrayPosition = null;
+		isUpdatingExistingReview = false;
 
-		for( var i = 0; i <  req.body.ratings.length; i++){
-			console.log(req.body.ratings[i].author);
-			if (req.body.ratings[i].author === req.body.author && !authorFound) {
-				authorFound = !authorFound;
-				idToUpdate = req.body.ratings[i]._id;
-				ratingArrayPosition = i;
+		for (var i = 0; i < req.body.ratings.length; i++) {
+			if (req.body.ratings[i].author === updatedRating.author) {
+				isUpdatingExistingReview = true;
+				req.body.ratings[i].notes = updatedRating.notes;
+				req.body.ratings[i].rating = updatedRating.rating;
+				break;
 			}
 		}
 
-		if(!authorFound){
-			update.$push = {
-				'ratings' : {
-					author : req.body.author,
-					notes : req.body.currentUserRating.notes,
-					rating : req.body.currentUserRating.rating,
-				}
-			}
-		} else {
-			//no idea why I have to do it like this it doesn't work when I try string concatenation in the update.$set object :(
-			//http://stackoverflow.com/questions/18156336/setting-value-of-an-array-element-in-mongoose-using-index
-			update.$set['ratings.' + ratingArrayPosition + '.notes'] = req.body.currentUserRating.notes || '';
-			update.$set['ratings.' + ratingArrayPosition + '.rating'] = req.body.currentUserRating.rating || '';
+		if (!isUpdatingExistingReview) {
+			req.body.ratings.push(updatedRating);
 		}
 
-		console.log(update);
+		delete req.body.currentUserRating;
 
-		var options = {
-			upsert: true
-		};
 		Todo.update({
 			_id : req.params.todo_id,
 		},
-		update,
-		options,
+		req.body,
+		{
+			upsert: true
+		},
 		function(err, todo) {
 			if (err)
 				res.send(err);
 			getTodos(res);
 		});
+		/// This is the old method
+		//  var update = {
+		// 	$set: {
+		// 		name : req.body.name,
+		// 		location : req.body.location,
+		// 		cuisine : req.body.cuisine || '',
+		// 		addedBy : req.body.addedBy || '',
+		// 	},
+		// };
+
+		// var authorFound = false,
+		// 	idToUpdate = null,
+		// 	ratingArrayPosition = null;
+
+		// for( var i = 0; i <  req.body.ratings.length; i++){
+		// 	console.log(req.body.ratings[i].author);
+		// 	if (req.body.ratings[i].author === req.body.author && !authorFound) {
+		// 		authorFound = !authorFound;
+		// 		idToUpdate = req.body.ratings[i]._id;
+		// 		ratingArrayPosition = i;
+		// 	}
+		// }
+
+		// if(!authorFound){
+		// 	update.$push = {
+		// 		'ratings' : {
+		// 			author : req.body.author,
+		// 			notes : req.body.currentUserRating.notes,
+		// 			rating : req.body.currentUserRating.rating,
+		// 		}
+		// 	}
+		// } else {
+		// 	//no idea why I have to do it like this it doesn't work when I try string concatenation in the update.$set object :(
+		// 	//http://stackoverflow.com/questions/18156336/setting-value-of-an-array-element-in-mongoose-using-index
+		// 	update.$set['ratings.' + ratingArrayPosition + '.notes'] = req.body.currentUserRating.notes || '';
+		// 	update.$set['ratings.' + ratingArrayPosition + '.rating'] = req.body.currentUserRating.rating || '';
+		// }
+
+		// console.log(update);
+
+		// var options = {
+		// 	upsert: true
+		// };
+		// Todo.update({
+		// 	_id : req.params.todo_id,
+		// },
+		// update,
+		// options,
+		// function(err, todo) {
+		// 	if (err)
+		// 		res.send(err);
+		// 	getTodos(res);
+		// });
 	});
 
 	app.get('/api/todos/:todo_id', function(req, res) {
