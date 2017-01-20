@@ -30,9 +30,10 @@ var ratingsSchema = new mongoose.Schema ({
 });
 
 module.exports = restaurantsConn.model('Restaurant', new mongoose.Schema ({
-	name     : {type : String, default: ''},
-	location : {type : String, default: ''},
-	cuisine  : {type : String, default: ''},
-	rating   : {type : Number},
+	name     : {type: String, default: ''},
+	location : {type: String, default: ''},
+	cuisine  : {type: String, default: ''},
+	rating   : {type: Number},
+	dateAdded: {type: Date, default: ''},
 	ratings  : [ ratingsSchema ],
 }));

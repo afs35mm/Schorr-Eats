@@ -45,6 +45,7 @@ module.exports = function(app, passport) {
 			name : req.body.name,
 			location : req.body.location,
 			cuisine : req.body.cuisine,
+			dateAdded: new Date(),
 			ratings : [{
 				author: req.body.user,
 				notes: req.body.comments,
@@ -71,94 +72,70 @@ module.exports = function(app, passport) {
 	});
 
 	app.put('/api/todos/:todo_id', function(req, res) {
-		var updatedRating = {
-			rating: req.body.currentUserRating.rating,
-			notes: req.body.currentUserRating.notes,
-			author: req.body.author,
-		};
+		// { _id: '588189ac6dae18f06da35e44',
+		// __v: 0,
+		// ratings:
+		// [ { author: 'Andrew',
+		// 	notes: 'testabc',
+		// 	rating: 4,
+		// 	_id: '588189ac6dae18f06da35e45' } ],
+		// cuisine: 'BBQ',
+		// location: 'dlfjs',
+		// name: 'testabc',
+		// author: 'A',
+		// currentUserRating: { notes: '!!!!!', rating: '4.5' } }
+		// console.log(req.params); //{ todo_id: '588189ac6dae18f06da35e44' }
+		Todo.findOne({_id: req.body._id}, function(err, data){
+		    if (data) {
+		    	var isUpdatingExistingReview = false;
+		    	for (var i = 0; i < data.ratings.length; i ++) {
+		    		if (data.ratings[i].author === req.body.author) {
+		    			isUpdatingExistingReview = true;
+		    			var reviewIdx = i;
+		    			break;
+		    		}
+		    	}
 
-		isUpdatingExistingReview = false;
+		    	// new review, push to array
+		    	if (!isUpdatingExistingReview) {
+		    		data.ratings.push({
+		    			author: req.body.author,
+		    			rating: req.body.currentUserRating.rating,
+		    			notes: req.body.currentUserRating.notes,
+		    		});
+		    	// updating, update to reviewIdx
+		    	} else {
+		    		var updatingReview = data.ratings[reviewIdx];
+		    		updatingReview.notes = req.body.currentUserRating.notes;
+		    		updatingReview.rating = req.body.currentUserRating.rating;
+		    	}
 
-		for (var i = 0; i < req.body.ratings.length; i++) {
-			if (req.body.ratings[i].author === updatedRating.author) {
-				isUpdatingExistingReview = true;
-				req.body.ratings[i].notes = updatedRating.notes;
-				req.body.ratings[i].rating = updatedRating.rating;
-				break;
-			}
-		}
+		    	data.location = req.body.location;
+		    	data.name = req.body.name;
+		    	data.cuisine = req.body.cuisine
 
-		if (!isUpdatingExistingReview) {
-			req.body.ratings.push(updatedRating);
-		}
+		    	var options = {
+					upsert: false
+				};
 
-		delete req.body.currentUserRating;
-
-		Todo.update({
-			_id : req.params.todo_id,
-		},
-		req.body,
-		{
-			upsert: true
-		},
-		function(err, todo) {
-			if (err)
-				res.send(err);
-			getTodos(res);
+				Todo.update({
+					_id : req.params.todo_id,
+				},
+				data,
+				options,
+				function(err, todo) {
+					if (err){
+						res.send(err);
+					} else {
+						getTodos(res);
+					}
+				});
+		    } else {
+		    	res.status(500).send({
+		    		error: err,
+		    	});
+		    }
 		});
-		/// This is the old method
-		//  var update = {
-		// 	$set: {
-		// 		name : req.body.name,
-		// 		location : req.body.location,
-		// 		cuisine : req.body.cuisine || '',
-		// 		addedBy : req.body.addedBy || '',
-		// 	},
-		// };
-
-		// var authorFound = false,
-		// 	idToUpdate = null,
-		// 	ratingArrayPosition = null;
-
-		// for( var i = 0; i <  req.body.ratings.length; i++){
-		// 	console.log(req.body.ratings[i].author);
-		// 	if (req.body.ratings[i].author === req.body.author && !authorFound) {
-		// 		authorFound = !authorFound;
-		// 		idToUpdate = req.body.ratings[i]._id;
-		// 		ratingArrayPosition = i;
-		// 	}
-		// }
-
-		// if(!authorFound){
-		// 	update.$push = {
-		// 		'ratings' : {
-		// 			author : req.body.author,
-		// 			notes : req.body.currentUserRating.notes,
-		// 			rating : req.body.currentUserRating.rating,
-		// 		}
-		// 	}
-		// } else {
-		// 	//no idea why I have to do it like this it doesn't work when I try string concatenation in the update.$set object :(
-		// 	//http://stackoverflow.com/questions/18156336/setting-value-of-an-array-element-in-mongoose-using-index
-		// 	update.$set['ratings.' + ratingArrayPosition + '.notes'] = req.body.currentUserRating.notes || '';
-		// 	update.$set['ratings.' + ratingArrayPosition + '.rating'] = req.body.currentUserRating.rating || '';
-		// }
-
-		// console.log(update);
-
-		// var options = {
-		// 	upsert: true
-		// };
-		// Todo.update({
-		// 	_id : req.params.todo_id,
-		// },
-		// update,
-		// options,
-		// function(err, todo) {
-		// 	if (err)
-		// 		res.send(err);
-		// 	getTodos(res);
-		// });
 	});
 
 	app.get('/api/todos/:todo_id', function(req, res) {
