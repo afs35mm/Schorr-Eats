@@ -2,7 +2,6 @@ var mongoose = require('mongoose'),
     databaseUrl;
 
 if(process.env.NODE_ENV === 'development') {
-    // databaseUrl = require('../../config/database').users.url
     databaseUrl = 'mongodb://localhost/users';
 } else {
     databaseUrl = require('../../config/database').users.url

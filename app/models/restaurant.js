@@ -1,7 +1,7 @@
 var mongoose = require('mongoose'),
 	restaurantDbUrl;
 
-console.log('----', process.env.NODE_ENV);
+console.log('NODE_ENV:', process.env.NODE_ENV);
 if(process.env.NODE_ENV === 'development') {
 	if (process.env.USER_DB === 'mod') {
 		restaurantDbUrl = require('../../config/database').resturantsMod.url;
@@ -19,7 +19,6 @@ if(process.env.NODE_ENV === 'development') {
 	restaurantDbUrl = require('../../config/database').resturantsMod.url;
 }
 
-console.log(restaurantDbUrl);
 
 var restaurantsConn = mongoose.createConnection(restaurantDbUrl);
 
