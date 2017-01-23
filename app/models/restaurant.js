@@ -33,6 +33,7 @@ module.exports = restaurantsConn.model('Restaurant', new mongoose.Schema ({
 	location : {type: String, default: ''},
 	cuisine  : {type: String, default: ''},
 	rating   : {type: Number},
-	dateAdded: {type: Date, default: ''},
+	date     : {type: Date, default: ''},
+	dateReadable: {type: String, default: ''},
 	ratings  : [ ratingsSchema ],
 }));

@@ -6,6 +6,7 @@ require('angular');
 
 require('./lib/bootstrap.min.js');
 require('./lib/star-rating.min.js');
+require('./lib/date-picker');
 require('./controllers');
 require('./services/todos.js');
 
