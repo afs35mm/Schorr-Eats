@@ -31,10 +31,24 @@
 		<table class="table">
 			<thead>
 				<tr>
-					<th>Name</th>
+					<th>
+						<a href="#">
+							<a href="#" ng-click="orderByField='name'; reverseSort = !reverseSort">
+								First Name
+								<span ng-show="orderByField == 'name'"><span ng-show="!reverseSort"><span class="glyphicon glyphicon-chevron-up"></span></span>
+								<span ng-show="reverseSort"><span class="glyphicon glyphicon-chevron-down"></span></span></span>
+							</a>
+						</a>
+					</th>
 					<th>Location</th>
 					<th>Cuisine</th>
-					<th>Visited</th>
+					<th>
+						<a href="#" ng-click="orderByField='dateReadable'; reverseSort = !reverseSort" class="nowrap">
+							Visited
+							<span ng-show="orderByField == 'dateReadable'"><span ng-show="!reverseSort"><span class="glyphicon glyphicon-chevron-up"></span></span>
+							<span ng-show="reverseSort"><span class="glyphicon glyphicon-chevron-down"></span></span></span>
+						</a>
+					</th>
 					<th>Comments</th>
 					<% if(user){ %>
 					<th class="align-right"></th>
@@ -47,7 +61,7 @@
 						<img src="/img/ajax-loader.gif">
 					</td>
 				</tr>
-				<tr ng-repeat="todo in todos" class="contentRow" on-last-repeat="finishedRepeat()">
+				<tr ng-repeat="todo in todos|orderBy:orderByField:reverseSort" class="contentRow" on-last-repeat="finishedRepeat()">
 					<td class="restaurantName">
 						{{ todo.name }}
 					</td>

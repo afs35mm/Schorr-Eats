@@ -6413,6 +6413,11 @@ http://nicolasgallagher.com/micro-clearfix-hack/
       bottom: 10px; }
   .content .row .logout {
     float: right; }
+  .content th:first-child {
+    padding-left: 0; }
+  .content th a {
+    color: #000;
+    text-decoration: underline; }
   .content table .align-right {
     text-align: right; }
   .content .row {
@@ -6433,8 +6438,6 @@ http://nicolasgallagher.com/micro-clearfix-hack/
       padding-left: 10px; }
     .content .rating-table table td:first-child {
       width: 105px; }
-  .content .nowrap {
-    white-space: nowrap; }
   .content .contentRow {
     display: none; }
   .content .loaderGif {
@@ -6446,3 +6449,6 @@ label[for="username"] {
 
 .editResturant .modal-footer .btn-default {
   float: left; }
+
+.nowrap {
+  white-space: nowrap; }

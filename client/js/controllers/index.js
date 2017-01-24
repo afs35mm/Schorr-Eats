@@ -10,20 +10,22 @@ app.directive('onLastRepeat', function($timeout) {
     };
 });
 
-function formatDate(date) {
-	if (!date) {
-		return '';
-	}
-	var dateObject = new Date(Date.parse(date));
-	var dateArr = dateObject.toDateString().split(' ').splice(1);
-	dateArr[1] += ',';
-	return dateArr.join(' ');
-}
+// function formatDate(date) {
+// 	if (!date) {
+// 		return '';
+// 	}
+// 	var dateObject = new Date(Date.parse(date));
+// 	var dateArr = dateObject.toDateString().split(' ').splice(1);
+// 	dateArr[1] += ',';
+// 	return dateArr.join(' ');
+// }
 
 app.controller('mainController', ['$scope', '$rootScope', '$http','Todos', function($scope, $rootScope, $http, Todos) {
 
 	$scope.formData = {};
 	$scope.loading = true;
+	$scope.orderByField = null;
+  	$scope.reverseSort = false;
 
 	$scope.$watch('userName', function () {
 	    $scope.userName = $scope.userName;
@@ -32,6 +34,8 @@ app.controller('mainController', ['$scope', '$rootScope', '$http','Todos', funct
 	Todos.get().then(function(data) {
 		$scope.todos = data.data;
 		$scope.loading = false;
+		console.log(data.data);
+
 		// $scope.todos.forEach(function(todo){
 		// 	todo.dateReadable = formatDate(todo.dateAdded);
 		// });
