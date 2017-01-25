@@ -49,6 +49,7 @@
 							<span ng-show="reverseSort"><span class="glyphicon glyphicon-chevron-down"></span></span></span>
 						</a>
 					</th>
+					<!-- <td>Date</td> -->
 					<th>Comments</th>
 					<% if(user){ %>
 					<th class="align-right"></th>
@@ -74,6 +75,9 @@
 					<td class="nowrap">
 						{{ todo.dateReadable }}
 					</td>
+					<!-- <td class="nowrap">
+						{{ todo.date }}
+					</td> -->
 					<td class="rating-table">
 						<table>
 							<tr ng-repeat="rating in todo.ratings">
@@ -218,8 +222,8 @@
 								</select>
 							</div>
 							<div class="form-group">
-							    <label for="dateField">Resturant Name</label>
-								<input type="text" class="form-control dateField" placeholder="Date visited">
+							    <label for="dateField">Date Visited</label>
+								<input ng-model="formData.date" type="text" class="form-control dateField" placeholder="Date visited">
 							</div>
 							<div class="form-group">
 							    <label for="">Rating</label>
@@ -348,6 +352,10 @@
 									<option>Vietnamese</option>
 									<option>Wings</option>
 								</select>
+							</div>
+							<div class="form-group">
+							    <label for="dateField">Date Visited</label>
+								<input ng-model="editingItem.dateReadable" type="text" class="form-control dateField" placeholder="Date visited">
 							</div>
 							<div class="form-group">
 							    <label for="">Rating - {{editingItem.currentUserRating.rating}}</label>

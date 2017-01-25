@@ -10,16 +10,6 @@ app.directive('onLastRepeat', function($timeout) {
     };
 });
 
-// function formatDate(date) {
-// 	if (!date) {
-// 		return '';
-// 	}
-// 	var dateObject = new Date(Date.parse(date));
-// 	var dateArr = dateObject.toDateString().split(' ').splice(1);
-// 	dateArr[1] += ',';
-// 	return dateArr.join(' ');
-// }
-
 app.controller('mainController', ['$scope', '$rootScope', '$http','Todos', function($scope, $rootScope, $http, Todos) {
 
 	$scope.formData = {};
@@ -33,21 +23,13 @@ app.controller('mainController', ['$scope', '$rootScope', '$http','Todos', funct
 
 	Todos.get().then(function(data) {
 		$scope.todos = data.data;
-		$scope.loading = false;
-		console.log(data.data);
-
-		// $scope.todos.forEach(function(todo){
-		// 	todo.dateReadable = formatDate(todo.dateAdded);
-		// });
 	});
 
 	$scope.createTodo = function() {
 		if ($scope.formData.name != undefined) {
 			$scope.loading = true;
 			$scope.formData.user = $scope.userName;
-
 			$('#addModal').find('.starRatingAdd').rating('clear');
-
 			Todos.create($scope.formData)
 				.then(function(data) {
 					$scope.loading = false;
@@ -109,8 +91,6 @@ app.controller('mainController', ['$scope', '$rootScope', '$http','Todos', funct
 	};
 
 	$scope.updateTodo = function() {
-		console.log($scope.originalItem);
-		console.log($scope.editingItem);
 		Todos.update($scope.editingItem)
 			.then(function(data) {
 				$scope.todos = data.data;

@@ -45,7 +45,8 @@ module.exports = function(app, passport) {
 			name : req.body.name,
 			location : req.body.location,
 			cuisine : req.body.cuisine,
-			dateAdded: new Date(),
+			dateReadable: req.body.date,
+			date: new Date(Date.parse(req.body.date)),
 			ratings : [{
 				author: req.body.user,
 				notes: req.body.comments,
@@ -113,15 +114,19 @@ module.exports = function(app, passport) {
 		    	data.location = req.body.location;
 		    	data.name = req.body.name;
 		    	data.cuisine = req.body.cuisine
+		    	data.dateReadable = req.body.dateReadable;
+		    	data.date = new Date(Date.parse(req.body.dateReadable));
 
 		    	var options = {
-					upsert: false
+					upsert: false,
+					// multi: true,
 				};
-
 				Todo.update({
 					_id : req.params.todo_id,
 				},
-				data,
+				{
+					$set: data,
+				},
 				options,
 				function(err, todo) {
 					if (err){
