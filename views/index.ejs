@@ -17,13 +17,12 @@
 
 	<div class="content">
 		<header>
-			<h1>Schorr Eats
-				<% if(user) { %>
-					<small>Hi there, <%= user.prettyUsername ? user.prettyUsername : '' %></small>
-				<% } else{ %>
-					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">Login</button>
-				<% } %>
-			</h1>
+			<h1>Schorr Eats</h1>
+			<% if(user) { %>
+				<small>Hi there, <%= user.prettyUsername ? user.prettyUsername : '' %></small>
+			<% } else{ %>
+				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">Login</button>
+			<% } %>
 		</header>
 		<% if (message.length > 0) { %>
 			<div class="alert alert-danger"><%= message %></div>
@@ -34,15 +33,15 @@
 					<th>
 						<a href="#">
 							<a href="#" ng-click="orderByField='name'; reverseSort = !reverseSort">
-								First Name
+								Name
 								<span ng-show="orderByField == 'name'"><span ng-show="!reverseSort"><span class="glyphicon glyphicon-chevron-up"></span></span>
 								<span ng-show="reverseSort"><span class="glyphicon glyphicon-chevron-down"></span></span></span>
 							</a>
 						</a>
 					</th>
-					<th>Location</th>
-					<th>Cuisine</th>
-					<th>
+					<th class="mobileHide">Location</th>
+					<th class="mobileHide">Cuisine</th>
+					<th class="mobileHide">
 						<a href="#" ng-click="orderByField='date'; reverseSort = !reverseSort" class="nowrap">
 							Visited
 							<span ng-show="orderByField == 'date'"><span ng-show="!reverseSort"><span class="glyphicon glyphicon-chevron-up"></span></span>
@@ -50,7 +49,7 @@
 						</a>
 					</th>
 					<!-- <td>Date</td> -->
-					<th>Comments</th>
+					<th class="mobileHide">Comments</th>
 					<% if(user){ %>
 					<th class="align-right"></th>
 					<% } %>
@@ -69,10 +68,10 @@
 					<td class="restaurantLocation">
 						{{ todo.location }}
 					</td>
-					<td>
+					<td class="restaurantCuisine">
 						{{ todo.cuisine }}
 					</td>
-					<td class="nowrap">
+					<td class="nowrap restaurantDate">
 						{{ todo.dateReadable }}
 					</td>
 					<!-- <td class="nowrap">
@@ -81,13 +80,13 @@
 					<td class="rating-table">
 						<table>
 							<tr ng-repeat="rating in todo.ratings">
-								<td ng-if="rating.notes != undefined || rating.rating != undefined">
+								<td class="ratingAuthor" ng-if="rating.notes != undefined || rating.rating != undefined">
 									{{rating.author}}:
 								</td>
 								<td ng-if="rating.notes == undefined && rating.rating == undefined">
 
 								</td>
-								<td>
+								<td class="rest-description">
 									{{rating.notes}}
 								</td>
 								<td class="star-cell">

@@ -3,16 +3,26 @@
 	box-sizing: border-box;
 	padding: 0 40px;
 	margin: 0 auto 60px;
+
+	header {
+		display: flex;
+		align-items: baseline;
+	}
 	h1 {
-		border-bottom: 1px solid $lt-grey;
-		padding-bottom: 10px;
-		position: relative;
-		small, .btn {
-			position:absolute; right:0; bottom: 10px;
-		}
+		// border-bottom: 1px solid $lt-grey;
+		// padding-bottom: 10px;
+		// position: relative;
+	}
+	small, .btn {
+		// position:absolute; right:0; bottom: 10px;
+		margin-left: auto;
+
 	}
 	.row .logout {
 		float: right;
+	}
+	.table {
+		font-size: 12px;
 	}
 	th {
 		&:first-child {
@@ -32,10 +42,14 @@
 	.restaurantName {
 		font-weight:600;
 		padding-left:0;
-		width:135px;
+		width: 115px;
 	}
 	.restaurantLocation {
-		width:110px;
+		// width:110px;
+	}
+	.rest-description {
+		// background: red;
+		// min-width: 450px;
 	}
 	.rating-table table{
 		width:100%;
@@ -48,7 +62,7 @@
 			padding-left:10px;
 		}
 		td:first-child {
-			width:105px;
+			width: 60px;
 		}
 	}
 	.contentRow {
@@ -71,4 +85,23 @@ label[for="username"]{
 }
 .nowrap {
 	white-space: nowrap;
+}
+
+@media (max-width: 800px) {
+.content {
+    padding: 0 10px;
+
+	.mobileHide {
+	 	display: none;
+	}
+
+	.restaurantName {
+		width: 100%;
+	}
+
+	.restaurantName, .restaurantLocation, .restaurantCuisine, .restaurantDate, .rating-table {
+		display: block;
+		// background: red;
+	}
+}
 }

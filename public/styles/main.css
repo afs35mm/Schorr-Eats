@@ -6403,16 +6403,15 @@ http://nicolasgallagher.com/micro-clearfix-hack/
   box-sizing: border-box;
   padding: 0 40px;
   margin: 0 auto 60px; }
-  .content h1 {
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 10px;
-    position: relative; }
-    .content h1 small, .content h1 .btn {
-      position: absolute;
-      right: 0;
-      bottom: 10px; }
+  .content header {
+    display: flex;
+    align-items: baseline; }
+  .content small, .content .btn {
+    margin-left: auto; }
   .content .row .logout {
     float: right; }
+  .content .table {
+    font-size: 12px; }
   .content th:first-child {
     padding-left: 0; }
   .content th a {
@@ -6425,9 +6424,7 @@ http://nicolasgallagher.com/micro-clearfix-hack/
   .content .restaurantName {
     font-weight: 600;
     padding-left: 0;
-    width: 135px; }
-  .content .restaurantLocation {
-    width: 110px; }
+    width: 115px; }
   .content .rating-table table {
     width: 100%; }
     .content .rating-table table td {
@@ -6437,7 +6434,7 @@ http://nicolasgallagher.com/micro-clearfix-hack/
       width: 140px;
       padding-left: 10px; }
     .content .rating-table table td:first-child {
-      width: 105px; }
+      width: 60px; }
   .content .contentRow {
     display: none; }
   .content .loaderGif {
@@ -6452,3 +6449,13 @@ label[for="username"] {
 
 .nowrap {
   white-space: nowrap; }
+
+@media (max-width: 800px) {
+  .content {
+    padding: 0 10px; }
+    .content .mobileHide {
+      display: none; }
+    .content .restaurantName {
+      width: 100%; }
+    .content .restaurantName, .content .restaurantLocation, .content .restaurantCuisine, .content .restaurantDate, .content .rating-table {
+      display: block; } }
