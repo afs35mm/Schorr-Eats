@@ -29,4 +29,4 @@ To mimic the modulus prod environment run `node app/server.js`.
 --db=do
 --db=mod
 Initally added: git remote add live ssh://root@162.243.219.224/var/repo/site.git
-To push to Digital ocean: 162.243.219.224, `git push live master`
+To push to Digital ocean: 162.243.219.224, `git push live master` - defunct
