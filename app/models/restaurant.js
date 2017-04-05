@@ -19,6 +19,10 @@ if(process.env.NODE_ENV === 'development') {
 	restaurantDbUrl = require('../../config/database').resturantsMod.url;
 }
 
+console.log('yolo');
+	restaurantDbUrl = 'mongodb://andrewfschorr:S2YxXa0noy7GwwXU@cluster0-shard-00-00-4brof.mongodb.net:27017,cluster0-shard-00-01-4brof.mongodb.net:27017,cluster0-shard-00-02-4brof.mongodb.net:27017/biscuits?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin';
+
+
 
 var restaurantsConn = mongoose.createConnection(restaurantDbUrl);
 
