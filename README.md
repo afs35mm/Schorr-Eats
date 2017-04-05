@@ -23,7 +23,6 @@ Web app to keep a running tally of resturants around NYC. NodeJs on the back and
 #### Currently migrating to Digital Ocean since Modulus is too damn, expensive.
 
 To deploy anyways, simply run `modulus deploy`.
-
 To mimic the modulus prod environment run `node app/server.js`.
 
 ### Environment Flag options for DBs
