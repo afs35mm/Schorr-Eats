@@ -22,11 +22,8 @@ Web app to keep a running tally of resturants around NYC. NodeJs on the back and
 
 #### Currently migrating to Digital Ocean since Modulus is too damn, expensive.
 
-To deploy anyways, simply run `modulus deploy`.
-To mimic the modulus prod environment run `node app/server.js`.
+Hosted at [MongoDB Cloud Atlas](https://www.mongodb.com/cloud/atlas) for DB, and Google App engine for Node hosting.
 
-### Environment Flag options for DBs
---db=do
---db=mod
-Initally added: git remote add live ssh://root@162.243.219.224/var/repo/site.git
-To push to Digital ocean: 162.243.219.224, `git push live master` - defunct
+To deploy run `gcloud app deploy`.
+
+To mimic the modulus prod environment run `node app/server.js`.
