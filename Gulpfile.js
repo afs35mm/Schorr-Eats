@@ -43,14 +43,14 @@ gulp.task('sass-watch', function() {
 });
 
 gulp.task('serve', function () {
-	var db = (argv.db === 'do' || argv.db === 'mod') ? argv.db : '';
+	var ENV = argv.env === 'production' ? 'production' : 'development';
+	console.log(`Environment is ${ENV}`);
 	nodemon({
 		// watch: 'app/*',
 		script: './app/server.js',
 		ext: 'json js',
 		env: {
-			'USER_DB': db,
-			'NODE_ENV': 'development'
+			'NODE_ENV': ENV
 		},
 		ignore: [
 			'client/*',
@@ -60,7 +60,6 @@ gulp.task('serve', function () {
 	}).on('restart', function () {
 		console.log('Restarted webserver');
 	});
-	console.log(db);
 })
 
 var b = watchify(browserify({
