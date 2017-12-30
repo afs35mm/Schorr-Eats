@@ -1,6 +1,7 @@
 var Todo = require('./models/restaurant'),
 	User = require('./models/user'),
-	LocalStrategy = require('passport-local').Strategy;
+	LocalStrategy = require('passport-local').Strategy,
+	AWS = require('aws-sdk');
 
 
 function getTodos(res){
@@ -73,6 +74,7 @@ module.exports = function(app, passport) {
 	});
 
 	app.put('/api/todos/:todo_id', function(req, res) {
+		console.log(req.body);
 		// { _id: '588189ac6dae18f06da35e44',
 		// __v: 0,
 		// ratings:
@@ -86,61 +88,61 @@ module.exports = function(app, passport) {
 		// author: 'A',
 		// currentUserRating: { notes: '!!!!!', rating: '4.5' } }
 		// console.log(req.params); //{ todo_id: '588189ac6dae18f06da35e44' }
-		Todo.findOne({_id: req.body._id}, function(err, data){
-		    if (data) {
-		    	var isUpdatingExistingReview = false;
-		    	for (var i = 0; i < data.ratings.length; i ++) {
-		    		if (data.ratings[i].author === req.body.author) {
-		    			isUpdatingExistingReview = true;
-		    			var reviewIdx = i;
-		    			break;
-		    		}
-		    	}
+		// Todo.findOne({_id: req.body._id}, function(err, data){
+		//     if (data) {
+		//     	var isUpdatingExistingReview = false;
+		//     	for (var i = 0; i < data.ratings.length; i ++) {
+		//     		if (data.ratings[i].author === req.body.author) {
+		//     			isUpdatingExistingReview = true;
+		//     			var reviewIdx = i;
+		//     			break;
+		//     		}
+		//     	}
 
-		    	// new review, push to array
-		    	if (!isUpdatingExistingReview) {
-		    		data.ratings.push({
-		    			author: req.body.author,
-		    			rating: req.body.currentUserRating.rating,
-		    			notes: req.body.currentUserRating.notes,
-		    		});
-		    	// updating, update to reviewIdx
-		    	} else {
-		    		var updatingReview = data.ratings[reviewIdx];
-		    		updatingReview.notes = req.body.currentUserRating.notes;
-		    		updatingReview.rating = req.body.currentUserRating.rating;
-		    	}
+		//     	// new review, push to array
+		//     	if (!isUpdatingExistingReview) {
+		//     		data.ratings.push({
+		//     			author: req.body.author,
+		//     			rating: req.body.currentUserRating.rating,
+		//     			notes: req.body.currentUserRating.notes,
+		//     		});
+		//     	// updating, update to reviewIdx
+		//     	} else {
+		//     		var updatingReview = data.ratings[reviewIdx];
+		//     		updatingReview.notes = req.body.currentUserRating.notes;
+		//     		updatingReview.rating = req.body.currentUserRating.rating;
+		//     	}
 
-		    	data.location = req.body.location;
-		    	data.name = req.body.name;
-		    	data.cuisine = req.body.cuisine
-		    	data.dateReadable = req.body.dateReadable;
-		    	data.date = new Date(Date.parse(req.body.dateReadable));
+		//     	data.location = req.body.location;
+		//     	data.name = req.body.name;
+		//     	data.cuisine = req.body.cuisine
+		//     	data.dateReadable = req.body.dateReadable;
+		//     	data.date = new Date(Date.parse(req.body.dateReadable));
 
-		    	var options = {
-					upsert: false,
-					// multi: true,
-				};
-				Todo.update({
-					_id : req.params.todo_id,
-				},
-				{
-					$set: data,
-				},
-				options,
-				function(err, todo) {
-					if (err){
-						res.send(err);
-					} else {
-						getTodos(res);
-					}
-				});
-		    } else {
-		    	res.status(500).send({
-		    		error: err,
-		    	});
-		    }
-		});
+		//     	var options = {
+		// 			upsert: false,
+		// 			// multi: true,
+		// 		};
+		// 		Todo.update({
+		// 			_id : req.params.todo_id,
+		// 		},
+		// 		{
+		// 			$set: data,
+		// 		},
+		// 		options,
+		// 		function(err, todo) {
+		// 			if (err){
+		// 				res.send(err);
+		// 			} else {
+		// 				getTodos(res);
+		// 			}
+		// 		});
+		//     } else {
+		//     	res.status(500).send({
+		//     		error: err,
+		//     	});
+		//     }
+		// });
 	});
 
 	app.get('/api/todos/:todo_id', function(req, res) {

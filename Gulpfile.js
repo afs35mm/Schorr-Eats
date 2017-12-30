@@ -11,18 +11,6 @@ var gulp = require('gulp'),
 	sourcemaps = require('gulp-sourcemaps'),
 	argv = require('yargs').argv;
 
-gulp.task('nodemon', function() {
-		nodemon({ script: './app/server.js',
-		env: { 'NODE_ENV': 'development' },
-		ext: 'json js',
-    	//ignore: ['/client/js/main', '/client/js/main.js']
-    	ignore: ['client/*']
-	})
-	.on('restart', function () {
-		console.log('Restarted webserver')
-	});
-});
-
 gulp.task('sass', function(){
 	gulp.src('./client/scss/*.scss')
 	.pipe(sass({errLogToConsole: true}))
@@ -39,12 +27,10 @@ gulp.task('uglify', function() {
 
 gulp.task('sass-watch', function() {
 	gulp.watch('./client/scss/**/*.scss', ['sass']);
-	//gulp.watch('./client/js/**/*.js', ['uglify']);
 });
 
 gulp.task('serve', function () {
 	var ENV = argv.env === 'production' ? 'production' : 'development';
-	console.log(`Environment is ${ENV}`);
 	nodemon({
 		// watch: 'app/*',
 		script: './app/server.js',
@@ -60,7 +46,22 @@ gulp.task('serve', function () {
 	}).on('restart', function () {
 		console.log('Restarted webserver');
 	});
-})
+});
+
+gulp.task('serve-dev', function () {
+	var ENV = argv.env === 'production' ? 'production' : 'development';
+	nodemon({
+		script: './app/server.js',
+		env: {
+			'NODE_ENV': ENV
+		},
+		ignore: [
+			'**/*',
+		],
+	}).on('restart', function () {
+		console.log('Restarted webserver');
+	});
+});
 
 var b = watchify(browserify({
 	entries: ['./client/js/main.js'],

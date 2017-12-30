@@ -361,6 +361,15 @@
 								<input ng-model="editingItem.currentUserRating.rating" value="{{editingItem.currentUserRating.rating}}" class="starRatingEdit" min=0 max=5 step=0.5 data-size="xs" >
 							</div>
 							<div class="form-group">
+							    <label for="">TSTTTSTT</label>
+								<input ng-model="editingItem.test" value="test">
+							</div>
+							<div class="form-group">
+								<label for="uploadImage">Photos</label>
+								<p class="help-block">Show the goods:</p>
+								<input type="file" id="uploadImage" ng-model="editingItem.uploadImage">
+							</div>
+							<div class="form-group">
 							    <label for="comments">Comments</label>
 								<textarea id="comments" ng-model="editingItem.currentUserRating.notes" class="form-control" rows="3"></textarea>
 							</div>

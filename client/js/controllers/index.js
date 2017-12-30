@@ -60,7 +60,6 @@ app.controller('mainController', ['$scope', '$rootScope', '$http','Todos', funct
 	};
 
 	$scope.deleteTodo = function() {
-
 		var result = window.confirm('Are you absolutely positively sure you want to delete this!???');
 		if(!result) return;
 		$scope.loading = true;
@@ -80,7 +79,7 @@ app.controller('mainController', ['$scope', '$rootScope', '$http','Todos', funct
 		$scope.editingItem.author = $scope.userName;
 		//loop through the restaurant ratings array and see if the person has rated already
 		var i = 0;
-		while( i <  $scope.editingItem.ratings.length){
+		while (i <  $scope.editingItem.ratings.length) {
 			$scope.editingItem.currentUserRating = {}
 			if($scope.editingItem.ratings[i].author === $scope.userName){
 				$scope.editingItem.currentUserRating = $scope.editingItem.ratings[i];

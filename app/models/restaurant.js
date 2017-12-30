@@ -3,14 +3,14 @@ var mongoose = require('mongoose'),
 
 console.log('NODE_ENV:', process.env.NODE_ENV);
 if(process.env.NODE_ENV === 'development') {
-	databaseUrl = 'mongodb://localhost/restaurants1';
+	restaurantDbUrl = 'mongodb://localhost/restaurants';
 } else {
 	restaurantDbUrl = require('../../config/database').restaurants.url;
 }
+console.log(`restaurant url is ${restaurantDbUrl}`);
+var restaurantsConn = mongoose.connect(restaurantDbUrl);
 
-var restaurantsConn = mongoose.createConnection(restaurantDbUrl);
-
-var ratingsSchema = new mongoose.Schema ({
+var ratingsSchema = new mongoose.Schema({
 	author: {type: String },
 	notes: {type: String },
 	rating: {type: Number },
