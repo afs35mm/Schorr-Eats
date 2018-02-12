@@ -6444,6 +6444,27 @@ http://nicolasgallagher.com/micro-clearfix-hack/
 label[for="username"] {
   display: block; }
 
+.editResturant .uploaded-imgs ul {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  justify-content: space-between; }
+  .editResturant .uploaded-imgs ul:after {
+    content: "";
+    flex: auto; }
+
+.editResturant .uploaded-imgs li {
+  list-style-type: none;
+  width: 25%;
+  padding: 10px;
+  box-sizing: border-box; }
+
+.editResturant .uploaded-imgs img {
+  position: relative;
+  width: 100%;
+  height: 110px;
+  object-fit: cover; }
+
 .editResturant .modal-footer .btn-default {
   float: left; }
 

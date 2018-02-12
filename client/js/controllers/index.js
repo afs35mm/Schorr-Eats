@@ -11,7 +11,6 @@ app.directive('onLastRepeat', function($timeout) {
 });
 
 app.controller('mainController', ['$scope', '$rootScope', '$http','Todos', function($scope, $rootScope, $http, Todos) {
-
 	$scope.formData = {};
 	$scope.loading = true;
 	$scope.orderByField = null;
@@ -23,6 +22,7 @@ app.controller('mainController', ['$scope', '$rootScope', '$http','Todos', funct
 
 	Todos.get().then(function(data) {
 		$scope.todos = data.data;
+		console.log($scope.todos);
 		$scope.loading = false;
 	});
 

@@ -2,12 +2,11 @@ var Todo = require('./models/restaurant'),
 	User = require('./models/user'),
 	LocalStrategy = require('passport-local').Strategy;
 
-
 function getTodos(res){
 	Todo.find(function(err, todos) {
-			if (err)
-				res.send(err)
-			res.json(todos);
+		if (err)
+			res.send(err)
+		res.json(todos);
 	});
 };
 
@@ -17,7 +16,6 @@ function ensureAuthenticated (req, res, next) {
 };
 
 module.exports = function(app, passport) {
-
 	app.post('/signup', passport.authenticate('signup', {
 		successRedirect: '/',
 		failureRedirect: '/signup',
@@ -34,7 +32,6 @@ module.exports = function(app, passport) {
 		failureRedirect: '/',
 		failureFlash : true
 	}));
-
 
 	app.get('/api/todos', function(req, res) {
 		getTodos(res);

@@ -12,11 +12,11 @@ var gulp = require('gulp'),
 	argv = require('yargs').argv;
 
 gulp.task('nodemon', function() {
-		nodemon({ script: './app/server.js',
-		env: { 'NODE_ENV': 'development' },
+	nodemon({ script: './app/server.js',
+		// env: { 'NODE_ENV': 'development' },
 		ext: 'json js',
-    	//ignore: ['/client/js/main', '/client/js/main.js']
-    	ignore: ['client/*']
+    	ignore: ['/client/js/main', '/client/js/main.js']
+    	// ignore: ['client/*']
 	})
 	.on('restart', function () {
 		console.log('Restarted webserver')

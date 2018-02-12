@@ -125,8 +125,8 @@
 								<input ng-model="formData.name" type="text" class="form-control required" id="nameField" placeholder="Resturant Name">
 							</div>
 							<div class="form-group">
-							    <label for="locationField">Location</label>
-								<input ng-model="formData.location" type="text" class="form-control required" id="locationField" placeholder="Location">
+							    <label for="addLocationField">Location</label>
+								<input ng-model="formData.location" type="text" class="form-control required" id="addLocationField" placeholder="Location">
 							</div>
 							<div class="form-group">
 								<label for="cuisine">Cuisine</label>
@@ -253,16 +253,16 @@
 					<form>
 						<div class="modal-body">
 							<div class="form-group">
-							    <label for="nameField">Resturant Name</label>
-								<input ng-model="editingItem.name" type="text" class="form-control" data-field="name" id="nameField" placeholder="">
+							    <label for="addNameField">Resturant Name</label>
+								<input ng-model="editingItem.name" type="text" class="form-control" data-field="name" id="addNameField" placeholder="">
 							</div>
 							<div class="form-group">
 							    <label for="locationField">Location</label>
 								<input ng-model="editingItem.location" type="text" class="form-control" data-field="location" id="locationField" placeholder="">
 							</div>
 							<div class="form-group">
-								<label for="cuisine">Cuisine</label>
-								<select ng-model="editingItem.cuisine" id="cuisine" class="form-control">
+								<label for="editCuisine">Cuisine</label>
+								<select ng-model="editingItem.cuisine" id="editCuisine" class="form-control">
 									<option selected></option>
 									<option>African</option>
 									<option>American</option>
@@ -361,10 +361,30 @@
 								<input ng-model="editingItem.currentUserRating.rating" value="{{editingItem.currentUserRating.rating}}" class="starRatingEdit" min=0 max=5 step=0.5 data-size="xs" >
 							</div>
 							<div class="form-group">
-							    <label for="comments">Comments</label>
-								<textarea id="comments" ng-model="editingItem.currentUserRating.notes" class="form-control" rows="3"></textarea>
+							    <label for="editComments">Comments</label>
+								<textarea id="editComments" ng-model="editingItem.currentUserRating.notes" class="form-control" rows="3"></textarea>
 							</div>
+							<div class="form-group">
+								<label for="uploadPhotos">Upload Photos</label>
+								<input type="file" id="imgUpload" class="imgUpload" />
+							</div>
+
+							<div class="uploaded-imgs">
+								<ul>
+									<li>
+										<img src="https://s3.us-east-2.amazonaws.com/schorreats/090317_bigsky_0286.jpg" alt="">
+									</li>
+									<li>
+										<img src="https://s3.us-east-2.amazonaws.com/schorreats/090317_bigsky_0286.jpg" alt="">
+									</li>
+									<li>
+										<img src="https://s3.us-east-2.amazonaws.com/schorreats/5b4Hl8a.jpg" alt="">
+									</li>
+								</ul>
+							</div>
+
 						</div>
+
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
 							<button type="button" class="btn btn-danger" ng-click="deleteTodo()">Delete</button>

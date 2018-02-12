@@ -78,9 +78,38 @@ label[for="username"]{
 	display: block;
 }
 
-.editResturant .modal-footer {
-	.btn-default {
-		float:left;
+.editResturant {
+	.uploaded-imgs {
+		ul {
+			display: flex;
+			margin: 0;
+			padding: 0;
+			justify-content: space-between;
+
+			&:after {
+				content: "";
+				flex: auto;
+			}
+		}
+
+		li {
+			list-style-type: none;
+			width: 25%;
+			padding: 10px;
+			box-sizing: border-box;
+		}
+
+		img {
+			position: relative;
+			width:  100%;
+			height: 110px;
+			object-fit: cover;
+		}
+	}
+	.modal-footer {
+		.btn-default {
+			float:left;
+		}
 	}
 }
 .nowrap {

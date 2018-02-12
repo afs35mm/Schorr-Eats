@@ -8,6 +8,7 @@ require('./lib/bootstrap.min.js');
 require('./lib/star-rating.min.js');
 require('./lib/date-picker');
 require('./controllers');
+require('./upload-image');
 require('./services/todos.js');
 
 angular.module('eatsTodo', ['todoController', 'todoService']);
