@@ -250,7 +250,6 @@
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 						<h4 class="modal-title" id="myModalLabel">Edit Resturant</h4>
 					</div>
-					<!-- ng-controller="UploadImageController" -->
 					<form>
 						<div class="modal-body">
 							<div class="form-group">
@@ -365,15 +364,20 @@
 							    <label for="editComments">Comments</label>
 								<textarea id="editComments" ng-model="editingItem.currentUserRating.notes" class="form-control" rows="3"></textarea>
 							</div>
-							<div class="form-group">
-								<label for="uploadPhotos">Upload Photos</label>
-								<input type="file" id="imgUpload" class="imgUpload" multiple/>
+							<!--  -->
+							<div ng-controller="UploadImageController">
+								<div class="form-group">
+									<label for="uploadPhotos">Upload Photos</label>
+									<input type="file" id="imgUpload" class="imgUpload" onchange="angular.element(this).scope().uploadFile(this.files)" multiple/>
+								</div>
+								<div class="uploaded-imgs">
+									<ul ng-show="images.length > 0">
+										<li ng-repeat="img in images">
+											<img ng-src="{{ img.src }}" alt="">
+										</li>
+									</ul>
+								</div>
 							</div>
-
-							<div class="uploaded-imgs">
-								<ul></ul>
-							</div>
-
 						</div>
 
 						<div class="modal-footer">

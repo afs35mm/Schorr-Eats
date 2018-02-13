@@ -4,7 +4,6 @@ var mongoose = require('mongoose'),
 if(process.env.NODE_ENV === 'development') {
 	databaseUrl = 'mongodb://localhost/restaurants1';
 } else {
-	console.log(require('../../config/database').restaurants.url);
 	restaurantDbUrl = require('../../config/database').restaurants.url;
 }
 
