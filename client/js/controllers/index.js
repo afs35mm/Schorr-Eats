@@ -91,6 +91,8 @@ app.controller('mainController', ['$scope', '$rootScope', '$http','Todos', funct
 	};
 
 	$scope.updateTodo = function() {
+		console.log(this);
+		console.log($scope);
 		Todos.update($scope.editingItem)
 			.then(function(data) {
 				$scope.todos = data.data;
