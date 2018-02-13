@@ -23,4 +23,5 @@ module.exports = restaurantsConn.model('Restaurant', new mongoose.Schema ({
 	date: {type: Date, default: ''},
 	dateReadable: {type: String, default: ''},
 	ratings: [ratingsSchema],
+	foo: {type: String, default: ''},
 }));

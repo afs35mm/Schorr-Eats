@@ -364,6 +364,7 @@
 							    <label for="editComments">Comments</label>
 								<textarea id="editComments" ng-model="editingItem.currentUserRating.notes" class="form-control" rows="3"></textarea>
 							</div>
+							<input ng-model="editingItem.foo" value="bar">
 							<!--  -->
 							<div ng-controller="UploadImageController">
 								<div class="form-group">
@@ -372,7 +373,7 @@
 								</div>
 								<div class="uploaded-imgs">
 									<ul ng-show="images.length > 0">
-										<li ng-repeat="img in images">
+										<li ng-repeat="img in images" ng-model="editingItem.images">
 											<img ng-src="{{ img.src }}" alt="">
 										</li>
 									</ul>

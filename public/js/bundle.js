@@ -93,20 +93,18 @@ app.controller('mainController', ['$scope', '$rootScope', '$http','Todos', funct
 
 	$scope.updateTodo = function() {
 		console.log(this);
-		console.log($scope);
-		Todos.update($scope.editingItem)
-			.then(function(data) {
-				$scope.todos = data.data;
-				$scope.loading = false;
-				$(function () {
-				   $('#editModal').modal('toggle');
-				});
-			});
+		console.log($scope.editingItem);
+		// Todos.update($scope.editingItem)
+		// 	.then(function(data) {
+		// 		$scope.todos = data.data;
+		// 		$scope.loading = false;
+		// 		$(function () {
+		// 		   $('#editModal').modal('toggle');
+		// 		});
+		// 	});
 	};
 
 }]);
-
-
 
 },{}],2:[function(require,module,exports){
 'use strict';
@@ -251,7 +249,6 @@ uploadImage.controller('UploadImageController', ['$scope', function($scope) {
             $scope.$apply(function() {
                 $scope.images.push(img);
             });
-
         });
     }
     console.log($scope);
