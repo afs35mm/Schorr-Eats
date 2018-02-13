@@ -6448,7 +6448,8 @@ label[for="username"] {
   display: flex;
   margin: 0;
   padding: 0;
-  justify-content: space-between; }
+  justify-content: space-between;
+  flex-wrap: wrap; }
   .editResturant .uploaded-imgs ul:after {
     content: "";
     flex: auto; }

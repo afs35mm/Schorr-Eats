@@ -23,7 +23,6 @@ app.controller('mainController', ['$scope', '$rootScope', '$http','Todos', funct
 
 	Todos.get().then(function(data) {
 		$scope.todos = data.data;
-		console.log($scope.todos);
 		$scope.loading = false;
 	});
 
@@ -185,6 +184,7 @@ require('./controllers');
 require('./upload-image');
 require('./services/todos.js');
 
+/*'uploadImage'*/
 angular.module('eatsTodo', ['todoController', 'todoService']);
 
 var events = require('./handle-events.js');
@@ -218,9 +218,27 @@ angular.module('todoService', [])
 	}
 }]);
 },{}],8:[function(require,module,exports){
+const uploadedImgsEl = document.querySelector('.uploaded-imgs ul');
+
 document.querySelector('.imgUpload').addEventListener('change', function() {
-    console.log(this);
+    if (this.files) {
+        [...this.files].forEach((file) => {
+            const img = document.createElement('img');
+            img.src = URL.createObjectURL(file); // set src to file url
+            const li = document.createElement('li');
+            li.appendChild(img);
+            uploadedImgsEl.appendChild(li);
+        });
+    }
 });
+
+
+// var uploadImage = angular.module('uploadImage', []);
+// uploadImage.controller('UploadImageController', ['$scope', function($scope) {
+//     $scope.uploadImage = function() {
+//         console.log(this);
+//     }
+// }]);
 },{}],9:[function(require,module,exports){
 /**
  * @license AngularJS v1.6.1

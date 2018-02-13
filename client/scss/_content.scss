@@ -85,6 +85,7 @@ label[for="username"]{
 			margin: 0;
 			padding: 0;
 			justify-content: space-between;
+			flex-wrap: wrap;
 
 			&:after {
 				content: "";
