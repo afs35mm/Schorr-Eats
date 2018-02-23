@@ -74,6 +74,7 @@ app.controller('mainController', ['$scope', '$rootScope', '$http','Todos', funct
 	};
 
 	$scope.editTodo = function(todo) {
+		console.log(todo);
 		$scope.editingItem = angular.copy(todo);
 		$scope.originalItem = todo;
 		$scope.editingItem.author = $scope.userName;
@@ -93,14 +94,15 @@ app.controller('mainController', ['$scope', '$rootScope', '$http','Todos', funct
 	$scope.updateTodo = function() {
 		console.log(this);
 		console.log($scope);
-		Todos.update($scope.editingItem)
-			.then(function(data) {
-				$scope.todos = data.data;
-				$scope.loading = false;
-				$(function () {
-				   $('#editModal').modal('toggle');
-				});
-			});
+		console.log('fuck');
+		// Todos.update($scope.editingItem)
+		// 	.then(function(data) {
+		// 		$scope.todos = data.data;
+		// 		$scope.loading = false;
+		// 		$(function () {
+		// 		   $('#editModal').modal('toggle');
+		// 		});
+		// 	});
 	};
 
 }]);

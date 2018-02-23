@@ -12,7 +12,7 @@ require('./upload-image');
 require('./services/todos.js');
 
 /*'uploadImage'*/
-angular.module('eatsTodo', ['todoController', 'todoService', 'uploadImage']);
+angular.module('eatsTodo', ['todoController', 'todoService']);
 
 var events = require('./handle-events.js');
 

@@ -75,6 +75,7 @@ app.controller('mainController', ['$scope', '$rootScope', '$http','Todos', funct
 	};
 
 	$scope.editTodo = function(todo) {
+		console.log(todo);
 		$scope.editingItem = angular.copy(todo);
 		$scope.originalItem = todo;
 		$scope.editingItem.author = $scope.userName;
@@ -94,14 +95,15 @@ app.controller('mainController', ['$scope', '$rootScope', '$http','Todos', funct
 	$scope.updateTodo = function() {
 		console.log(this);
 		console.log($scope);
-		Todos.update($scope.editingItem)
-			.then(function(data) {
-				$scope.todos = data.data;
-				$scope.loading = false;
-				$(function () {
-				   $('#editModal').modal('toggle');
-				});
-			});
+		console.log('fuck');
+		// Todos.update($scope.editingItem)
+		// 	.then(function(data) {
+		// 		$scope.todos = data.data;
+		// 		$scope.loading = false;
+		// 		$(function () {
+		// 		   $('#editModal').modal('toggle');
+		// 		});
+		// 	});
 	};
 
 }]);
@@ -187,7 +189,7 @@ require('./upload-image');
 require('./services/todos.js');
 
 /*'uploadImage'*/
-angular.module('eatsTodo', ['todoController', 'todoService', 'uploadImage']);
+angular.module('eatsTodo', ['todoController', 'todoService']);
 
 var events = require('./handle-events.js');
 
@@ -220,27 +222,28 @@ angular.module('todoService', [])
 	}
 }]);
 },{}],8:[function(require,module,exports){
-// const uploadedImgsEl = document.querySelector('.uploaded-imgs ul');
+const uploadedImgsEl = document.querySelector('.uploaded-imgs ul');
 
-// document.querySelector('.imgUpload').addEventListener('change', function() {
-//     if (this.files) {
-//         [...this.files].forEach((file) => {
-//             const img = document.createElement('img');
-//             img.src = URL.createObjectURL(file); // set src to file url
-//             const li = document.createElement('li');
-//             li.appendChild(img);
-//             uploadedImgsEl.appendChild(li);
-//         });
-//     }
-// });
-
-
-var uploadImage = angular.module('uploadImage', []);
-uploadImage.controller('UploadImageController', ['$scope', function($scope) {
-    $scope.uploadImage = function() {
-        console.log(this);
+document.querySelector('.imgUpload').addEventListener('change', function() {
+    if (this.files) {
+        [...this.files].forEach((file, i) => {
+            const img = document.createElement('img');
+            img.setAttribute('ng-model', 'editingItem.photos[' + i + ']');
+            img.src = URL.createObjectURL(file); // set src to file url
+            const li = document.createElement('li');
+            li.appendChild(img);
+            uploadedImgsEl.appendChild(li);
+        });
     }
-}]);
+});
+
+// var uploadImage = angular.module('uploadImage', []);
+// uploadImage.controller('UploadImageController', ['$scope', function($scope) {
+//     $scope.uploadImage = function() {
+//         console.log(this);
+//         consol
+//     }
+// }]);
 },{}],9:[function(require,module,exports){
 /**
  * @license AngularJS v1.6.1
