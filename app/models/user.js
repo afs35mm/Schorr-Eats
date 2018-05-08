@@ -1,16 +1,7 @@
-var mongoose = require('mongoose'),
-    databaseUrl;
+const mongoose = require('mongoose');
+mongoose.Promise  = Promise;
 
-if(process.env.NODE_ENV === 'development') {
-    databaseUrl = 'mongodb://localhost/users';
-} else {
-    console.log(require('../../config/database').users);
-    databaseUrl = require('../../config/database').users.url
-}
-
-var usersConn = mongoose.createConnection(databaseUrl);
-
-module.exports = usersConn.model('User', {
+module.exports = mongoose.createConnection(process.env.USERS_DB).model('User', {
     username : {type : String },
     shortName : {type : String },
     password : {type : String },

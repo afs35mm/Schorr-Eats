@@ -1,7 +1,7 @@
-var LocalStrategy   = require('passport-local').Strategy,
-    User = require('../models/user'),
-    bCrypt = require('bcrypt-nodejs'),
-    doubleSecretPassCode = require('../../config/doubleSecretPassCode');
+var LocalStrategy   = require('passport-local').Strategy;
+const User = require('../models/user');
+const bCrypt = require('bcrypt-nodejs');
+const doubleSecretPassCode = process.env.DOUBLE_SECRET_PASSCODE;
 
 function createHash(password){
     return bCrypt.hashSync(password, bCrypt.genSaltSync(10), null);
@@ -46,21 +46,21 @@ module.exports = function(passport){
                     } else {
                         // if there is no user with that email
                         // create the user
-                        var newUser = new User(); 
-                        
-                        // set the user's local credentials 
+                        var newUser = new User();
+
+                        // set the user's local credentials
                         newUser.username = username.toLowerCase();
                         newUser.password = createHash(password);
                         newUser.shortName = req.body.name;
                         newUser.prettyUsername = makeSexyName(newUser.shortName);
 
                         // save the user
-                        newUser.save(function(err) { 
+                        newUser.save(function(err) {
                             if (err){
-                                console.log('Error in Saving user: '+err);  
-                                throw err;  
+                                console.log('Error in Saving user: '+err);
+                                throw err;
                             }
-                            console.log('User Registration succesful');    
+                            console.log('User Registration succesful');
                             return done(null, newUser);
                         });
                     }
@@ -74,4 +74,3 @@ module.exports = function(passport){
 };
 
 
-	

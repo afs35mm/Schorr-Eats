@@ -7,12 +7,11 @@ function isValidPassword (user, password){
 };
 
 module.exports = function(passport){
-
 	passport.use('local-login', new LocalStrategy({
         passReqToCallback : true, // allows us to pass back the entire request to the callback
         usernameField: 'email',
         passwordField: 'password'
-    }, 
+    },
     function(req, username, password, done) {
         // asynchronous
         process.nextTick(function() {
@@ -31,9 +30,10 @@ module.exports = function(passport){
                     console.log('Invalid Password');
                     return done(null, false, req.flash('loginMessage', 'Invalid Password')); // redirect back to login page
                 }
-                
+
                 // all is well, return user
                 else{
+                    console.log('we good');
                     return done(null, user);
                 }
             });

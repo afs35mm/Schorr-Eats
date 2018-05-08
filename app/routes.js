@@ -1,12 +1,12 @@
-var Todo = require('./models/restaurant'),
-	User = require('./models/user'),
-	LocalStrategy = require('passport-local').Strategy;
+const Restaurant = require('./models/restaurant');
+const User = require('./models/user');
+const LocalStrategy = require('passport-local').Strategy;
 
-function getTodos(res){
-	Todo.find(function(err, todos) {
+function getRestaurants(res){
+	Restaurant.find(function(err, restaurants) {
 		if (err)
 			res.send(err)
-		res.json(todos);
+		res.json(restaurants);
 	});
 };
 
@@ -23,8 +23,10 @@ module.exports = function(app, passport) {
 	}));
 
 	app.get('/signup', function(req, res) {
-		var messageBody = req.user ? 'You\'re signed in already!' : req.flash('signupMessage');
-		res.render('signup.ejs', { message: messageBody });
+		const messageBody = req.user ? 'You\'re signed in already!' : req.flash('signupMessage');
+		res.render('signup.ejs', {
+			message: messageBody
+		});
 	});
 
 	app.post('/users/login', passport.authenticate('local-login', {
@@ -34,11 +36,11 @@ module.exports = function(app, passport) {
 	}));
 
 	app.get('/api/todos', function(req, res) {
-		getTodos(res);
+		getRestaurants(res);
 	});
 
 	app.post('/api/todos', function(req, res) {
-		Todo.create({
+		Restaurant.create({
 			name : req.body.name,
 			location : req.body.location,
 			cuisine : req.body.cuisine,
@@ -54,7 +56,7 @@ module.exports = function(app, passport) {
 			if (err) {
 				res.send(err);
 			}
-			getTodos(res);
+			getRestaurants(res);
 		});
 	});
 
@@ -65,31 +67,18 @@ module.exports = function(app, passport) {
 			if (err)
 				res.send(err);
 
-			getTodos(res);
+			getRestaurants(res);
 		});
 	});
 
 	app.put('/api/todos/:todo_id', function(req, res) {
-		// { _id: '588189ac6dae18f06da35e44',
-		// __v: 0,
-		// ratings:
-		// [ { author: 'Andrew',
-		// 	notes: 'testabc',
-		// 	rating: 4,
-		// 	_id: '588189ac6dae18f06da35e45' } ],
-		// cuisine: 'BBQ',
-		// location: 'dlfjs',
-		// name: 'testabc',
-		// author: 'A',
-		// currentUserRating: { notes: '!!!!!', rating: '4.5' } }
-		// console.log(req.params); //{ todo_id: '588189ac6dae18f06da35e44' }
-		Todo.findOne({_id: req.body._id}, function(err, data){
+		Restaurant.findOne({_id: req.body._id}, function(err, data){
 		    if (data) {
-		    	var isUpdatingExistingReview = false;
-		    	for (var i = 0; i < data.ratings.length; i ++) {
+		    	const isUpdatingExistingReview = false;
+		    	for (const i = 0; i < data.ratings.length; i ++) {
 		    		if (data.ratings[i].author === req.body.author) {
 		    			isUpdatingExistingReview = true;
-		    			var reviewIdx = i;
+		    			const reviewIdx = i;
 		    			break;
 		    		}
 		    	}
@@ -103,7 +92,7 @@ module.exports = function(app, passport) {
 		    		});
 		    	// updating, update to reviewIdx
 		    	} else {
-		    		var updatingReview = data.ratings[reviewIdx];
+		    		const updatingReview = data.ratings[reviewIdx];
 		    		updatingReview.notes = req.body.currentUserRating.notes;
 		    		updatingReview.rating = req.body.currentUserRating.rating;
 		    	}
@@ -114,11 +103,11 @@ module.exports = function(app, passport) {
 		    	data.dateReadable = req.body.dateReadable;
 		    	data.date = new Date(Date.parse(req.body.dateReadable));
 
-		    	var options = {
+		    	const options = {
 					upsert: false,
 					// multi: true,
 				};
-				Todo.update({
+				Restaurant.update({
 					_id : req.params.todo_id,
 				},
 				{
@@ -129,7 +118,7 @@ module.exports = function(app, passport) {
 					if (err){
 						res.send(err);
 					} else {
-						getTodos(res);
+						getRestaurants(res);
 					}
 				});
 		    } else {
@@ -141,7 +130,7 @@ module.exports = function(app, passport) {
 	});
 
 	app.get('/api/todos/:todo_id', function(req, res) {
-		Todo.findOne({ _id: req.params.todo_id}, function(err, todo){
+		Restaurant.findOne({ _id: req.params.todo_id}, function(err, todo){
 			if (err){
 	            console.log('error occured in the database');
 	        }
@@ -155,6 +144,7 @@ module.exports = function(app, passport) {
 	});
 
 	app.get('/', ensureAuthenticated, function(req, res) {
+		console.log(req.user);
 		res.render('index.ejs', {
 			user: req.user,
 			message: req.flash('loginMessage')

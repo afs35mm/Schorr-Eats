@@ -18,10 +18,11 @@
 	<div class="content">
 		<header>
 			<h1>Schorr Eats</h1>
-			<% if(user) { %>
+
+			<% if (user) {  %>
 				<small>Hi there, <%= user.prettyUsername ? user.prettyUsername : '' %></small>
-			<% } else{ %>
-				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">Login</button>
+			<% } else { %>
+				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">Login!</button>
 			<% } %>
 		</header>
 		<% if (message.length > 0) { %>

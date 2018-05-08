@@ -1,27 +1,42 @@
-var mongoose = require('mongoose'),
-	restaurantDbUrl;
+const mongoose = require('mongoose');
+mongoose.Promise = Promise;
 
-if(process.env.NODE_ENV === 'development') {
-	databaseUrl = 'mongodb://localhost/restaurants1';
-} else {
-	console.log(require('../../config/database').restaurants.url);
-	restaurantDbUrl = require('../../config/database').restaurants.url;
-}
-
-var restaurantsConn = mongoose.createConnection(restaurantDbUrl);
-
-var ratingsSchema = new mongoose.Schema ({
-	author: {type: String },
-	notes: {type: String },
-	rating: {type: Number },
+const ratingsSchema = new mongoose.Schema ({
+	author: {
+		type: String
+	},
+	notes: {
+		type: String
+	},
+	rating: {
+		type: Number
+	},
 });
 
-module.exports = restaurantsConn.model('Restaurant', new mongoose.Schema ({
-	name: {type: String, default: ''},
-	location: {type: String, default: ''},
-	cuisine: {type: String, default: ''},
-	rating: {type: Number},
-	date: {type: Date, default: ''},
-	dateReadable: {type: String, default: ''},
-	ratings: [ratingsSchema],
+module.exports = mongoose.createConnection(process.env.RESTAURANTS_DB)
+	.model('Restaurant', new mongoose.Schema ({
+		name: {
+			type: String,
+			default: ''
+		},
+		location: {
+			type: String,
+			default: ''
+		},
+		cuisine: {
+			type: String,
+			default: ''
+		},
+		rating: {
+			type: Number
+		},
+		date: {
+			type: Date,
+			default: ''
+		},
+		dateReadable: {
+			type: String,
+			default: ''
+		},
+		ratings: [ratingsSchema],
 }));
