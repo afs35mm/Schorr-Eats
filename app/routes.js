@@ -4,9 +4,11 @@ const LocalStrategy = require('passport-local').Strategy;
 
 function getRestaurants(res){
 	Restaurant.find(function(err, restaurants) {
-		if (err)
+		if (err) {
 			res.send(err)
-		res.json(restaurants);
+		} else {
+			res.json(restaurants);
+		}
 	});
 };
 
@@ -35,11 +37,11 @@ module.exports = function(app, passport) {
 		failureFlash : true
 	}));
 
-	app.get('/api/todos', function(req, res) {
+	app.get('/api/restaurants', function(req, res) {
 		getRestaurants(res);
 	});
 
-	app.post('/api/todos', function(req, res) {
+	app.post('/api/restaurant', function(req, res) {
 		Restaurant.create({
 			name : req.body.name,
 			location : req.body.location,
@@ -52,7 +54,7 @@ module.exports = function(app, passport) {
 				rating: req.body.rating,
 			}]
 		},
-		function(err, todo) {
+		function(err, restaurant) {
 			if (err) {
 				res.send(err);
 			}
@@ -60,18 +62,19 @@ module.exports = function(app, passport) {
 		});
 	});
 
-	app.delete('/api/todos/:todo_id', function(req, res) {
-		Todo.remove({
-			_id : req.params.todo_id
-		}, function(err, todo) {
-			if (err)
+	app.delete('/api/restaurants/:id', function(req, res) {
+		Restaurant.remove({
+			_id : req.params.id
+		}, function(err, restaurant) {
+			if (err) {
 				res.send(err);
-
-			getRestaurants(res);
+			} else {
+				getRestaurants(res);
+			}
 		});
 	});
 
-	app.put('/api/todos/:todo_id', function(req, res) {
+	app.put('/api/restaurants/:id', function(req, res) {
 		Restaurant.findOne({_id: req.body._id}, function(err, data){
 		    if (data) {
 		    	const isUpdatingExistingReview = false;
@@ -108,13 +111,13 @@ module.exports = function(app, passport) {
 					// multi: true,
 				};
 				Restaurant.update({
-					_id : req.params.todo_id,
+					_id : req.params.id,
 				},
 				{
 					$set: data,
 				},
 				options,
-				function(err, todo) {
+				function(err, restaurant) {
 					if (err){
 						res.send(err);
 					} else {
@@ -129,12 +132,12 @@ module.exports = function(app, passport) {
 		});
 	});
 
-	app.get('/api/todos/:todo_id', function(req, res) {
-		Restaurant.findOne({ _id: req.params.todo_id}, function(err, todo){
+	app.get('/api/restaurants/:id', function(req, res) {
+		Restaurant.findOne({ _id: req.params.id}, function(err, restaurant){
 			if (err){
 	            console.log('error occured in the database');
 	        }
-	        res.json(todo);
+	        res.json(restaurant);
 		});
 	});
 
