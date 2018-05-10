@@ -6,23 +6,16 @@
 
 	<title>Schorr Eats</title>
 	<link rel="stylesheet" href="styles/main.css">
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-	  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-	<![endif]-->
 </head>
 	<body ng-controller="mainController" ng-init="userName='<%= user ? user.prettyUsername : '' %>' ">
 
 	<div class="content">
 		<header>
 			<h1>Schorr Eats</h1>
-
 			<% if (user) {  %>
 				<small>Hi there, <%= user.prettyUsername ? user.prettyUsername : '' %></small>
 			<% } else { %>
-				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">Login!</button>
+				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">Login</button>
 			<% } %>
 		</header>
 		<% if (message.length > 0) { %>
@@ -415,7 +408,6 @@
 			</div>
 		</div>
 	</div>
-	<!--<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places" async></script>-->
 	<script src="js/bundle.js"></script>
 </body>
 </html>

@@ -186,18 +186,11 @@ require('./controllers');
 require('./upload-image');
 require('./services/todos.js');
 
-/*'uploadImage'*/
 angular.module('eatsTodo', ['todoController', 'todoService', 'uploadImage']);
 
 var events = require('./handle-events.js');
 
 events.init();
-//map.init();
-// $('.starRating').each(function(){
-// 	console.log(this);
-// });
-
-// $('.starRating').rating();
 },{"./controllers":1,"./handle-events.js":2,"./lib/bootstrap.min.js":3,"./lib/date-picker":4,"./lib/star-rating.min.js":5,"./services/todos.js":7,"./upload-image":8,"angular":10,"jquery":11}],7:[function(require,module,exports){
 angular.module('todoService', [])
 

@@ -11,7 +11,8 @@ function getRestaurants(res){
 };
 
 function ensureAuthenticated (req, res, next) {
-	req.isAuthenticated()
+	req.isAuthenticated();
+	console.log(req.isAuthenticated());
 	return next();
 };
 

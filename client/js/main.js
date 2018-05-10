@@ -11,15 +11,8 @@ require('./controllers');
 require('./upload-image');
 require('./services/todos.js');
 
-/*'uploadImage'*/
 angular.module('eatsTodo', ['todoController', 'todoService', 'uploadImage']);
 
 var events = require('./handle-events.js');
 
 events.init();
-//map.init();
-// $('.starRating').each(function(){
-// 	console.log(this);
-// });
-
-// $('.starRating').rating();
