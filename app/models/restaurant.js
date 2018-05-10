@@ -4,7 +4,6 @@ var mongoose = require('mongoose'),
 if(false) {
 	databaseUrl = 'mongodb://localhost/restaurants1';
 } else {
-	console.log(require('../../config/database').restaurants.url);
 	restaurantDbUrl = require('../../config/database').restaurants.url;
 }
 
@@ -24,4 +23,5 @@ module.exports = restaurantsConn.model('Restaurant', new mongoose.Schema ({
 	date: {type: Date, default: ''},
 	dateReadable: {type: String, default: ''},
 	ratings: [ratingsSchema],
+	foo: {type: String, default: ''},
 }));
