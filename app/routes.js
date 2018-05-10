@@ -12,7 +12,6 @@ function getRestaurants(res){
 
 function ensureAuthenticated (req, res, next) {
 	req.isAuthenticated();
-	console.log(req.isAuthenticated());
 	return next();
 };
 
@@ -145,7 +144,6 @@ module.exports = function(app, passport) {
 	});
 
 	app.get('/', ensureAuthenticated, function(req, res) {
-		console.log(req.user);
 		res.render('index.ejs', {
 			user: req.user,
 			message: req.flash('loginMessage')

@@ -23,9 +23,8 @@ app.use(expressSession({
 	secret: 'iloverootbeer',
 	resave: false,
 	saveUninitialized: true,
-	cookie: {
-		secure: true
-	}
+	// only working with HTTP for now :(
+	// cookie: {secure: true}
 }));
 app.use(passport.initialize());
 app.use(passport.session());
