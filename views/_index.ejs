@@ -1,0 +1,403 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Schorr Eats</title>
+	<!-- <link rel="stylesheet" href="styles/main.css"> -->
+</head>
+	<body>
+<!--
+	<div class="content">
+		<header>
+			<h1>Schorr Eats</h1>
+			<% if (user) {  %>
+				<small>Hi there, <%= user.prettyUsername ? user.prettyUsername : '' %></small>
+			<% } else { %>
+				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">Login</button>
+			<% } %>
+		</header>
+		<% if (message.length > 0) { %>
+			<div class="alert alert-danger"><%= message %></div>
+		<% } %>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>
+						<a href="#">
+							<a href="#" ng-click="orderByField='name'; reverseSort = !reverseSort">
+								Name
+								<span ng-show="orderByField == 'name'"><span ng-show="!reverseSort"><span class="glyphicon glyphicon-chevron-up"></span></span>
+								<span ng-show="reverseSort"><span class="glyphicon glyphicon-chevron-down"></span></span></span>
+							</a>
+						</a>
+					</th>
+					<th class="mobileHide">Location</th>
+					<th class="mobileHide">Cuisine</th>
+					<th class="mobileHide">
+						<a href="#" ng-click="orderByField='date'; reverseSort = !reverseSort" class="nowrap">
+							Visited
+							<span ng-show="orderByField == 'date'"><span ng-show="!reverseSort"><span class="glyphicon glyphicon-chevron-up"></span></span>
+							<span ng-show="reverseSort"><span class="glyphicon glyphicon-chevron-down"></span></span></span>
+						</a>
+					</th>
+					<th class="mobileHide">Comments</th>
+					<% if(user){ %>
+					<th class="align-right"></th>
+					<% } %>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-hide="loading == false">
+					<td colspan="10" class="loaderGif">
+						<img src="/img/ajax-loader.gif">
+					</td>
+				</tr>
+				<tr ng-repeat="todo in todos|orderBy:orderByField:reverseSort" class="contentRow" on-last-repeat="finishedRepeat()">
+					<td class="restaurantName">
+						{{ todo.name }}
+					</td>
+					<td class="restaurantLocation">
+						{{ todo.location }}
+					</td>
+					<td class="restaurantCuisine">
+						{{ todo.cuisine }}
+					</td>
+					<td class="nowrap restaurantDate">
+						{{ todo.dateReadable }}
+					</td>
+					<td class="rating-table">
+						<table>
+							<tr ng-repeat="rating in todo.ratings">
+								<td class="ratingAuthor" ng-if="rating.notes != undefined || rating.rating != undefined">
+									{{rating.author}}:
+								</td>
+								<td ng-if="rating.notes == undefined && rating.rating == undefined">
+
+								</td>
+								<td class="rest-description">
+									{{rating.notes}}
+								</td>
+								<td class="star-cell">
+									<input value="{{rating.rating}}" class="starRatingView"  data-size="xs"  data-rtl="false">
+								</td>
+							</tr>
+						</table>
+					</td>
+					<% if(user){ %>
+					<td class="align-right">
+						<button type="button" class="btn btn-info" data-toggle="modal" data-target="#editModal" ng-click="editTodo(todo)">Edit</button>
+					</td>
+					<% } %>
+				</tr>
+			</tbody>
+		</table>
+		<% if(user){ %>
+		<div class="row">
+			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModal">Add Restaurant</button>
+			<a class="btn btn-default logout" href="/logout">Logout</a>
+		</div>
+		<% } %>
+
+		<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addResturant" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="myModalLabel">Add Resturant</h4>
+					</div>
+					<form class="add-restaurant-form">
+						<div class="modal-body">
+							<div class="form-group">
+							    <label for="nameField">Resturant Name</label>
+								<input ng-model="formData.name" type="text" class="form-control required" id="nameField" placeholder="Resturant Name">
+							</div>
+							<div class="form-group">
+							    <label for="addLocationField">Location</label>
+								<input ng-model="formData.location" type="text" class="form-control required" id="addLocationField" placeholder="Location">
+							</div>
+							<div class="form-group">
+								<label for="cuisine">Cuisine</label>
+								<select ng-model="formData.cuisine" id="cuisine" class="form-control">
+									<option selected></option>
+									<option>African</option>
+									<option>American</option>
+									<option>Argentinian</option>
+									<option>Asian</option>
+									<option>Bagels</option>
+									<option>BBQ</option>
+									<option>Belgian</option>
+									<option>Brazilian</option>
+									<option>Breakfast</option>
+									<option>Brunch</option>
+									<option>Bubble Tea</option>
+									<option>Burgers</option>
+									<option>Cajun and Creole</option>
+									<option>Californian Cuisine</option>
+									<option>Cambodian</option>
+									<option>Caribbean</option>
+									<option>Cheesesteaks</option>
+									<option>Chinese</option>
+									<option>Churrascaria</option>
+									<option>Costa Rican</option>
+									<option>Crepes</option>
+									<option>Cuban</option>
+									<option>Deli</option>
+									<option>Dessert</option>
+									<option>Dim Sum &amp; Dumplings</option>
+									<option>Diner</option>
+									<option>English</option>
+									<option>Farm to Table</option>
+									<option>Filipino</option>
+									<option>French</option>
+									<option>Frozen Yogurt Dessert</option>
+									<option>German</option>
+									<option>Gluten-Free</option>
+									<option>Greek</option>
+									<option>Grocery Items</option>
+									<option>Haitian</option>
+									<option>Halal</option>
+									<option>Hawaiian</option>
+									<option>Healthy</option>
+									<option>Hot Dogs</option>
+									<option>Indian</option>
+									<option>Indonesian</option>
+									<option>Irish</option>
+									<option>Italian</option>
+									<option>Jamaican</option>
+									<option>Japanese</option>
+									<option>Juices</option>
+									<option>Korean</option>
+									<option>Kosher</option>
+									<option>Late-Night</option>
+									<option>Latin-American</option>
+									<option>Lebanese</option>
+									<option>Lunch-Specials</option>
+									<option>Malaysian</option>
+									<option>Mediterranean</option>
+									<option>Mexican</option>
+									<option>Middle-Eastern</option>
+									<option>Moroccan</option>
+									<option>Noodle-Shops</option>
+									<option>Organic</option>
+									<option>Pakistani</option>
+									<option>Peruvian</option>
+									<option>Pizza</option>
+									<option>Polish</option>
+									<option>Portuguese</option>
+									<option>Russian</option>
+									<option>Salads</option>
+									<option>Sandwiches-Wraps</option>
+									<option>Scandinavian</option>
+									<option>Seafood</option>
+									<option>Smoothies-Shakes</option>
+									<option>Soup</option>
+									<option>Southern and Soul</option>
+									<option>Spanish</option>
+									<option>Sri-Lankan</option>
+									<option>Steakhouse</option>
+									<option>Sushi</option>
+									<option>Sweets and Candy</option>
+									<option>Taiwanese</option>
+									<option>Thai</option>
+									<option>Turkish</option>
+									<option>Vegan</option>
+									<option>Vegetarian</option>
+									<option>Venezuelan</option>
+									<option>Vietnamese</option>
+									<option>Wings</option>
+								</select>
+							</div>
+							<div class="form-group">
+							    <label for="dateField">Date Visited</label>
+								<input ng-model="formData.date" type="text" class="form-control dateField" placeholder="Date visited">
+							</div>
+							<div class="form-group">
+							    <label for="">Rating</label>
+								<input ng-model="formData.rating" type="number" class="starRatingAdd" min=0 max=5 step=0.5 data-size="xs" >
+							</div>
+							<div class="form-group">
+							    <label for="comments">Comments</label>
+								<textarea id="comments" ng-model="formData.comments" class="form-control" rows="3"></textarea>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+							<button type="button" class="btn btn-primary validate-form" ng-click="createTodo()">Add Restaurant!</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade editResturant" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editResturant" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="myModalLabel">Edit Resturant</h4>
+					</div>
+					<form>
+						<div class="modal-body">
+							<div class="form-group">
+							    <label for="addNameField">Resturant Name</label>
+								<input ng-model="editingItem.name" type="text" class="form-control" data-field="name" id="addNameField" placeholder="">
+							</div>
+							<div class="form-group">
+							    <label for="locationField">Location</label>
+								<input ng-model="editingItem.location" type="text" class="form-control" data-field="location" id="locationField" placeholder="">
+							</div>
+							<div class="form-group">
+								<label for="editCuisine">Cuisine</label>
+								<select ng-model="editingItem.cuisine" id="editCuisine" class="form-control">
+									<option selected></option>
+									<option>African</option>
+									<option>American</option>
+									<option>Argentinian</option>
+									<option>Asian</option>
+									<option>Bagels</option>
+									<option>BBQ</option>
+									<option>Belgian</option>
+									<option>Brazilian</option>
+									<option>Breakfast</option>
+									<option>Brunch</option>
+									<option>Bubble Tea</option>
+									<option>Burgers</option>
+									<option>Cajun and Creole</option>
+									<option>Californian Cuisine</option>
+									<option>Cambodian</option>
+									<option>Caribbean</option>
+									<option>Cheesesteaks</option>
+									<option>Chinese</option>
+									<option>Churrascaria</option>
+									<option>Costa Rican</option>
+									<option>Crepes</option>
+									<option>Cuban</option>
+									<option>Deli</option>
+									<option>Dessert</option>
+									<option>Dim Sum &amp; Dumplings</option>
+									<option>Diner</option>
+									<option>English</option>
+									<option>Farm to Table</option>
+									<option>Filipino</option>
+									<option>French</option>
+									<option>Frozen Yogurt Dessert</option>
+									<option>German</option>
+									<option>Gluten-Free</option>
+									<option>Greek</option>
+									<option>Grocery Items</option>
+									<option>Haitian</option>
+									<option>Halal</option>
+									<option>Hawaiian</option>
+									<option>Healthy</option>
+									<option>Hot Dogs</option>
+									<option>Indian</option>
+									<option>Indonesian</option>
+									<option>Irish</option>
+									<option>Italian</option>
+									<option>Jamaican</option>
+									<option>Japanese</option>
+									<option>Juices</option>
+									<option>Korean</option>
+									<option>Kosher</option>
+									<option>Late-Night</option>
+									<option>Latin-American</option>
+									<option>Lebanese</option>
+									<option>Lunch-Specials</option>
+									<option>Malaysian</option>
+									<option>Mediterranean</option>
+									<option>Mexican</option>
+									<option>Middle-Eastern</option>
+									<option>Moroccan</option>
+									<option>Noodle-Shops</option>
+									<option>Organic</option>
+									<option>Pakistani</option>
+									<option>Peruvian</option>
+									<option>Pizza</option>
+									<option>Polish</option>
+									<option>Portuguese</option>
+									<option>Russian</option>
+									<option>Salads</option>
+									<option>Sandwiches-Wraps</option>
+									<option>Scandinavian</option>
+									<option>Seafood</option>
+									<option>Smoothies-Shakes</option>
+									<option>Soup</option>
+									<option>Southern and Soul</option>
+									<option>Spanish</option>
+									<option>Sri-Lankan</option>
+									<option>Steakhouse</option>
+									<option>Sushi</option>
+									<option>Sweets and Candy</option>
+									<option>Taiwanese</option>
+									<option>Thai</option>
+									<option>Turkish</option>
+									<option>Vegan</option>
+									<option>Vegetarian</option>
+									<option>Venezuelan</option>
+									<option>Vietnamese</option>
+									<option>Wings</option>
+								</select>
+							</div>
+							<div class="form-group">
+							    <label for="dateField">Date Visited</label>
+								<input ng-model="editingItem.dateReadable" type="text" class="form-control dateField" placeholder="Date visited">
+							</div>
+							<div class="form-group">
+							    <label for="">Rating - {{editingItem.currentUserRating.rating}}</label>
+								<input ng-model="editingItem.currentUserRating.rating" value="{{editingItem.currentUserRating.rating}}" class="starRatingEdit" min=0 max=5 step=0.5 data-size="xs" >
+							</div>
+							<div class="form-group">
+							    <label for="editComments">Comments</label>
+								<textarea id="editComments" ng-model="editingItem.currentUserRating.notes" class="form-control" rows="3"></textarea>
+							</div>
+							<div class="form-group">
+								<label for="uploadPhotos">Upload Photos</label>
+								<input type="file" id="imgUpload" class="imgUpload" multiple/>
+							</div>
+
+							<div class="uploaded-imgs">
+								<ul></ul>
+							</div>
+
+						</div>
+
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+							<button type="button" class="btn btn-danger" ng-click="deleteTodo()">Delete</button>
+							<button type="button" class="btn btn-primary" ng-click="updateTodo()">Update</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="login" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="myModalLabel">Login</h4>
+					</div>
+					<form action="/users/login" method="post">
+						<div class="modal-body">
+							<div class="form-group">
+							    <label for="email">What's your email?</label>
+								<input type="text" name="email" class="form-control" id="email" placeholder="Email">
+							</div>
+							<div class="form-group">
+							    <label for="password">What's your password? (case sensitive)</label>
+								<input type="password" name="password" class="form-control" id="password" placeholder="Password">
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+							<button type="submit" class="btn btn-primary">Login</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div> -->
+	<script src="/index.js"></script>
+</body>
+</html>
