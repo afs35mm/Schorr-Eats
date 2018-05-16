@@ -1,22 +1,38 @@
 import React from 'react';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import PropTypes from 'prop-types';
+import { Modal } from 'reactstrap';
 
-const DomModal = ({modalType, showModal, toggleModal}) => {
+import LoginModal from './modals/login';
+
+const DomModal = ({ modalType, showModal, toggleModal }) => {
+    let modalContent;
+    if (modalType === 'login') {
+        modalContent = <LoginModal toggleModal={toggleModal} />;
+    } else {
+        modalContent = null;
+    }
     return (
         <div>
-            <Modal isOpen={showModal} toggle={() => {toggleModal(false)}}>
-                <ModalHeader toggle={() => {toggleModal(false)}}>Modal title</ModalHeader>
-                <ModalBody>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                </ModalBody>
-                <ModalFooter>
-                    <Button color="primary" onClick={() => {toggleModal(false)}}>Do Something</Button>{' '}
-                    <Button color="secondary" onClick={() => {toggleModal(false)}}>Cancel</Button>
-                </ModalFooter>
+            <Modal
+                isOpen={showModal}
+                toggle={() => {
+                    toggleModal(null);
+                }}>
+                {modalContent}
             </Modal>
         </div>
     );
 };
 
-export default DomModal;
+DomModal.propTypes = {
+    modalType: PropTypes.string,
+    showModal: PropTypes.bool,
+    toggleModal: PropTypes.func.isRequired,
+};
 
+DomModal.defaultProps = {
+    modalType: '',
+    showModal: false,
+};
+
+export default DomModal;

@@ -14,19 +14,17 @@ import '../styles/index.scss';
 class SchorrEats extends React.Component {
     constructor(props, context) {
         super(props, context);
-
         this.state = {
             showModal: false,
             modalType: null,
         };
 
-        this.toggle = this.toggle.bind(this);
+        this.toggleModal = this.toggleModal.bind(this);
     }
 
-    toggle(modalType) {
-        console.log(modalType);
+    toggleModal(modalType) {
         this.setState({
-            modal: modalType,
+            modalType,
             showModal: !!modalType,
         });
     }
@@ -36,9 +34,9 @@ class SchorrEats extends React.Component {
                 <Modal
                     modalType={this.state.modalType}
                     showModal={this.state.showModal}
-                    toggleModal={this.toggle}
+                    toggleModal={this.toggleModal}
                 />
-                <NavBar showModal={this.toggle} />
+                <NavBar toggleModal={this.toggleModal} />
                 <div className="container-fluid">
                     <RatingsTable />
                 </div>
