@@ -1,14 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
+import 'bootstrap';
 
 import RatingsTable from './ratings-table';
 import NavBar from './dom-components/nav-bar';
 import Modal from './dom-components/modal';
 
-import { Button } from 'reactstrap';
-
-import 'bootstrap';
 import '../styles/index.scss';
 
 class SchorrEats extends React.Component {
@@ -23,9 +21,10 @@ class SchorrEats extends React.Component {
     }
 
     toggleModal(modalType) {
+        const showModal = !!modalType;
         this.setState({
             modalType,
-            showModal: !!modalType,
+            showModal,
         });
     }
     render() {

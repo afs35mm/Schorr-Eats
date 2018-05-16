@@ -1,17 +1,17 @@
-var login = require('./login');
-var signup = require('./signup');
-var User = require('../models/user');
+const login = require('./login');
+const signup = require('./signup');
+const User = require('../models/user');
 
-module.exports = function(passport){
-    passport.serializeUser(function(user, done) {
+module.exports = function(passport) {
+    passport.serializeUser((user, done) => {
         done(null, user._id);
     });
 
-    passport.deserializeUser(function(id, done) {
-        User.findById(id, function(err, user) {
+    passport.deserializeUser((id, done) => {
+        User.findById(id, (err, user) => {
             done(err, user);
         });
     });
     login(passport);
     signup(passport);
-}
+};

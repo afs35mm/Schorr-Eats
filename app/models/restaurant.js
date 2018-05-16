@@ -13,7 +13,6 @@ const ratingsSchema = new mongoose.Schema({
         type: Number,
     },
 });
-console.log(process.env.RESTAURANTS_DB);
 module.exports = mongoose.createConnection(process.env.RESTAURANTS_DB).model(
     'Restaurant',
     new mongoose.Schema({

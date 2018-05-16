@@ -20,7 +20,7 @@
     "method-override": "~2.1.1",
     "mongoose": "~4.9.3",
     "morgan": "~1.1.1",
-    "passport": "~0.2.1",
+    "passport": "^0.2.2",
     "passport-http": "~0.2.2",
     "passport-local": "~1.0.0",
     "pikaday": "^1.5.1",

@@ -34,14 +34,45 @@ module.exports = function(app, passport) {
         });
     });
 
-    app.post(
-        '/users/login',
-        passport.authenticate('local-login', {
-            successRedirect: '/',
-            failureRedirect: '/',
-            failureFlash: true,
-        }),
-    );
+    app.post('/users/login', (req, res, next) => {
+        passport.use(
+            new LocalStrategy((username, password, done) => {
+                console.log(username, password);
+                User.findOne({ username }, (err, user) => {
+                    if (err) {
+                        return done(err);
+                    }
+                    if (!user) {
+                        return done(null, false, { message: 'Incorrect username.' });
+                    }
+                    if (!user.validPassword(password)) {
+                        return done(null, false, { message: 'Incorrect password.' });
+                    }
+                    return done(null, user);
+                });
+            }),
+        );
+    });
+
+    // app.post('/users/login', (req, res, next) => {
+    //     passport.authenticate('local-login', (err, user, info) => {
+    //         if (err) {
+    //             return next(err);
+    //         }
+    //         if (!user) {
+    //             return res.redirect('/login');
+    //         }
+    //         req.logIn(user, err => {
+    //             if (err) {
+    //                 return next(err);
+    //             }
+    //             return res.redirect(`/users/${user.username}`);
+    //         });
+    //     })(req, res, next);
+    // });
+
+    // app.post('/login', passport.authenticate('local', { successRedirect: '/',
+    //                                                 failureRedirect: '/login' }));
 
     app.get('/api/restaurants', (req, res) => {
         getRestaurants(res);
