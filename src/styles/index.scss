@@ -1,5 +1,203 @@
 @import "~bootstrap/scss/bootstrap.scss";
 
+$star-yellow: #f7e534;
+$star-outline: #e7e7e7;
+
 .pizzalogo {
     margin-right: 5px;
+}
+
+.main-table {
+    font-size: 12px;
+
+    .rest-row {
+        > td:first-child {
+            width: 10%;
+        }
+        > td:nth-child(2) {
+            width: 5%;
+        }
+        > td:nth-child(3) {
+            width: 5%;
+        }
+        > td:nth-child(4) {
+            width: 10%;
+        }
+        > td:nth-child(5) {
+            width: 70%;
+        }
+    }
+
+    .comments-cell {
+        padding: 0;
+
+        > table {
+            border: none;
+            width: 100%;
+
+            tr:first-child td {
+                border-top: none;
+            }
+            tr:last-child {
+                border-bottom: none;
+            }
+
+            tr {
+                td:first-child {
+                    width: 10%;
+                }
+                td:nth-child(2) {
+                    width: 72%;
+                }
+                td:nth-child(3) {
+                    width: 18%;
+                }
+            }
+            svg[class*="star-"] {
+                stroke: $star-outline;
+                fill: transparent;
+
+                &.star-unrated {
+                    use:nth-child(1),
+                    use:nth-child(2),
+                    use:nth-child(3),
+                    use:nth-child(4),
+                    use:nth-child(5) {
+                        fill: #e7e7e7;
+                    }
+                }
+                &.star-0-5 {
+                    use:nth-child(1) {
+                        fill: url(#halfGradient);
+                    }
+                }
+                &.star-1 {
+                    use:nth-child(1) {
+                        fill: $star-yellow;
+                    }
+                }
+                &.star-1-5 {
+                    use:nth-child(1) {
+                        fill: $star-yellow;
+                    }
+                    use:nth-child(2) {
+                        fill: url(#halfGradient);
+                    }
+                }
+                &.star-2 {
+                    use:nth-child(1),
+                    use:nth-child(2) {
+                        fill: $star-yellow;
+                    }
+                }
+                &.star-2-5 {
+                    use:nth-child(1),
+                    use:nth-child(2) {
+                        fill: $star-yellow;
+                    }
+                    use:nth-child(3) {
+                        fill: url(#halfGradient);
+                    }
+                }
+                &.star-3 {
+                    use:nth-child(1),
+                    use:nth-child(2),
+                    use:nth-child(3) {
+                        fill: $star-yellow;
+                    }
+                }
+                &.star-3-5 {
+                    use:nth-child(1),
+                    use:nth-child(2),
+                    use:nth-child(3) {
+                        fill: $star-yellow;
+                    }
+                    use:nth-child(3) {
+                        fill: url(#halfGradient);
+                    }
+                }
+                &.star-4 {
+                    use:nth-child(1),
+                    use:nth-child(2),
+                    use:nth-child(3),
+                    use:nth-child(4) {
+                        fill: $star-yellow;
+                    }
+                }
+                &.star-4-5 {
+                    use:nth-child(1),
+                    use:nth-child(2),
+                    use:nth-child(3),
+                    use:nth-child(4) {
+                        fill: $star-yellow;
+                    }
+                    use:nth-child(4) {
+                        fill: url(#halfGradient);
+                    }
+                }
+                &.star-5 {
+                    use:nth-child(1),
+                    use:nth-child(2),
+                    use:nth-child(3),
+                    use:nth-child(4),
+                    use:nth-child(5) {
+                        fill: $star-yellow;
+                    }
+                }
+
+            }
+            // .star {
+            //     fill: $star-yellow;
+            //     stroke: $star-outline;
+            //     stroke-width: 1;
+            //   }
+            //   .star--half {
+            //     fill:url(#halfGradient);
+            //   }
+            //   .star--empty {
+            //     fill: none;
+            //   }
+            //     svg {
+            //         wvgidth: 20px;
+            //         margin-right: 2px;
+            //         fill: #bbbbbb;
+            //     }
+            //     &.rating-1, {
+            //         svg:first-child {
+            //             fill: $star-yellow;
+            //         }
+            //     }
+            //     &.rating-2, {
+            //         svg:first-child,
+            //         svg:nth-child(2) {
+            //             fill: $star-yellow;
+            //         }
+            //     }
+            //     &.rating-3, {
+            //         svg:first-child,
+            //         svg:nth-child(2),
+            //         svg:nth-child(3) {
+            //             fill: $star-yellow;
+            //         }
+            //     }
+            //     &.rating-4, {
+            //         svg:first-child,
+            //         svg:nth-child(2),
+            //         svg:nth-child(3),
+            //         svg:nth-child(4) {
+            //             fill: $star-yellow;
+            //         }
+            //     }
+            //     &.rating-5, {
+            //         svg:first-child,
+            //         svg:nth-child(2),
+            //         svg:nth-child(3),
+            //         svg:nth-child(4),
+            //         svg:nth-child(5) {
+            //             fill: $star-yellow;
+            //         }
+            //     }
+            // }
+        }
+    }
 }

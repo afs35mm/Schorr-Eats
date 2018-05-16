@@ -41,7 +41,6 @@ module.exports = (env, options) => {
                 $: 'jquery',
                 jQuery: 'jquery',
                 'window.jQuery': 'jquery',
-                Tether: 'tether'
               })
         ],
         output: {

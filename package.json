@@ -26,7 +26,8 @@
     "pikaday": "^1.5.1",
     "popper.js": "^1.14.3",
     "react": "^16.3.2",
-    "react-dom": "^16.3.2"
+    "react-dom": "^16.3.2",
+    "reactstrap": "^6.0.1"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",

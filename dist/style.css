@@ -6040,3 +6040,84 @@ a.text-dark:hover, a.text-dark:focus {
 
 .pizzalogo {
   margin-right: 5px; }
+
+.main-table {
+  font-size: 12px; }
+  .main-table .rest-row > td:first-child {
+    width: 10%; }
+  .main-table .rest-row > td:nth-child(2) {
+    width: 5%; }
+  .main-table .rest-row > td:nth-child(3) {
+    width: 5%; }
+  .main-table .rest-row > td:nth-child(4) {
+    width: 10%; }
+  .main-table .rest-row > td:nth-child(5) {
+    width: 70%; }
+  .main-table .comments-cell {
+    padding: 0; }
+    .main-table .comments-cell > table {
+      border: none;
+      width: 100%; }
+      .main-table .comments-cell > table tr:first-child td {
+        border-top: none; }
+      .main-table .comments-cell > table tr:last-child {
+        border-bottom: none; }
+      .main-table .comments-cell > table tr td:first-child {
+        width: 10%; }
+      .main-table .comments-cell > table tr td:nth-child(2) {
+        width: 72%; }
+      .main-table .comments-cell > table tr td:nth-child(3) {
+        width: 18%; }
+      .main-table .comments-cell > table svg[class*="star-"] {
+        stroke: #e7e7e7;
+        fill: transparent; }
+        .main-table .comments-cell > table svg[class*="star-"].star-unrated use:nth-child(1),
+        .main-table .comments-cell > table svg[class*="star-"].star-unrated use:nth-child(2),
+        .main-table .comments-cell > table svg[class*="star-"].star-unrated use:nth-child(3),
+        .main-table .comments-cell > table svg[class*="star-"].star-unrated use:nth-child(4),
+        .main-table .comments-cell > table svg[class*="star-"].star-unrated use:nth-child(5) {
+          fill: #e7e7e7; }
+        .main-table .comments-cell > table svg[class*="star-"].star-0-5 use:nth-child(1) {
+          fill: url(#halfGradient); }
+        .main-table .comments-cell > table svg[class*="star-"].star-1 use:nth-child(1) {
+          fill: #f7e534; }
+        .main-table .comments-cell > table svg[class*="star-"].star-1-5 use:nth-child(1) {
+          fill: #f7e534; }
+        .main-table .comments-cell > table svg[class*="star-"].star-1-5 use:nth-child(2) {
+          fill: url(#halfGradient); }
+        .main-table .comments-cell > table svg[class*="star-"].star-2 use:nth-child(1),
+        .main-table .comments-cell > table svg[class*="star-"].star-2 use:nth-child(2) {
+          fill: #f7e534; }
+        .main-table .comments-cell > table svg[class*="star-"].star-2-5 use:nth-child(1),
+        .main-table .comments-cell > table svg[class*="star-"].star-2-5 use:nth-child(2) {
+          fill: #f7e534; }
+        .main-table .comments-cell > table svg[class*="star-"].star-2-5 use:nth-child(3) {
+          fill: url(#halfGradient); }
+        .main-table .comments-cell > table svg[class*="star-"].star-3 use:nth-child(1),
+        .main-table .comments-cell > table svg[class*="star-"].star-3 use:nth-child(2),
+        .main-table .comments-cell > table svg[class*="star-"].star-3 use:nth-child(3) {
+          fill: #f7e534; }
+        .main-table .comments-cell > table svg[class*="star-"].star-3-5 use:nth-child(1),
+        .main-table .comments-cell > table svg[class*="star-"].star-3-5 use:nth-child(2),
+        .main-table .comments-cell > table svg[class*="star-"].star-3-5 use:nth-child(3) {
+          fill: #f7e534; }
+        .main-table .comments-cell > table svg[class*="star-"].star-3-5 use:nth-child(3) {
+          fill: url(#halfGradient); }
+        .main-table .comments-cell > table svg[class*="star-"].star-4 use:nth-child(1),
+        .main-table .comments-cell > table svg[class*="star-"].star-4 use:nth-child(2),
+        .main-table .comments-cell > table svg[class*="star-"].star-4 use:nth-child(3),
+        .main-table .comments-cell > table svg[class*="star-"].star-4 use:nth-child(4) {
+          fill: #f7e534; }
+        .main-table .comments-cell > table svg[class*="star-"].star-4-5 use:nth-child(1),
+        .main-table .comments-cell > table svg[class*="star-"].star-4-5 use:nth-child(2),
+        .main-table .comments-cell > table svg[class*="star-"].star-4-5 use:nth-child(3),
+        .main-table .comments-cell > table svg[class*="star-"].star-4-5 use:nth-child(4) {
+          fill: #f7e534; }
+        .main-table .comments-cell > table svg[class*="star-"].star-4-5 use:nth-child(4) {
+          fill: url(#halfGradient); }
+        .main-table .comments-cell > table svg[class*="star-"].star-5 use:nth-child(1),
+        .main-table .comments-cell > table svg[class*="star-"].star-5 use:nth-child(2),
+        .main-table .comments-cell > table svg[class*="star-"].star-5 use:nth-child(3),
+        .main-table .comments-cell > table svg[class*="star-"].star-5 use:nth-child(4),
+        .main-table .comments-cell > table svg[class*="star-"].star-5 use:nth-child(5) {
+          fill: #f7e534; }
