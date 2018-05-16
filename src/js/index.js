@@ -18,8 +18,7 @@ class SchorrEats extends React.Component {
         this.state = {
             showModal: false,
             modalType: null,
-
-        }
+        };
 
         this.toggle = this.toggle.bind(this);
     }
@@ -28,7 +27,7 @@ class SchorrEats extends React.Component {
         console.log(modalType);
         this.setState({
             modal: modalType,
-            showModal: (!!modalType),
+            showModal: !!modalType,
         });
     }
     render() {
@@ -36,8 +35,7 @@ class SchorrEats extends React.Component {
             <div>
                 <Modal
                     modalType={this.state.modalType}
-                        showModal={this.state.showModal}
-
+                    showModal={this.state.showModal}
                     toggleModal={this.toggle}
                 />
                 <NavBar showModal={this.toggle} />
