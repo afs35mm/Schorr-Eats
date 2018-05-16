@@ -1,0 +1,39 @@
+
+{
+  "parser": "babel-eslint",
+  "extends": ["airbnb", "prettier"],
+  "plugins": ["prettier"],
+  "rules": {
+    "indent": [0, 2, { "SwitchCase": 4 }],
+    "react/jsx-indent": [0, 2, { "SwitchCase": 4 }],
+    "react/jsx-indent-props": [0, 2],
+    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
+    "react/prefer-stateless-function": 0,
+    "react/jsx-filename-extension": 0,
+    "react/no-unescaped-entities": ["error", { "forbid": [] }],
+    "react/jsx-closing-bracket-location": [0, {"selfClosing": "after-props"}],
+    "no-nested-ternary": 0,
+    "no-console": "off",
+    "prettier/prettier": [
+      "error",
+      {
+        "singleQuote": true,
+        "tabWidth": 4,
+        "jsxBracketSameLine": true,
+        "printWidth": 100
+      }
+    ]
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "paths": ["src", "./resources/assets/js", "node_modules"]
+      }
+    }
+  }
+}

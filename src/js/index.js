@@ -1,8 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
+
 import RatingsTable from './ratings-table';
 import NavBar from './dom-components/nav-bar';
 import Modal from './dom-components/modal';
+
 import { Button } from 'reactstrap';
 
 import 'bootstrap';
@@ -13,26 +16,37 @@ class SchorrEats extends React.Component {
         super(props, context);
 
         this.state = {
-            modal: false
-        };
+            showModal: false,
+            modalType: null,
+
+        }
 
         this.toggle = this.toggle.bind(this);
     }
 
-    toggle() {
+    toggle(modalType) {
+        console.log(modalType);
         this.setState({
-            modal: !this.state.modal
+            modal: modalType,
+            showModal: (!!modalType),
         });
     }
     render() {
-        return <div>
-            <Modal shouldShow={this.state.modal} toggleModal={this.toggle} />
-            <NavBar showModal={this.toggle} />
-            <div className="container-fluid">
-                <RatingsTable />
-            </div>
-        </div>
-    }
-};
+        return (
+            <div>
+                <Modal
+                    modalType={this.state.modalType}
+                        showModal={this.state.showModal}
 
-ReactDOM.render(<SchorrEats />, document.getElementById("index"));
+                    toggleModal={this.toggle}
+                />
+                <NavBar showModal={this.toggle} />
+                <div className="container-fluid">
+                    <RatingsTable />
+                </div>
+            </div>
+        );
+    }
+}
+
+ReactDOM.render(<SchorrEats />, document.getElementById('index'));

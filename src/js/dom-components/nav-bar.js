@@ -8,7 +8,7 @@ const navBar = ({showModal}) => {
                 SchorrEats.com
             </a>
             <span className="navbar-text ml-auto text-white">
-                <button type="button" className="btn-sm btn btn-primary" onClick={showModal} data-target="#exampleModal">Login</button>
+                <button type="button" className="btn-sm btn btn-primary" onClick={() => {showModal('login')}} data-target="#exampleModal">Login</button>
             </span>
         </nav>
     );
