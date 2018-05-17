@@ -74,49 +74,139 @@ class AddRestaurantModal extends React.Component {
                 <ModalBody>
                     <form>
                         <div className="form-group">
-                            <label htmlFor="exampleInputEmail1">Email address</label>
+                            <label htmlFor="name">Restaurant Name</label>
                             <input
-                                type="email"
+                                type="text"
                                 className="form-control"
-                                id="exampleInputEmail1"
-                                aria-describedby="emailHelp"
-                                placeholder="Enter email"
-                                value={this.state.email}
-                                onChange={this.handleEmailChange}
+                                id="name"
+                                aria-describedby="date"
+                                placeholder="Restaurant name"
+                                value={this.state.name}
+                                onChange={this.handleNameChange}
                             />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="exampleInputPassword1">Password</label>
+                            <label htmlFor="name">Location</label>
                             <input
-                                type="password"
+                                type="text"
                                 className="form-control"
-                                id="exampleInputPassword1"
-                                placeholder="Password"
-                                value={this.state.password}
-                                onChange={this.handlePassWordChange}
-                                onKeyPress={e => {
-                                    if (e.charCode === 13) {
-                                        this.loginReq({
-                                            email: this.state.email,
-                                            password: this.state.password,
-                                        });
-                                    }
-                                }}
+                                id="name"
+                                aria-describedby="restaurantLocation"
+                                placeholder="Restaurant location"
+                                value={this.state.location}
+                                onChange={this.handleLocationChange}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="cuisine">Cuisine</label>
+                            <select id="cuisine" className="form-control">
+                                <option defaultValue value=""/>
+                                <option value="African">African</option>
+                                <option value="American">American</option>
+                                <option value="Argentinian">Argentinian</option>
+                                <option value="Asian">Asian</option>
+                                <option value="Bagels">Bagels</option>
+                                <option value="BBQ">BBQ</option>
+                                <option value="Belgian">Belgian</option>
+                                <option value="Brazilian">Brazilian</option>
+                                <option value="Breakfast">Breakfast</option>
+                                <option value="Brunch">Brunch</option>
+                                <option value="Bubble Tea">Bubble Tea</option>
+                                <option value="Burgers">Burgers</option>
+                                <option value="Cajun and Creole">Cajun and Creole</option>
+                                <option value="Californian Cuisine">Californian Cuisine</option>
+                                <option value="Cambodian">Cambodian</option>
+                                <option value="Caribbean">Caribbean</option>
+                                <option value="Cheesesteaks">Cheesesteaks</option>
+                                <option value="Chinese">Chinese</option>
+                                <option value="Churrascaria">Churrascaria</option>
+                                <option value="Costa Rican">Costa Rican</option>
+                                <option value="Crepes">Crepes</option>
+                                <option value="Cuban">Cuban</option>
+                                <option value="Deli">Deli</option>
+                                <option value="Dessert">Dessert</option>
+                                <option value="Dim Sum &amp; Dumplings">Dim Sum &amp; Dumplings</option>
+                                <option value="Diner">Diner</option>
+                                <option value="English">English</option>
+                                <option value="Farm to Table">Farm to Table</option>
+                                <option value="Filipino">Filipino</option>
+                                <option value="French">French</option>
+                                <option value="Frozen Yogurt Dessert">Frozen Yogurt Dessert</option>
+                                <option value="German">German</option>
+                                <option value="Gluten-Free">Gluten-Free</option>
+                                <option value="Greek">Greek</option>
+                                <option value="Grocery Items">Grocery Items</option>
+                                <option value="Haitian">Haitian</option>
+                                <option value="Halal">Halal</option>
+                                <option value="Hawaiian">Hawaiian</option>
+                                <option value="Healthy">Healthy</option>
+                                <option value="Hot Dogs">Hot Dogs</option>
+                                <option value="Indian">Indian</option>
+                                <option value="Indonesian">Indonesian</option>
+                                <option value="Irish">Irish</option>
+                                <option value="Italian">Italian</option>
+                                <option value="Jamaican">Jamaican</option>
+                                <option value="Japanese">Japanese</option>
+                                <option value="Juices">Juices</option>
+                                <option value="Korean">Korean</option>
+                                <option value="Kosher">Kosher</option>
+                                <option value="Late-Night">Late-Night</option>
+                                <option value="Latin-American">Latin-American</option>
+                                <option value="Lebanese">Lebanese</option>
+                                <option value="Lunch-Specials">Lunch-Specials</option>
+                                <option value="Malaysian">Malaysian</option>
+                                <option value="Mediterranean">Mediterranean</option>
+                                <option value="Mexican">Mexican</option>
+                                <option value="Middle-Eastern">Middle-Eastern</option>
+                                <option value="Moroccan">Moroccan</option>
+                                <option value="Noodle-Shops">Noodle-Shops</option>
+                                <option value="Organic">Organic</option>
+                                <option value="Pakistani">Pakistani</option>
+                                <option value="Peruvian">Peruvian</option>
+                                <option value="Pizza">Pizza</option>
+                                <option value="Polish">Polish</option>
+                                <option value="Portuguese">Portuguese</option>
+                                <option value="Russian">Russian</option>
+                                <option value="Salads">Salads</option>
+                                <option value="Sandwiches-Wraps">Sandwiches-Wraps</option>
+                                <option value="Scandinavian">Scandinavian</option>
+                                <option value="Seafood">Seafood</option>
+                                <option value="Smoothies-Shakes">Smoothies-Shakes</option>
+                                <option value="Soup">Soup</option>
+                                <option value="Southern and Soul">Southern and Soul</option>
+                                <option value="Spanish">Spanish</option>
+                                <option value="Sri-Lankan">Sri-Lankan</option>
+                                <option value="Steakhouse">Steakhouse</option>
+                                <option value="Sushi">Sushi</option>
+                                <option value="Sweets and Candy">Sweets and Candy</option>
+                                <option value="Taiwanese">Taiwanese</option>
+                                <option value="Thai">Thai</option>
+                                <option value="Turkish">Turkish</option>
+                                <option value="Vegan">Vegan</option>
+                                <option value="Vegetarian">Vegetarian</option>
+                                <option value="Venezuelan">Venezuelan</option>
+                                <option value="Vietnamese">Vietnamese</option>
+                                <option value="Wings">Wings</option>
+                            </select>
+                        </div>
+                        {/* https://github.com/Hacker0x01/react-datepicker */}
+                        <div className="form-group">
+                            <label htmlFor="name">Date visited</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="date"
+                                aria-describedby="date"
+                                placeholder="Date visited"
+                                value={this.state.date}
+                                onChange={this.handleDateChange}
                             />
                         </div>
                     </form>
                 </ModalBody>
                 <ModalFooter>
-                    <Button
-                        color="primary"
-                        onClick={() => {
-                            // toggleModal(null);
-                            this.loginReq({
-                                email: this.state.email,
-                                password: this.state.password,
-                            });
-                        }}>
-                        Login
+                    <Button color="primary" onClick={() => {}}>
+                        Save
                     </Button>
                     <Button
                         color="secondary"
