@@ -26,7 +26,14 @@ class Login extends React.Component {
                 email,
                 password,
             }),
-        });
+        })
+            .then(resp => resp.json())
+            .then(data => {
+                console.log(data);
+            })
+            .catch(err => {
+                console.log(err);
+            });
     }
 
     handleEmailChange(e) {
@@ -69,6 +76,16 @@ class Login extends React.Component {
                                 placeholder="Password"
                                 value={this.state.password}
                                 onChange={this.handlePassWordChange}
+                                onKeyPress={e => {
+                                    console.log(e.keyCode);
+                                    console.log(e);
+                                    // if (e.keyCode === 13) {
+                                    //     this.loginReq({
+                                    //         email: this.state.email,
+                                    //         password: this.state.password,
+                                    //     });
+                                    // }
+                                }}
                             />
                         </div>
                     </form>
