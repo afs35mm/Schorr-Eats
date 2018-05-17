@@ -29,12 +29,19 @@ class Login extends React.Component {
                 password,
             }),
         })
-            //https://stackoverflow.com/questions/36225862/handle-a-500-response-with-the-fetch-api
-            .then(resp => resp.json())
+            .then((resp) => {
+                console.log(resp);
+                if (resp.status === 200) {
+                    return resp.json();
+                }
+
+                throw new Error();
+            })
             .then(data => {
                 console.log(data);
             })
             .catch(err => {
+                console.log(err);
                 this.setState({
                     error: true,
                     errorMessage: err.message,

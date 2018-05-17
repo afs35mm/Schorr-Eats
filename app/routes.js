@@ -40,7 +40,7 @@ module.exports = function(app, passport) {
                 return res.status(500).json({});
             }
             if (!user) {
-                return res.status(500).json({
+                return res.status(401).json({
                     message: 'Invalid email and/or password combination',
                 });
             }
