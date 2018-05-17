@@ -1,4 +1,4 @@
 {
     "verbose": true,
-    "ignore": ["src/js/**/*.js", "views/**/*.*"]
+    "watch": ["app/**"]
 }

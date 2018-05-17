@@ -50,7 +50,7 @@ module.exports = function(app, passport) {
                         message: "Something is'nt right... ",
                     });
                 }
-                return res.status(200).json({});
+                return res.status(200).json(user);
             });
         })(req, res, next);
     });
@@ -175,8 +175,9 @@ module.exports = function(app, passport) {
 
     app.get('/', ensureAuthenticated, (req, res) => {
         res.render('index.ejs', {
-            user: req.user,
-            message: req.flash('loginMessage'),
+            bootstrap: {
+                user: req.user,
+            },
         });
     });
 };

@@ -5,6 +5,10 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Schorr Eats</title>
     <link rel="stylesheet" href="style.css">
+    <script>
+        // Make sure this is sanatized before inputing into DOM
+        var dataBs = <%- JSON.stringify(bootstrap) %>;
+    </script>
 </head>
 <body>
     <%- include partials/star-svg-sprite.ejs %>
