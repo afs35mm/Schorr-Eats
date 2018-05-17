@@ -13,7 +13,7 @@ function getRestaurants(res) {
 }
 
 function ensureAuthenticated(req, res, next) {
-    console.log(req.isAuthenticated());
+    req.isAuthenticated();
     return next();
 }
 
@@ -40,11 +40,15 @@ module.exports = function(app, passport) {
                 return res.status(500).json({});
             }
             if (!user) {
-                return res.status(404).json({});
+                return res.status(500).json({
+                    message: 'Invalid email and/or password combination',
+                });
             }
             req.login(user, err => {
                 if (err) {
-                    return res.status(500).json({});
+                    return res.status(500).json({
+                        message: "Something is'nt right... ",
+                    });
                 }
                 return res.status(200).json({});
             });
@@ -170,7 +174,6 @@ module.exports = function(app, passport) {
     });
 
     app.get('/', ensureAuthenticated, (req, res) => {
-        console.log(req.user);
         res.render('index.ejs', {
             user: req.user,
             message: req.flash('loginMessage'),

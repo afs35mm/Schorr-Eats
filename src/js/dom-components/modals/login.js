@@ -9,6 +9,8 @@ class Login extends React.Component {
             toggleModal: props.toggleModal,
             email: '',
             password: '',
+            error: false,
+            errorMessage: null,
         };
         this.handleEmailChange = this.handleEmailChange.bind(this);
         this.handlePassWordChange = this.handlePassWordChange.bind(this);
@@ -27,12 +29,16 @@ class Login extends React.Component {
                 password,
             }),
         })
+            //https://stackoverflow.com/questions/36225862/handle-a-500-response-with-the-fetch-api
             .then(resp => resp.json())
             .then(data => {
                 console.log(data);
             })
             .catch(err => {
-                console.log(err);
+                this.setState({
+                    error: true,
+                    errorMessage: err.message,
+                });
             });
     }
 
@@ -45,6 +51,11 @@ class Login extends React.Component {
     }
 
     render() {
+        const error = this.state.error ? (
+            <div className="alert alert-danger" role="alert">
+                {this.state.errorMessage}
+            </div>
+        ) : null;
         return (
             <div>
                 <ModalHeader
@@ -56,6 +67,7 @@ class Login extends React.Component {
                 <ModalBody>
                     <form>
                         <div className="form-group">
+                            {error}
                             <label htmlFor="exampleInputEmail1">Email address</label>
                             <input
                                 type="email"
@@ -77,14 +89,12 @@ class Login extends React.Component {
                                 value={this.state.password}
                                 onChange={this.handlePassWordChange}
                                 onKeyPress={e => {
-                                    console.log(e.keyCode);
-                                    console.log(e);
-                                    // if (e.keyCode === 13) {
-                                    //     this.loginReq({
-                                    //         email: this.state.email,
-                                    //         password: this.state.password,
-                                    //     });
-                                    // }
+                                    if (e.charCode === 13) {
+                                        this.loginReq({
+                                            email: this.state.email,
+                                            password: this.state.password,
+                                        });
+                                    }
                                 }}
                             />
                         </div>
