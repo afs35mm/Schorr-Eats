@@ -30,7 +30,7 @@ app.use(
         resave: false,
         saveUninitialized: true,
         // only working with HTTP for now :(
-        // cookie: {secure: true}
+        // cookie: { secure: false },
     }),
 );
 app.use(passport.initialize());

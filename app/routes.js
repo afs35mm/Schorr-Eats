@@ -13,7 +13,7 @@ function getRestaurants(res) {
 }
 
 function ensureAuthenticated(req, res, next) {
-    req.isAuthenticated();
+    console.log(req.isAuthenticated());
     return next();
 }
 
@@ -35,44 +35,21 @@ module.exports = function(app, passport) {
     });
 
     app.post('/users/login', (req, res, next) => {
-        passport.use(
-            new LocalStrategy((username, password, done) => {
-                console.log(username, password);
-                User.findOne({ username }, (err, user) => {
-                    if (err) {
-                        return done(err);
-                    }
-                    if (!user) {
-                        return done(null, false, { message: 'Incorrect username.' });
-                    }
-                    if (!user.validPassword(password)) {
-                        return done(null, false, { message: 'Incorrect password.' });
-                    }
-                    return done(null, user);
-                });
-            }),
-        );
+        passport.authenticate('local-login', (err, user, info) => {
+            if (err) {
+                return res.status(500).json({});
+            }
+            if (!user) {
+                return res.status(404).json({});
+            }
+            req.login(user, err => {
+                if (err) {
+                    return res.status(500).json({});
+                }
+                return res.status(200).json({});
+            });
+        })(req, res, next);
     });
-
-    // app.post('/users/login', (req, res, next) => {
-    //     passport.authenticate('local-login', (err, user, info) => {
-    //         if (err) {
-    //             return next(err);
-    //         }
-    //         if (!user) {
-    //             return res.redirect('/login');
-    //         }
-    //         req.logIn(user, err => {
-    //             if (err) {
-    //                 return next(err);
-    //             }
-    //             return res.redirect(`/users/${user.username}`);
-    //         });
-    //     })(req, res, next);
-    // });
-
-    // app.post('/login', passport.authenticate('local', { successRedirect: '/',
-    //                                                 failureRedirect: '/login' }));
 
     app.get('/api/restaurants', (req, res) => {
         getRestaurants(res);
@@ -193,6 +170,7 @@ module.exports = function(app, passport) {
     });
 
     app.get('/', ensureAuthenticated, (req, res) => {
+        console.log(req.user);
         res.render('index.ejs', {
             user: req.user,
             message: req.flash('loginMessage'),

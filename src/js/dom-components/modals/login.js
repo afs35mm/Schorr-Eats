@@ -15,11 +15,13 @@ class Login extends React.Component {
     }
 
     loginReq({ email, password }) {
-        console.log(this);
-        console.log(email);
-        console.log(password);
         fetch('/users/login', {
             method: 'POST',
+            credentials: 'same-origin',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
             body: JSON.stringify({
                 email,
                 password,
