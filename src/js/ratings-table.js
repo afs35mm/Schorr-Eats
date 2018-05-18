@@ -5,14 +5,18 @@ class RatingsTable extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            isLoggedIn: props.isLoggedIn,
             restaurants: [],
+            editRestaurant: props.editRestaurant,
         };
     }
+
     componentWillMount() {
         fetch('/api/restaurants')
             .then(resp => resp.json())
             .then(restaurants => this.setState({ restaurants }));
     }
+
     render() {
         const rows = this.state.restaurants.length
             ? this.state.restaurants.map(rest => {
@@ -23,6 +27,16 @@ class RatingsTable extends Component {
                           <td>
                               <StarRating rating={rating.rating} />
                           </td>
+                          {this.state.isLoggedIn ? (
+                              <td>
+                                  <button
+                                      type="button"
+                                      onClick={() => this.state.editRestaurant(rest._id)}
+                                      className="btn btn-info btn-sm">
+                                      Edit
+                                  </button>
+                              </td>
+                          ) : null}
                       </tr>
                   ));
                   return (

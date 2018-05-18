@@ -7,24 +7,31 @@ class StarRating extends Component {
             rating: props.rating,
             editable: props.editable,
             hoverRating: null,
+            onClickCb: props.onClickCb,
         };
     }
-    onMouseLeave(e) {
+    onMouseLeave() {
         this.setState({ hoverRating: null });
     }
 
     onStarClick(e) {
         const rect = e.currentTarget.getBoundingClientRect();
-        const width = rect.right - rect.left;;
+        const width = rect.right - rect.left;
         const percentageLeft = (e.nativeEvent.clientX - rect.left) / width;
-        this.setState({ rating: this.roundPercentage(percentageLeft) });
+        this.setState(() => {
+            const newState = {
+                rating: this.roundPercentage(percentageLeft),
+            };
+            if (this.state.onClickCb) {
+                this.state.onClickCb(newState.rating);
+            }
+            return newState;
+        });
     }
 
     getCoordinates(e) {
         const rect = e.currentTarget.getBoundingClientRect();
         const width = rect.right - rect.left;
-        // const height = rect.bottom - rect.top;
-        // const percentageDown = (e.nativeEvent.clientY - rect.top) / height;
         const percentageLeft = (e.nativeEvent.clientX - rect.left) / width;
         this.setState({ hoverRating: this.roundPercentage(percentageLeft) });
     }

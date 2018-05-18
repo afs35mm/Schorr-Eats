@@ -12,8 +12,15 @@ class AddRestaurantModal extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            name: '',
+            location: '',
+            cuisine: '',
+            date: moment(),
+            rating: null,
+            review: '',
             toggleModal: props.toggleModal,
-            startDate: moment(),
+            user: props.user,
+            error: false,
         };
         this.handleNameChange = this.handleNameChange.bind(this);
         this.handleLocationChange = this.handleLocationChange.bind(this);
@@ -21,69 +28,70 @@ class AddRestaurantModal extends React.Component {
         this.handleReviewChange = this.handleReviewChange.bind(this);
         this.onCuisineChange = this.onCuisineChange.bind(this);
         this.submitRestaurant = this.submitRestaurant.bind(this);
+        this.setRating = this.setRating.bind(this);
     }
-    // handleChange(date) {
-    //     this.setState({
-    //         startDate: date,
-    //     });
-    // }
 
-    // loginReq({ email, password }) {
-    //     fetch('/users/login', {
-    //         method: 'POST',
-    //         credentials: 'same-origin',
-    //         headers: {
-    //             Accept: 'application/json',
-    //             'Content-Type': 'application/json',
-    //         },
-    //         body: JSON.stringify({
-    //             email,
-    //             password,
-    //         }),
-    //     })
-    //         .then(resp => {
-    //             if (resp.status === 200) {
-    //                 return resp.json();
-    //             } else if (resp.status === 401) {
-    //                 return {
-    //                     error: true,
-    //                     errorMessage: 'Invalid username/password combination.',
-    //                 };
-    //             }
-    //             return genericErrorMessage;
-    //         })
-    //         .then(data => {
-    //             if (data.error) {
-    //                 this.setState(data);
-    //             } else {
-    //                 this.successCb(data);
-    //                 this.state.toggleModal(null);
-    //             }
-    //         })
-    //         .catch(err => {
-    //             this.setState(genericErrorMessage);
-    //         });
-    // }
-
+    setRating(rating) {
+        this.setState({ rating });
+    }
     handleNameChange(e) {
-        this.setState({ email: e.target.value });
+        this.setState({ name: e.target.value });
     }
     handleLocationChange(e) {
-        this.setState({ password: e.target.value });
+        this.setState({ location: e.target.value });
     }
     handleDateChange(e) {
-        this.setState({ password: e.target.value });
+        this.setState({ date: e });
     }
     handleReviewChange(e) {
-        this.setState({ password: e.target.value });
+        this.setState({ review: e.target.value });
     }
     onCuisineChange(e) {
-        this.setState({ password: e.target.value });
+        this.setState({ cuisine: e.target.value });
     }
     submitRestaurant() {
-
+        if (!this.state.name) {
+            // TODO alert, le sigh...
+            alert('Your restaurant needs a name!');
+            return;
+        }
+        // console.log(this.state.date.format());
+        const payload = {
+            name: this.state.name,
+            location: this.state.location,
+            cuisine: this.state.cuisine,
+            dateReadable: this.state.date.format('MMM D YYYY'),
+            date: this.state.date.format(),
+            user: this.state.user.prettyUsername,
+            comments: this.state.review,
+            rating: this.state.rating,
+        };
+        fetch('/api/restaurant', {
+            method: 'POST',
+            credentials: 'same-origin',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(payload),
+        })
+            .then(resp => {
+                if (resp.status === 200) {
+                    window.location = '/'; // TODO meh, this sucks
+                } else {
+                    this.setState({error: true});
+                }
+            })
+            .catch(err => {
+                this.setState({error: true});
+            });
     }
     render() {
+        const error = this.state.error ? (
+            <div className="alert alert-danger" role="alert">
+                uh oh, something's not working, tell Andrew...
+            </div>
+        ) : null;
         return (
             <div>
                 <ModalHeader
@@ -95,6 +103,7 @@ class AddRestaurantModal extends React.Component {
                 <ModalBody>
                     <form>
                         <div className="form-group">
+                            {error}
                             <label htmlFor="name">Restaurant Name</label>
                             <input
                                 type="text"
@@ -120,7 +129,10 @@ class AddRestaurantModal extends React.Component {
                         </div>
                         <div className="form-group">
                             <label htmlFor="cuisine">Cuisine</label>
-                            <select id="cuisine" onChange={this.onCuisineChange} className="form-control">
+                            <select
+                                id="cuisine"
+                                onChange={this.onCuisineChange}
+                                className="form-control">
                                 <option defaultValue value="" />
                                 <option value="African">African</option>
                                 <option value="American">American</option>
@@ -216,13 +228,13 @@ class AddRestaurantModal extends React.Component {
                             <label htmlFor="visited">Date visited</label>
                             <DatePicker
                                 className="form-control"
-                                selected={this.state.startDate}
+                                selected={this.state.date}
                                 onChange={this.handleDateChange}
                             />
                         </div>
                         <div className="form-group">
                             <label htmlFor="rating">Rating</label>
-                            <StarRating editable />
+                            <StarRating editable onClickCb={this.setRating} />
                         </div>
                         <div className="form-group">
                             <label htmlFor="review">Review!</label>
@@ -253,3 +265,12 @@ class AddRestaurantModal extends React.Component {
 }
 
 export default AddRestaurantModal;
+
+AddRestaurantModal.propTypes = {
+    toggleModal: PropTypes.func.isRequired,
+    user: PropTypes.shape({
+        prettyUsername: PropTypes.string,
+        shortName: PropTypes.string,
+        username: PropTypes.string,
+    }).isRequired,
+};

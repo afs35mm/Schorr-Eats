@@ -60,28 +60,26 @@ module.exports = function(app, passport) {
     });
 
     app.post('/api/restaurant', (req, res) => {
-        Restaurant.create(
-            {
-                name: req.body.name,
-                location: req.body.location,
-                cuisine: req.body.cuisine,
-                dateReadable: req.body.date,
-                date: new Date(Date.parse(req.body.date)),
-                ratings: [
-                    {
-                        author: req.body.user,
-                        notes: req.body.comments,
-                        rating: req.body.rating,
-                    },
-                ],
-            },
-            (err, restaurant) => {
-                if (err) {
-                    res.send(err);
-                }
-                getRestaurants(res);
-            },
-        );
+        const reqInfo = {
+            name: req.body.name,
+            location: req.body.location,
+            cuisine: req.body.cuisine,
+            dateReadable: req.body.dateReadable,
+            date: req.body.date,
+            ratings: [
+                {
+                    author: req.body.user,
+                    notes: req.body.comments,
+                    rating: req.body.rating,
+                },
+            ],
+        };
+        Restaurant.create(reqInfo, (err, restaurant) => {
+            if (err) {
+                return res.status(500).json({});
+            }
+            return res.status(200).json({});
+        });
     });
 
     app.delete('/api/restaurants/:id', (req, res) => {
@@ -174,9 +172,18 @@ module.exports = function(app, passport) {
     });
 
     app.get('/', ensureAuthenticated, (req, res) => {
+        let user;
+        if (req.user) {
+            const { prettyUsername, shortName, username } = req.user;
+            user = {
+                prettyUsername,
+                shortName,
+                username,
+            };
+        }
         res.render('index.ejs', {
             bootstrap: {
-                user: req.user,
+                user,
             },
         });
     });

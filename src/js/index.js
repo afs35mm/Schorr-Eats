@@ -1,4 +1,4 @@
-// import _ from 'lodash';
+import _ from 'lodash';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import 'bootstrap';
@@ -32,13 +32,26 @@ class SchorrEats extends React.Component {
         });
     }
 
+    editRestaurant(id) {
+        console.log(id);
+        fetch(`/api/restaurants/${id}`).then(resp => resp.json())
+        .then((resp) => {
+            // cuisine:"Belgian"
+            // date:"2018-04-30T19:37:53.000Z"
+            // dateReadable:"Apr 30 2018"
+            // location:"this is the location"
+            // name:"this is another restaruatn"
+        });
+    }
+
     render() {
-        let successCb = null;
+        let successCb;
         if (this.state.modalType === 'login') {
             successCb = this.setLoggedInUser.bind(this);
-        } else if (this.state.modalType === 'addRestaurant') {
-            successCb = () => {};
         }
+        // else if (this.state.modalType === 'addRestaurant') {
+        //     successCb = () => {};
+        // }
         let loggedInFooter = null;
         if (this.state.isLoggedIn) {
             loggedInFooter = (
@@ -60,6 +73,7 @@ class SchorrEats extends React.Component {
                     showModal={this.state.showModal}
                     toggleModal={this.toggleModal}
                     successCb={successCb}
+                    user={this.state.user}
                 />
                 <NavBar
                     toggleModal={this.toggleModal}
@@ -67,7 +81,10 @@ class SchorrEats extends React.Component {
                     user={this.state.user}
                 />
                 <div className="container-fluid">
-                    <RatingsTable isLoggedIn={this.state.isLoggedIn} />
+                    <RatingsTable
+                        isLoggedIn={this.state.isLoggedIn}
+                        editRestaurant={this.editRestaurant.bind(this)}
+                    />
                     {loggedInFooter}
                 </div>
             </div>
