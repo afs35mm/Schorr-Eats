@@ -121,7 +121,6 @@ class Login extends React.Component {
                     <Button
                         color="primary"
                         onClick={() => {
-                            // toggleModal(null);
                             this.loginReq({
                                 email: this.state.email,
                                 password: this.state.password,

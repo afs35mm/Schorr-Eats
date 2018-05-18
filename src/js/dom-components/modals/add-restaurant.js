@@ -12,23 +12,21 @@ class AddRestaurantModal extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            // toggleModal: props.toggleModal,
-            // email: '',
-            // password: '',
-            // error: false,
-            // errorMessage: null,
+            toggleModal: props.toggleModal,
             startDate: moment(),
         };
-        this.handleChange = this.handleChange.bind(this);
-        // this.handleEmailChange = this.handleEmailChange.bind(this);
-        // this.handlePassWordChange = this.handlePassWordChange.bind(this);
-        // this.successCb = this.props.successCb.bind(this);
+        this.handleNameChange = this.handleNameChange.bind(this);
+        this.handleLocationChange = this.handleLocationChange.bind(this);
+        this.handleDateChange = this.handleDateChange.bind(this);
+        this.handleReviewChange = this.handleReviewChange.bind(this);
+        this.onCuisineChange = this.onCuisineChange.bind(this);
+        this.submitRestaurant = this.submitRestaurant.bind(this);
     }
-    handleChange(date) {
-        this.setState({
-            startDate: date,
-        });
-    }
+    // handleChange(date) {
+    //     this.setState({
+    //         startDate: date,
+    //     });
+    // }
 
     // loginReq({ email, password }) {
     //     fetch('/users/login', {
@@ -67,14 +65,24 @@ class AddRestaurantModal extends React.Component {
     //         });
     // }
 
-    // handleEmailChange(e) {
-    //     this.setState({ email: e.target.value });
-    // }
+    handleNameChange(e) {
+        this.setState({ email: e.target.value });
+    }
+    handleLocationChange(e) {
+        this.setState({ password: e.target.value });
+    }
+    handleDateChange(e) {
+        this.setState({ password: e.target.value });
+    }
+    handleReviewChange(e) {
+        this.setState({ password: e.target.value });
+    }
+    onCuisineChange(e) {
+        this.setState({ password: e.target.value });
+    }
+    submitRestaurant() {
 
-    // handlePassWordChange(e) {
-    //     this.setState({ password: e.target.value });
-    // }
-
+    }
     render() {
         return (
             <div>
@@ -112,7 +120,7 @@ class AddRestaurantModal extends React.Component {
                         </div>
                         <div className="form-group">
                             <label htmlFor="cuisine">Cuisine</label>
-                            <select id="cuisine" className="form-control">
+                            <select id="cuisine" onChange={this.onCuisineChange} className="form-control">
                                 <option defaultValue value="" />
                                 <option value="African">African</option>
                                 <option value="American">American</option>
@@ -209,7 +217,7 @@ class AddRestaurantModal extends React.Component {
                             <DatePicker
                                 className="form-control"
                                 selected={this.state.startDate}
-                                onChange={this.handleChange}
+                                onChange={this.handleDateChange}
                             />
                         </div>
                         <div className="form-group">
@@ -218,15 +226,6 @@ class AddRestaurantModal extends React.Component {
                         </div>
                         <div className="form-group">
                             <label htmlFor="review">Review!</label>
-                            {/* <input
-                                type="text"
-                                className="form-control"
-                                id="review"
-                                aria-describedby="review"
-                                placeholder="Restaurant review"
-                                value={this.state.review}
-                                onChange={this.handleReviewChange}
-                            /> */}
                             <textarea
                                 className="form-control"
                                 placeholder="Restaurant review"
@@ -237,7 +236,7 @@ class AddRestaurantModal extends React.Component {
                     </form>
                 </ModalBody>
                 <ModalFooter>
-                    <Button color="primary" onClick={() => {}}>
+                    <Button color="primary" onClick={this.submitRestaurant}>
                         Save
                     </Button>
                     <Button

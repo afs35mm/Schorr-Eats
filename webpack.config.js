@@ -5,6 +5,7 @@ const webpack = require('webpack');
 module.exports = (env, options) => {
     const isProduction = options.mode === 'production';
     return {
+        devtool: 'eval',
         module: {
             rules: [
                 {
