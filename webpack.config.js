@@ -5,51 +5,50 @@ const webpack = require('webpack');
 module.exports = (env, options) => {
     const isProduction = options.mode === 'production';
     return {
-        module : {
+        module: {
             rules: [
                 {
                     test: /\.js$/,
                     exclude: /node_modules/,
                     use: {
-                        loader: "babel-loader"
-                    }
+                        loader: 'babel-loader',
+                    },
                 },
                 {
                     test: /\.scss$/,
                     use: ExtractTextPlugin.extract({
                         fallback: 'style-loader',
-                        use: [{
-                            loader: 'css-loader',
-                            options: {
-                                minimize: isProduction,
-                            }
-                        }, {
-                            loader: 'sass-loader',
-                        }],
-                    })
-                }
+                        use: [
+                            {
+                                loader: 'css-loader',
+                                options: {
+                                    minimize: isProduction,
+                                },
+                            },
+                            {
+                                loader: 'sass-loader',
+                            },
+                        ],
+                    }),
+                },
             ],
-
         },
         plugins: [
-            new ExtractTextPlugin(
-                {
-                    filename: 'style.css'
-                }
-            ),
+            new ExtractTextPlugin({
+                filename: 'style.css',
+            }),
             new webpack.ProvidePlugin({
                 $: 'jquery',
                 jQuery: 'jquery',
                 'window.jQuery': 'jquery',
-              })
+            }),
         ],
         output: {
             path: path.resolve(__dirname, 'dist'),
             filename: 'index.js',
         },
         entry: {
-            main: './src/js/index.js'
-        }
-    }
+            main: './src/js/index.js',
+        },
+    };
 };
-

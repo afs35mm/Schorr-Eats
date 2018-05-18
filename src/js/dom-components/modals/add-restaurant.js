@@ -1,6 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
+
+import 'react-datepicker/src/stylesheets/datepicker.scss';
+
+import StarRating from '../../star-rating';
 
 class AddRestaurantModal extends React.Component {
     constructor(props) {
@@ -11,10 +17,17 @@ class AddRestaurantModal extends React.Component {
             // password: '',
             // error: false,
             // errorMessage: null,
+            startDate: moment(),
         };
+        this.handleChange = this.handleChange.bind(this);
         // this.handleEmailChange = this.handleEmailChange.bind(this);
         // this.handlePassWordChange = this.handlePassWordChange.bind(this);
         // this.successCb = this.props.successCb.bind(this);
+    }
+    handleChange(date) {
+        this.setState({
+            startDate: date,
+        });
     }
 
     // loginReq({ email, password }) {
@@ -86,11 +99,11 @@ class AddRestaurantModal extends React.Component {
                             />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="name">Location</label>
+                            <label htmlFor="location">Location</label>
                             <input
                                 type="text"
                                 className="form-control"
-                                id="name"
+                                id="location"
                                 aria-describedby="restaurantLocation"
                                 placeholder="Restaurant location"
                                 value={this.state.location}
@@ -100,7 +113,7 @@ class AddRestaurantModal extends React.Component {
                         <div className="form-group">
                             <label htmlFor="cuisine">Cuisine</label>
                             <select id="cuisine" className="form-control">
-                                <option defaultValue value=""/>
+                                <option defaultValue value="" />
                                 <option value="African">African</option>
                                 <option value="American">American</option>
                                 <option value="Argentinian">Argentinian</option>
@@ -125,7 +138,9 @@ class AddRestaurantModal extends React.Component {
                                 <option value="Cuban">Cuban</option>
                                 <option value="Deli">Deli</option>
                                 <option value="Dessert">Dessert</option>
-                                <option value="Dim Sum &amp; Dumplings">Dim Sum &amp; Dumplings</option>
+                                <option value="Dim Sum &amp; Dumplings">
+                                    Dim Sum &amp; Dumplings
+                                </option>
                                 <option value="Diner">Diner</option>
                                 <option value="English">English</option>
                                 <option value="Farm to Table">Farm to Table</option>
@@ -189,17 +204,34 @@ class AddRestaurantModal extends React.Component {
                                 <option value="Wings">Wings</option>
                             </select>
                         </div>
-                        {/* https://github.com/Hacker0x01/react-datepicker */}
                         <div className="form-group">
-                            <label htmlFor="name">Date visited</label>
-                            <input
+                            <label htmlFor="visited">Date visited</label>
+                            <DatePicker
+                                className="form-control"
+                                selected={this.state.startDate}
+                                onChange={this.handleChange}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="rating">Rating</label>
+                            <StarRating editable />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="review">Review!</label>
+                            {/* <input
                                 type="text"
                                 className="form-control"
-                                id="date"
-                                aria-describedby="date"
-                                placeholder="Date visited"
-                                value={this.state.date}
-                                onChange={this.handleDateChange}
+                                id="review"
+                                aria-describedby="review"
+                                placeholder="Restaurant review"
+                                value={this.state.review}
+                                onChange={this.handleReviewChange}
+                            /> */}
+                            <textarea
+                                className="form-control"
+                                placeholder="Restaurant review"
+                                value={this.state.review}
+                                onChange={this.handleReviewChange}
                             />
                         </div>
                     </form>

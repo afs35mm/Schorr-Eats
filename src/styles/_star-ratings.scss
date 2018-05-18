@@ -1,0 +1,95 @@
+$star-yellow: #f7e534;
+$star-outline: #e7e7e7;
+
+.star-container {
+    stroke: $star-outline;
+    fill: transparent;
+
+    &.rating-unrated {
+        use:nth-child(1),
+        use:nth-child(2),
+        use:nth-child(3),
+        use:nth-child(4),
+        use:nth-child(5) {
+            fill: #e7e7e7;
+        }
+    }
+    &.rating-0-5 {
+        use:nth-child(1) {
+            fill: url(#halfGradient);
+        }
+    }
+    &.rating-1 {
+        use:nth-child(1) {
+            fill: $star-yellow;
+        }
+    }
+    &.rating-1-5 {
+        use:nth-child(1) {
+            fill: $star-yellow;
+        }
+        use:nth-child(2) {
+            fill: url(#halfGradient);
+        }
+    }
+    &.rating-2 {
+        use:nth-child(1),
+        use:nth-child(2) {
+            fill: $star-yellow;
+        }
+    }
+    &.rating-2-5 {
+        use:nth-child(1),
+        use:nth-child(2) {
+            fill: $star-yellow;
+        }
+        use:nth-child(3) {
+            fill: url(#halfGradient);
+        }
+    }
+    &.rating-3 {
+        use:nth-child(1),
+        use:nth-child(2),
+        use:nth-child(3) {
+            fill: $star-yellow;
+        }
+    }
+    &.rating-3-5 {
+        use:nth-child(1),
+        use:nth-child(2),
+        use:nth-child(3) {
+            fill: $star-yellow;
+        }
+        use:nth-child(4) {
+            fill: url(#halfGradient);
+        }
+    }
+    &.rating-4 {
+        use:nth-child(1),
+        use:nth-child(2),
+        use:nth-child(3),
+        use:nth-child(4) {
+            fill: $star-yellow;
+        }
+    }
+    &.rating-4-5 {
+        use:nth-child(1),
+        use:nth-child(2),
+        use:nth-child(3),
+        use:nth-child(4) {
+            fill: $star-yellow;
+        }
+        use:nth-child(5) {
+            fill: url(#halfGradient);
+        }
+    }
+    &.rating-5 {
+        use:nth-child(1),
+        use:nth-child(2),
+        use:nth-child(3),
+        use:nth-child(4),
+        use:nth-child(5) {
+            fill: $star-yellow;
+        }
+    }
+}
