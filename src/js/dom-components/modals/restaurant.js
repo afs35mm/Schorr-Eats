@@ -18,7 +18,7 @@ class AddRestaurantModal extends React.Component {
             cuisine: curRest ? curRest.cuisine : '',
             date: curRest ? moment(curRest.date) : moment(),
             rating: curRest && curRest.rating ? curRest.rating : null, //
-            review: curRest && curRest.rating ? curRest.rating.notes : '', //
+            review: curRest && curRest.rating ? curRest.rating.notes : '',
             toggleModal: props.toggleModal,
             user: props.user,
             error: false,
@@ -241,9 +241,9 @@ class AddRestaurantModal extends React.Component {
                         <div className="form-group">
                             <label htmlFor="rating">Rating</label>
                             <StarRating
-                                editable
-                                rating={this.state.rating}
+                                rating={this.props.curRestaurant ? this.props.curRestaurant.rating : null}
                                 onClickCb={this.setRating}
+                                editable
                             />
                         </div>
                         <div className="form-group">

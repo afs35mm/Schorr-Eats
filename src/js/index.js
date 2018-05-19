@@ -22,7 +22,6 @@ class SchorrEats extends React.Component {
         this.toggleModal = this.toggleModal.bind(this);
     }
     setLoggedInUser(user) {
-        console.log(user);
         this.setState({ user, isLoggedIn: true });
     }
 
@@ -43,7 +42,8 @@ class SchorrEats extends React.Component {
             .then(resp => resp.json())
             .then(resp => {
                 const { cuisine, date, dateReadable, location, name } = resp;
-                const rating = _.find(resp.ratings, { author: this.state.user.shortName });
+                const userRatingInfo = _.find(resp.ratings, { author: this.state.user.shortName });
+                const rating = userRatingInfo ? userRatingInfo.rating : null;
                 this.setState({
                     curRestaurant: {
                         cuisine,
@@ -87,6 +87,7 @@ class SchorrEats extends React.Component {
                     toggleModal={this.toggleModal}
                     successCb={successCb}
                     user={this.state.user}
+                    rating={this.state.rating}
                     curRestaurant={this.state.curRestaurant}
                 />
                 <NavBar

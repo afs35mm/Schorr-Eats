@@ -5,7 +5,7 @@ import { Modal } from 'reactstrap';
 import LoginModal from './modals/login';
 import RestaurantModal from './modals/restaurant';
 
-const DomModal = ({ modalType, showModal, toggleModal, successCb, user, curRestaurant }) => {
+const DomModal = ({ modalType, showModal, toggleModal, successCb, user, curRestaurant, rating }) => {
     let modalContent;
     switch (modalType) {
         case 'login':
@@ -18,6 +18,7 @@ const DomModal = ({ modalType, showModal, toggleModal, successCb, user, curResta
                     successCb={successCb}
                     user={user}
                     curRestaurant={curRestaurant}
+                    rating={rating}
                 />
             );
             break;

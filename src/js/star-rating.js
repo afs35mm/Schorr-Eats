@@ -4,7 +4,8 @@ class StarRating extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            rating: (props.rating) ? props.rating.rating : undefined,
+            // TODO there has to be a better way to do this
+            rating: props.rating,
             editable: props.editable,
             hoverRating: null,
             onClickCb: props.onClickCb,
@@ -62,6 +63,9 @@ class StarRating extends Component {
 
     render() {
         let rating;
+        // if (this.state.editable) {
+
+        // } else
         if (this.state.hoverRating) {
             rating = this.state.hoverRating.toString().replace('.', '-');
         } else {
