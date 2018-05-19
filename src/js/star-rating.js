@@ -4,7 +4,7 @@ class StarRating extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            rating: props.rating,
+            rating: (props.rating) ? props.rating.rating : undefined,
             editable: props.editable,
             hoverRating: null,
             onClickCb: props.onClickCb,

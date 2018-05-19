@@ -5,13 +5,13 @@ class RatingsTable extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLoggedIn: props.isLoggedIn,
+            // isLoggedIn: props.isLoggedIn,
             restaurants: [],
             editRestaurant: props.editRestaurant,
         };
     }
 
-    componentWillMount() {
+    componentDidMount() {
         fetch('/api/restaurants')
             .then(resp => resp.json())
             .then(restaurants => this.setState({ restaurants }));
@@ -27,16 +27,6 @@ class RatingsTable extends Component {
                           <td>
                               <StarRating rating={rating.rating} />
                           </td>
-                          {this.state.isLoggedIn ? (
-                              <td>
-                                  <button
-                                      type="button"
-                                      onClick={() => this.state.editRestaurant(rest._id)}
-                                      className="btn btn-info btn-sm">
-                                      Edit
-                                  </button>
-                              </td>
-                          ) : null}
                       </tr>
                   ));
                   return (
@@ -50,6 +40,16 @@ class RatingsTable extends Component {
                                   <tbody>{ratings}</tbody>
                               </table>
                           </td>
+                          {this.props.isLoggedIn ? (
+                              <td>
+                                  <button
+                                      type="button"
+                                      onClick={() => this.state.editRestaurant(rest._id)}
+                                      className="btn btn-info btn-sm">
+                                      Edit
+                                  </button>
+                              </td>
+                          ) : null}
                       </tr>
                   );
               })
@@ -63,6 +63,7 @@ class RatingsTable extends Component {
                         <th>Cuisine</th>
                         <th>Visited</th>
                         <th>Comments</th>
+                        {this.props.isLoggedIn ? <th /> : null}
                     </tr>
                 </thead>
                 <tbody>{rows}</tbody>

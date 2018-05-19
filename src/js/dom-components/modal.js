@@ -3,17 +3,22 @@ import PropTypes from 'prop-types';
 import { Modal } from 'reactstrap';
 
 import LoginModal from './modals/login';
-import AddRestaurantModal from './modals/add-restaurant';
+import RestaurantModal from './modals/restaurant';
 
-const DomModal = ({ modalType, showModal, toggleModal, successCb, user }) => {
+const DomModal = ({ modalType, showModal, toggleModal, successCb, user, curRestaurant }) => {
     let modalContent;
     switch (modalType) {
         case 'login':
             modalContent = <LoginModal toggleModal={toggleModal} successCb={successCb} />;
             break;
-        case 'addRestaurant':
+        case 'restaurant':
             modalContent = (
-                <AddRestaurantModal toggleModal={toggleModal} successCb={successCb} user={user} />
+                <RestaurantModal
+                    toggleModal={toggleModal}
+                    successCb={successCb}
+                    user={user}
+                    curRestaurant={curRestaurant}
+                />
             );
             break;
         default:

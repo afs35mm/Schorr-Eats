@@ -17,48 +17,61 @@ class SchorrEats extends React.Component {
             modalType: null,
             isLoggedIn: !!props.dataBs.user,
             user: props.dataBs.user,
+            curRestaurant: null,
         };
         this.toggleModal = this.toggleModal.bind(this);
     }
     setLoggedInUser(user) {
+        console.log(user);
         this.setState({ user, isLoggedIn: true });
     }
 
     toggleModal(modalType) {
         const showModal = !!modalType;
-        this.setState({
+        const newState = {
             modalType,
             showModal,
-        });
+        };
+        if (!modalType && typeof this.state.curRestaurant === 'object') {
+            newState.curRestaurant = null;
+        }
+        this.setState(newState);
     }
 
     editRestaurant(id) {
-        console.log(id);
-        fetch(`/api/restaurants/${id}`).then(resp => resp.json())
-        .then((resp) => {
-            // cuisine:"Belgian"
-            // date:"2018-04-30T19:37:53.000Z"
-            // dateReadable:"Apr 30 2018"
-            // location:"this is the location"
-            // name:"this is another restaruatn"
-        });
+        fetch(`/api/restaurants/${id}`)
+            .then(resp => resp.json())
+            .then(resp => {
+                const { cuisine, date, dateReadable, location, name } = resp;
+                const rating = _.find(resp.ratings, { author: this.state.user.shortName });
+                this.setState({
+                    curRestaurant: {
+                        cuisine,
+                        date,
+                        dateReadable,
+                        location,
+                        name,
+                        rating,
+                    },
+                });
+                this.toggleModal('restaurant');
+            });
     }
 
     render() {
         let successCb;
         if (this.state.modalType === 'login') {
             successCb = this.setLoggedInUser.bind(this);
+        } else {
+            successCb = null;
         }
-        // else if (this.state.modalType === 'addRestaurant') {
-        //     successCb = () => {};
-        // }
         let loggedInFooter = null;
         if (this.state.isLoggedIn) {
             loggedInFooter = (
                 <div>
                     <hr />
                     <button
-                        onClick={() => this.toggleModal('addRestaurant')}
+                        onClick={() => this.toggleModal('restaurant')}
                         type="button"
                         className="add-restaurant btn btn-primary">
                         Add Restaurant
@@ -74,6 +87,7 @@ class SchorrEats extends React.Component {
                     toggleModal={this.toggleModal}
                     successCb={successCb}
                     user={this.state.user}
+                    curRestaurant={this.state.curRestaurant}
                 />
                 <NavBar
                     toggleModal={this.toggleModal}

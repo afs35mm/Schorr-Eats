@@ -11,13 +11,14 @@ import StarRating from '../../star-rating';
 class AddRestaurantModal extends React.Component {
     constructor(props) {
         super(props);
+        const curRest = props.curRestaurant;
         this.state = {
-            name: '',
-            location: '',
-            cuisine: '',
-            date: moment(),
-            rating: null,
-            review: '',
+            name: curRest ? curRest.name : '',
+            location: curRest ? curRest.location : '',
+            cuisine: curRest ? curRest.cuisine : '',
+            date: curRest ? moment(curRest.date) : moment(),
+            rating: curRest && curRest.rating ? curRest.rating : null, //
+            review: curRest && curRest.rating ? curRest.rating.notes : '', //
             toggleModal: props.toggleModal,
             user: props.user,
             error: false,
@@ -55,6 +56,10 @@ class AddRestaurantModal extends React.Component {
             alert('Your restaurant needs a name!');
             return;
         }
+        if (this.props.curRestaurant) {
+            console.log('updating!');
+            return;
+        }
         // console.log(this.state.date.format());
         const payload = {
             name: this.state.name,
@@ -66,25 +71,25 @@ class AddRestaurantModal extends React.Component {
             comments: this.state.review,
             rating: this.state.rating,
         };
-        fetch('/api/restaurant', {
-            method: 'POST',
-            credentials: 'same-origin',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(payload),
-        })
-            .then(resp => {
-                if (resp.status === 200) {
-                    window.location = '/'; // TODO meh, this sucks
-                } else {
-                    this.setState({error: true});
-                }
-            })
-            .catch(err => {
-                this.setState({error: true});
-            });
+        // fetch('/api/restaurant', {
+        //     method: 'POST',
+        //     credentials: 'same-origin',
+        //     headers: {
+        //         Accept: 'application/json',
+        //         'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify(payload),
+        // })
+        //     .then(resp => {
+        //         if (resp.status === 200) {
+        //             window.location = '/'; // TODO meh, this sucks
+        //         } else {
+        //             this.setState({ error: true });
+        //         }
+        //     })
+        //     .catch(err => {
+        //         this.setState({ error: true });
+        //     });
     }
     render() {
         const error = this.state.error ? (
@@ -130,6 +135,7 @@ class AddRestaurantModal extends React.Component {
                         <div className="form-group">
                             <label htmlFor="cuisine">Cuisine</label>
                             <select
+                                value={this.state.cuisine}
                                 id="cuisine"
                                 onChange={this.onCuisineChange}
                                 className="form-control">
@@ -234,7 +240,11 @@ class AddRestaurantModal extends React.Component {
                         </div>
                         <div className="form-group">
                             <label htmlFor="rating">Rating</label>
-                            <StarRating editable onClickCb={this.setRating} />
+                            <StarRating
+                                editable
+                                rating={this.state.rating}
+                                onClickCb={this.setRating}
+                            />
                         </div>
                         <div className="form-group">
                             <label htmlFor="review">Review!</label>
