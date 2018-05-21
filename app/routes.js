@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const Restaurant = require('./models/restaurant');
 const User = require('./models/user');
 const LocalStrategy = require('passport-local').Strategy;
@@ -97,64 +98,65 @@ module.exports = function(app, passport) {
         );
     });
 
-    app.put('/api/restaurants/:id', (req, res) => {
-        Restaurant.findOne({ _id: req.body._id }, (err, data) => {
-            if (data) {
-                const isUpdatingExistingReview = false;
-                for (const i = 0; i < data.ratings.length; i++) {
-                    if (data.ratings[i].author === req.body.author) {
-                        isUpdatingExistingReview = true;
-                        const reviewIdx = i;
-                        break;
-                    }
-                }
+    app.put('/api/restaurant/:id', (req, res) => {
+        if (req.body)
+        // Restaurant.findOne({ _id: req.params.id }, (err, data) => {
+        //     // TODO so much logic, put in seperate method
+        //     if (data) {
+        //         let isUpdatingExistingReview = false;
+        //         let reviewIdx;
+        //         for (let i = 0; i < data.ratings.length; i++) {
+        //             if (data.ratings[i].author === req.body.author) {
+        //                 isUpdatingExistingReview = true;
+        //                 reviewIdx = i;
+        //                 break;
+        //             }
+        //         }
 
-                // new review, push to array
-                if (!isUpdatingExistingReview) {
-                    data.ratings.push({
-                        author: req.body.author,
-                        rating: req.body.currentUserRating.rating,
-                        notes: req.body.currentUserRating.notes,
-                    });
-                    // updating, update to reviewIdx
-                } else {
-                    const updatingReview = data.ratings[reviewIdx];
-                    updatingReview.notes = req.body.currentUserRating.notes;
-                    updatingReview.rating = req.body.currentUserRating.rating;
-                }
+        //         // // new review, push to array
+        //         // if (!isUpdatingExistingReview) {
+        //         //     data.ratings.push({
+        //         //         author: req.body.author,
+        //         //         rating: req.body.currentUserRating.rating,
+        //         //         notes: req.body.currentUserRating.notes,
+        //         //     });
+        //         //     // updating, update to reviewIdx
+        //         // } else {
+        //         //     const updatingReview = data.ratings[reviewIdx];
+        //         //     updatingReview.notes = req.body.currentUserRating.notes;
+        //         //     updatingReview.rating = req.body.currentUserRating.rating;
+        //         // }
 
-                data.location = req.body.location;
-                data.name = req.body.name;
-                data.cuisine = req.body.cuisine;
-                data.dateReadable = req.body.dateReadable;
-                data.date = new Date(Date.parse(req.body.dateReadable));
+        //         const { location, name, cuisine, date } = req.body;
+        //         data = { ...data, location, name, cuisine, date };
 
-                const options = {
-                    upsert: false,
-                    // multi: true,
-                };
-                Restaurant.update(
-                    {
-                        _id: req.params.id,
-                    },
-                    {
-                        $set: data,
-                    },
-                    options,
-                    (err, restaurant) => {
-                        if (err) {
-                            res.send(err);
-                        } else {
-                            getRestaurants(res);
-                        }
-                    },
-                );
-            } else {
-                res.status(500).send({
-                    error: err,
-                });
-            }
-        });
+        //         const options = {
+        //             upsert: false,
+        //             // multi: true,
+        //         };
+        //         Restaurant.update(
+        //             {
+        //                 _id: req.params.id,
+        //             },
+        //             {
+        //                 $set: data,
+        //             },
+        //             options,
+        //             (err, restaurant) => {
+        //                 if (err) {
+        //                     res.send(err);
+        //                 } else {
+        //                     // meh
+        //                     return res.status(200).json({});
+        //                 }
+        //             },
+        //         );
+        //     } else {
+        //         res.status(500).send({
+        //             error: err,
+        //         });
+        //     }
+        // });
     });
 
     app.get('/api/restaurants/:id', (req, res) => {

@@ -35,10 +35,10 @@ module.exports = mongoose.createConnection(process.env.RESTAURANTS_DB).model(
             type: Date,
             default: '',
         },
-        dateReadable: {
-            type: String,
-            default: '',
-        },
+        // dateReadable: {
+        //     type: String,
+        //     default: '',
+        // },
         ratings: [ratingsSchema],
     }),
 );

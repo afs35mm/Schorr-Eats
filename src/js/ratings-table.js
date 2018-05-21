@@ -1,3 +1,4 @@
+import moment from 'moment';
 import React, { Component } from 'react';
 import StarRating from './star-rating';
 
@@ -18,6 +19,7 @@ class RatingsTable extends Component {
     render() {
         const rows = this.state.restaurants.length
             ? this.state.restaurants.map(rest => {
+                const dateReadable = rest.date ? moment(rest.date).format('MMM D YYYY') : '';
                   const ratings = rest.ratings.map(rating => (
                       <tr key={rating._id}>
                           <td>{rating.author}</td>
@@ -32,7 +34,7 @@ class RatingsTable extends Component {
                           <td>{rest.name}</td>
                           <td>{rest.location}</td>
                           <td>{rest.cuisine}</td>
-                          <td>{rest.dateReadable}</td>
+                          <td>{dateReadable}</td>
                           <td className="comments-cell">
                               <table className="table-sm">
                                   <tbody>{ratings}</tbody>

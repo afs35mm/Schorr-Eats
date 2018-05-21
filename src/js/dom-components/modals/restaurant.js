@@ -63,7 +63,7 @@ class AddRestaurantModal extends React.Component {
             name: this.state.name,
             location: this.state.location,
             cuisine: this.state.cuisine,
-            dateReadable: this.state.date.format('MMM D YYYY'),
+            // dateReadable: this.state.date.format('MMM D YYYY'),
             date: this.state.date.format(),
             user: this.state.user.prettyUsername,
             comments: this.state.review,
@@ -75,25 +75,26 @@ class AddRestaurantModal extends React.Component {
                 ? `/api/restaurant/${this.props.curRestaurant._id}`
                 : '/api/restaurant';
         console.log(url);
-        // fetch('/api/restaurant', {
-        //     method: 'POST',
-        //     credentials: 'same-origin',
-        //     headers: {
-        //         Accept: 'application/json',
-        //         'Content-Type': 'application/json',
-        //     },
-        //     body: JSON.stringify(payload),
-        // })
-        //     .then(resp => {
-        //         if (resp.status === 200) {
-        //             window.location = '/'; // TODO meh, this sucks
-        //         } else {
-        //             this.setState({ error: true });
-        //         }
-        //     })
-        //     .catch(err => {
-        //         this.setState({ error: true });
-        //     });
+
+        fetch(url, {
+            method,
+            credentials: 'same-origin',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(payload),
+        })
+            .then(resp => {
+                if (resp.status === 200) {
+                    window.location = '/'; // TODO meh, this sucks
+                } else {
+                    this.setState({ error: true });
+                }
+            })
+            .catch(err => {
+                this.setState({ error: true });
+            });
     }
     render() {
         const error = this.state.error ? (
