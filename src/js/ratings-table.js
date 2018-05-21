@@ -5,9 +5,7 @@ class RatingsTable extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            // isLoggedIn: props.isLoggedIn,
             restaurants: [],
-            editRestaurant: props.editRestaurant,
         };
     }
 
@@ -44,7 +42,7 @@ class RatingsTable extends Component {
                               <td>
                                   <button
                                       type="button"
-                                      onClick={() => this.state.editRestaurant(rest._id)}
+                                      onClick={() => this.props.editRestaurant(rest._id)}
                                       className="btn btn-info btn-sm">
                                       Edit
                                   </button>

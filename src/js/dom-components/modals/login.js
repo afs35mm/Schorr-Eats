@@ -11,7 +11,7 @@ class Login extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            toggleModal: props.toggleModal,
+            // toggleModal: props.toggleModal,
             email: '',
             password: '',
             error: false,
@@ -51,7 +51,7 @@ class Login extends React.Component {
                     this.setState(data);
                 } else {
                     this.successCb(data);
-                    this.state.toggleModal(null);
+                    this.props.toggleModal(null);
                 }
             })
             .catch(err => {
@@ -77,7 +77,7 @@ class Login extends React.Component {
             <div>
                 <ModalHeader
                     toggle={() => {
-                        this.state.toggleModal(null);
+                        this.props.toggleModal(null);
                     }}>
                     Login
                 </ModalHeader>
@@ -131,7 +131,7 @@ class Login extends React.Component {
                     <Button
                         color="secondary"
                         onClick={() => {
-                            this.state.toggleModal(null);
+                            this.props.toggleModal(null);
                         }}>
                         Cancel
                     </Button>

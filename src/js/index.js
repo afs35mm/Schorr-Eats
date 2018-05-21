@@ -41,7 +41,7 @@ class SchorrEats extends React.Component {
         fetch(`/api/restaurants/${id}`)
             .then(resp => resp.json())
             .then(resp => {
-                const { cuisine, date, dateReadable, location, name } = resp;
+                const { cuisine, date, dateReadable, location, name, _id } = resp;
                 const userRatingInfo = _.find(resp.ratings, { author: this.state.user.shortName });
                 const rating = userRatingInfo ? userRatingInfo.rating : null;
                 this.setState({
@@ -52,6 +52,7 @@ class SchorrEats extends React.Component {
                         location,
                         name,
                         rating,
+                        _id,
                     },
                 });
                 this.toggleModal('restaurant');

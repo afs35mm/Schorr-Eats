@@ -4,11 +4,8 @@ class StarRating extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            // TODO there has to be a better way to do this
-            rating: props.rating,
-            editable: props.editable,
             hoverRating: null,
-            onClickCb: props.onClickCb,
+            rating: props.rating, // TODO antipattern, think unavoidable tho?
         };
     }
     onMouseLeave() {
@@ -23,8 +20,8 @@ class StarRating extends Component {
             const newState = {
                 rating: this.roundPercentage(percentageLeft),
             };
-            if (this.state.onClickCb) {
-                this.state.onClickCb(newState.rating);
+            if (this.props.onClickCb) {
+                this.props.onClickCb(newState.rating);
             }
             return newState;
         });
@@ -63,24 +60,17 @@ class StarRating extends Component {
 
     render() {
         let rating;
-        // if (this.state.editable) {
-
-        // } else
         if (this.state.hoverRating) {
             rating = this.state.hoverRating.toString().replace('.', '-');
         } else {
-            rating =
-                this.state.rating === undefined || this.state.rating === null
-                    ? 'unrated'
-                    : this.state.rating.toString().replace('.', '-');
+            rating = !this.state.rating ? 'unrated' : this.state.rating.toString().replace('.', '-');
         }
-
         return (
             <div>
                 <svg
-                    onMouseMove={this.state.editable ? this.getCoordinates.bind(this) : null}
-                    onClick={this.state.editable ? this.onStarClick.bind(this) : null}
-                    onMouseLeave={this.state.editable ? this.onMouseLeave.bind(this) : null}
+                    onMouseMove={this.props.editable ? this.getCoordinates.bind(this) : null}
+                    onClick={this.props.editable ? this.onStarClick.bind(this) : null}
+                    onMouseLeave={this.props.editable ? this.onMouseLeave.bind(this) : null}
                     className={`star-container rating-${rating}`}
                     viewBox="0 0 180 32">
                     <use xlinkHref="#icon-star" x="0" y="0" />

@@ -12,12 +12,13 @@ class AddRestaurantModal extends React.Component {
     constructor(props) {
         super(props);
         const curRest = props.curRestaurant;
+        // TODO anti pattern, figure out a better way to take this out of state
         this.state = {
             name: curRest ? curRest.name : '',
             location: curRest ? curRest.location : '',
             cuisine: curRest ? curRest.cuisine : '',
             date: curRest ? moment(curRest.date) : moment(),
-            rating: curRest && curRest.rating ? curRest.rating : null, //
+            rating: curRest && curRest.rating ? curRest.rating : null,
             review: curRest && curRest.rating ? curRest.rating.notes : '',
             toggleModal: props.toggleModal,
             user: props.user,
@@ -51,16 +52,13 @@ class AddRestaurantModal extends React.Component {
         this.setState({ cuisine: e.target.value });
     }
     submitRestaurant() {
+        console.log(this);
         if (!this.state.name) {
             // TODO alert, le sigh...
             alert('Your restaurant needs a name!');
             return;
         }
-        if (this.props.curRestaurant) {
-            console.log('updating!');
-            return;
-        }
-        // console.log(this.state.date.format());
+
         const payload = {
             name: this.state.name,
             location: this.state.location,
@@ -71,6 +69,12 @@ class AddRestaurantModal extends React.Component {
             comments: this.state.review,
             rating: this.state.rating,
         };
+        const method = this.props.curRestaurant ? 'PUT' : 'POST';
+        const url =
+            method === 'PUT'
+                ? `/api/restaurant/${this.props.curRestaurant._id}`
+                : '/api/restaurant';
+        console.log(url);
         // fetch('/api/restaurant', {
         //     method: 'POST',
         //     credentials: 'same-origin',
@@ -241,7 +245,11 @@ class AddRestaurantModal extends React.Component {
                         <div className="form-group">
                             <label htmlFor="rating">Rating</label>
                             <StarRating
-                                rating={this.props.curRestaurant ? this.props.curRestaurant.rating : null}
+                                rating={
+                                    this.props.curRestaurant
+                                        ? this.props.curRestaurant.rating
+                                        : null
+                                }
                                 onClickCb={this.setRating}
                                 editable
                             />
