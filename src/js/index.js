@@ -41,7 +41,6 @@ class SchorrEats extends React.Component {
         fetch(`/api/restaurants/${id}`)
             .then(resp => resp.json())
             .then(resp => {
-                console.log(resp);
                 const { cuisine, date, dateReadable, location, name, _id } = resp;
                 const rating = _.find(resp.ratings, { author: this.state.user.shortName });
                 // console.log(userRatingInfo);

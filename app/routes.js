@@ -25,7 +25,7 @@ module.exports = function(app, passport) {
             successRedirect: '/',
             failureRedirect: '/signup',
             failureFlash: true,
-        }),
+        })
     );
 
     app.get('/signup', (req, res) => {
@@ -70,7 +70,7 @@ module.exports = function(app, passport) {
             ratings: [
                 {
                     author: req.body.user,
-                    notes: req.body.comments,
+                    notes: req.body.notes,
                     rating: req.body.rating,
                 },
             ],
@@ -94,69 +94,72 @@ module.exports = function(app, passport) {
                 } else {
                     getRestaurants(res);
                 }
-            },
+            }
         );
     });
 
     app.put('/api/restaurant/:id', (req, res) => {
-        if (req.body)
-        // Restaurant.findOne({ _id: req.params.id }, (err, data) => {
-        //     // TODO so much logic, put in seperate method
-        //     if (data) {
-        //         let isUpdatingExistingReview = false;
-        //         let reviewIdx;
-        //         for (let i = 0; i < data.ratings.length; i++) {
-        //             if (data.ratings[i].author === req.body.author) {
-        //                 isUpdatingExistingReview = true;
-        //                 reviewIdx = i;
-        //                 break;
-        //             }
-        //         }
+        Restaurant.findOne({ _id: req.params.id }, (err, data) => {
+            // TODO so much logic, put in seperate method
+            if (data) {
+                let isUpdatingExistingReview = false;
+                let reviewIdx;
+                if (data.ratings === null) data.ratings = []; // fuck
+                for (let i = 0; i < data.ratings.length; i++) {
+                    if (data.ratings[i].author === req.body.user) {
+                        isUpdatingExistingReview = true;
+                        reviewIdx = i;
+                        break;
+                    }
+                }
 
-        //         // // new review, push to array
-        //         // if (!isUpdatingExistingReview) {
-        //         //     data.ratings.push({
-        //         //         author: req.body.author,
-        //         //         rating: req.body.currentUserRating.rating,
-        //         //         notes: req.body.currentUserRating.notes,
-        //         //     });
-        //         //     // updating, update to reviewIdx
-        //         // } else {
-        //         //     const updatingReview = data.ratings[reviewIdx];
-        //         //     updatingReview.notes = req.body.currentUserRating.notes;
-        //         //     updatingReview.rating = req.body.currentUserRating.rating;
-        //         // }
+                // new review, push to array
+                if (!isUpdatingExistingReview) {
+                    data.ratings.push({
+                        author: req.body.user,
+                        rating: req.body.rating,
+                        notes: req.body.notes,
+                    });
+                    // updating, update to reviewIdx
+                } else {
+                    const updatingReview = data.ratings[reviewIdx];
+                    updatingReview.notes = req.body.notes;
+                    updatingReview.rating = req.body.rating;
+                }
 
-        //         const { location, name, cuisine, date } = req.body;
-        //         data = { ...data, location, name, cuisine, date };
+                const { location, name, cuisine, date } = req.body;
+                data.location = location;
+                data.name = name;
+                data.cuisine = cuisine;
+                data.date = date;
 
-        //         const options = {
-        //             upsert: false,
-        //             // multi: true,
-        //         };
-        //         Restaurant.update(
-        //             {
-        //                 _id: req.params.id,
-        //             },
-        //             {
-        //                 $set: data,
-        //             },
-        //             options,
-        //             (err, restaurant) => {
-        //                 if (err) {
-        //                     res.send(err);
-        //                 } else {
-        //                     // meh
-        //                     return res.status(200).json({});
-        //                 }
-        //             },
-        //         );
-        //     } else {
-        //         res.status(500).send({
-        //             error: err,
-        //         });
-        //     }
-        // });
+                const options = {
+                    upsert: false,
+                    // multi: true,
+                };
+                Restaurant.update(
+                    {
+                        _id: req.params.id,
+                    },
+                    {
+                        $set: data,
+                    },
+                    options,
+                    (err, restaurant) => {
+                        if (err) {
+                            res.send(err);
+                        } else {
+                            // meh
+                            return res.status(200).json({});
+                        }
+                    },
+                );
+            } else {
+                res.status(500).send({
+                    error: err,
+                });
+            }
+        });
     });
 
     app.get('/api/restaurants/:id', (req, res) => {

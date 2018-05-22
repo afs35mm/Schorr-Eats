@@ -40,5 +40,5 @@ module.exports = mongoose.createConnection(process.env.RESTAURANTS_DB).model(
         //     default: '',
         // },
         ratings: [ratingsSchema],
-    }),
+    })
 );

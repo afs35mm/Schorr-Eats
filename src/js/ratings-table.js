@@ -19,16 +19,18 @@ class RatingsTable extends Component {
     render() {
         const rows = this.state.restaurants.length
             ? this.state.restaurants.map(rest => {
-                const dateReadable = rest.date ? moment(rest.date).format('MMM D YYYY') : '';
-                  const ratings = rest.ratings.map(rating => (
-                      <tr key={rating._id}>
-                          <td>{rating.author}</td>
-                          <td>{rating.notes}</td>
-                          <td>
-                              <StarRating rating={rating.rating} />
-                          </td>
-                      </tr>
-                  ));
+                  const dateReadable = rest.date ? moment(rest.date).format('MMM D YYYY') : '';
+                  const ratings = rest.ratings
+                      ? rest.ratings.map(rating => (
+                            <tr key={rating._id}>
+                                <td>{rating.author}</td>
+                                <td>{rating.notes}</td>
+                                <td>
+                                    <StarRating rating={rating.rating} />
+                                </td>
+                            </tr>
+                        ))
+                      : null;
                   return (
                       <tr key={rest._id} className="rest-row">
                           <td>{rest.name}</td>

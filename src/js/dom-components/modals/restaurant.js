@@ -8,7 +8,7 @@ import 'react-datepicker/src/stylesheets/datepicker.scss';
 
 import StarRating from '../../star-rating';
 
-class AddRestaurantModal extends React.Component {
+class RestaurantModal extends React.Component {
     constructor(props) {
         super(props);
         const curRest = props.curRestaurant;
@@ -19,7 +19,7 @@ class AddRestaurantModal extends React.Component {
             cuisine: curRest ? curRest.cuisine : '',
             date: curRest ? moment(curRest.date) : moment(),
             rating: curRest && curRest.rating ? curRest.rating : null,
-            review: curRest && curRest.rating ? curRest.rating.notes : '',
+            notes: curRest && curRest.rating ? curRest.rating.notes : [],
             toggleModal: props.toggleModal,
             user: props.user,
             error: false,
@@ -27,9 +27,10 @@ class AddRestaurantModal extends React.Component {
         this.handleNameChange = this.handleNameChange.bind(this);
         this.handleLocationChange = this.handleLocationChange.bind(this);
         this.handleDateChange = this.handleDateChange.bind(this);
-        this.handleReviewChange = this.handleReviewChange.bind(this);
+        this.handleNotesChange = this.handleNotesChange.bind(this);
         this.onCuisineChange = this.onCuisineChange.bind(this);
         this.submitRestaurant = this.submitRestaurant.bind(this);
+        this.deleteRestaurant = this.deleteRestaurant.bind(this);
         this.setRating = this.setRating.bind(this);
     }
 
@@ -45,20 +46,40 @@ class AddRestaurantModal extends React.Component {
     handleDateChange(e) {
         this.setState({ date: e });
     }
-    handleReviewChange(e) {
-        this.setState({ review: e.target.value });
+    handleNotesChange(e) {
+        this.setState({ notes: e.target.value });
     }
     onCuisineChange(e) {
         this.setState({ cuisine: e.target.value });
     }
+    deleteRestaurant() {
+        const deleteRestaurant = confirm('Are you positively sure you want to delete this?');
+        console.log(this.props.curRestaurant._id);
+        fetch(`/api/restaurants/${this.props.curRestaurant._id}`, {
+            method: 'DELETE',
+            credentials: 'same-origin',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+        })
+            .then(resp => {
+                if (resp.status === 200) {
+                    window.location = '/'; // TODO meh, this sucks
+                } else {
+                    this.setState({ error: true });
+                }
+            })
+            .catch(err => {
+                this.setState({ error: true });
+            });
+    }
     submitRestaurant() {
-        console.log(this);
         if (!this.state.name) {
             // TODO alert, le sigh...
             alert('Your restaurant needs a name!');
             return;
         }
-
         const payload = {
             name: this.state.name,
             location: this.state.location,
@@ -66,7 +87,7 @@ class AddRestaurantModal extends React.Component {
             // dateReadable: this.state.date.format('MMM D YYYY'),
             date: this.state.date.format(),
             user: this.state.user.prettyUsername,
-            comments: this.state.review,
+            notes: this.state.notes,
             rating: this.state.rating,
         };
         const method = this.props.curRestaurant ? 'PUT' : 'POST';
@@ -74,7 +95,6 @@ class AddRestaurantModal extends React.Component {
             method === 'PUT'
                 ? `/api/restaurant/${this.props.curRestaurant._id}`
                 : '/api/restaurant';
-        console.log(url);
 
         fetch(url, {
             method,
@@ -101,6 +121,11 @@ class AddRestaurantModal extends React.Component {
             <div className="alert alert-danger" role="alert">
                 uh oh, something's not working, tell Andrew...
             </div>
+        ) : null;
+        const deleteBtn = this.props.curRestaurant ? (
+            <Button color="danger" className="mr-auto" onClick={this.deleteRestaurant}>
+                Delete
+            </Button>
         ) : null;
         return (
             <div>
@@ -260,13 +285,14 @@ class AddRestaurantModal extends React.Component {
                             <textarea
                                 className="form-control"
                                 placeholder="Restaurant review"
-                                value={this.state.review}
-                                onChange={this.handleReviewChange}
+                                value={this.state.notes}
+                                onChange={this.handleNotesChange}
                             />
                         </div>
                     </form>
                 </ModalBody>
                 <ModalFooter>
+                    {deleteBtn}
                     <Button color="primary" onClick={this.submitRestaurant}>
                         Save
                     </Button>
@@ -283,9 +309,9 @@ class AddRestaurantModal extends React.Component {
     }
 }
 
-export default AddRestaurantModal;
+export default RestaurantModal;
 
-AddRestaurantModal.propTypes = {
+RestaurantModal.propTypes = {
     toggleModal: PropTypes.func.isRequired,
     user: PropTypes.shape({
         prettyUsername: PropTypes.string,

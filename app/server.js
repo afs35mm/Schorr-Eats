@@ -17,7 +17,7 @@ app.use(morgan('dev'));
 app.use(
     bodyParser.urlencoded({
         extended: 'true',
-    }),
+    })
 );
 app.use(bodyParser.json());
 app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
@@ -31,7 +31,7 @@ app.use(
         saveUninitialized: true,
         // only working with HTTP for now :(
         // cookie: { secure: false },
-    }),
+    })
 );
 app.use(passport.initialize());
 app.use(passport.session());
