@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Button, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
+import ImageUploader from 'react-images-upload';
 
 import 'react-datepicker/src/stylesheets/datepicker.scss';
 
@@ -23,6 +24,7 @@ class RestaurantModal extends React.Component {
             toggleModal: props.toggleModal,
             user: props.user,
             error: false,
+            pictures: [],
         };
         this.handleNameChange = this.handleNameChange.bind(this);
         this.handleLocationChange = this.handleLocationChange.bind(this);
@@ -31,11 +33,19 @@ class RestaurantModal extends React.Component {
         this.onCuisineChange = this.onCuisineChange.bind(this);
         this.submitRestaurant = this.submitRestaurant.bind(this);
         this.deleteRestaurant = this.deleteRestaurant.bind(this);
+        this.onDrop = this.onDrop.bind(this);
         this.setRating = this.setRating.bind(this);
     }
 
     setRating(rating) {
         this.setState({ rating });
+    }
+    onDrop(pictureFiles, pictureDataURLs) {
+        console.log(this);
+        // e.preventDefault();
+        this.setState({
+            pictures: this.state.pictures.concat(pictureFiles),
+        });
     }
     handleNameChange(e) {
         this.setState({ name: e.target.value });
@@ -54,7 +64,6 @@ class RestaurantModal extends React.Component {
     }
     deleteRestaurant() {
         const deleteRestaurant = confirm('Are you positively sure you want to delete this?');
-        console.log(this.props.curRestaurant._id);
         fetch(`/api/restaurants/${this.props.curRestaurant._id}`, {
             method: 'DELETE',
             credentials: 'same-origin',
@@ -65,7 +74,7 @@ class RestaurantModal extends React.Component {
         })
             .then(resp => {
                 if (resp.status === 200) {
-                    window.location = '/'; // TODO meh, this sucks
+                    // window.location = '/'; // TODO meh, this sucks
                 } else {
                     this.setState({ error: true });
                 }
@@ -107,7 +116,8 @@ class RestaurantModal extends React.Component {
         })
             .then(resp => {
                 if (resp.status === 200) {
-                    window.location = '/'; // TODO meh, this sucks
+                    // window.location = '/'; // TODO meh, this sucks
+                    console.log(resp);
                 } else {
                     this.setState({ error: true });
                 }
@@ -136,7 +146,7 @@ class RestaurantModal extends React.Component {
                     Add Restaurant
                 </ModalHeader>
                 <ModalBody>
-                    <form>
+                    <form onSubmit={e => e.preventDefault()}>
                         <div className="form-group">
                             {error}
                             <label htmlFor="name">Restaurant Name</label>
@@ -289,10 +299,14 @@ class RestaurantModal extends React.Component {
                                 onChange={this.handleNotesChange}
                             />
                         </div>
-                        <div className="custom-file">
-                            <input type="file" className="custom-file-input" id="customFile" />
-                            <label className="custom-file-label" htmlFor="customFile">Choose file</label>
-                        </div>
+                        <ImageUploader
+                            withIcon={false}
+                            buttonText="Upload images!"
+                            onChange={this.onDrop}
+                            imgExtension={['.jpg', '.gif', '.png', '.gif']}
+                            maxFileSize={5242880}
+                            withPreview={true}
+                        />
                     </form>
                 </ModalBody>
                 <ModalFooter>
