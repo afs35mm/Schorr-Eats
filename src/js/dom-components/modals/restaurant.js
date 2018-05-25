@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { Button, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
-import ImageUploader from 'react-images-upload';
 
 import 'react-datepicker/src/stylesheets/datepicker.scss';
 
+import PhotoUpload from '../photo-upload';
 import StarRating from '../../star-rating';
 
 class RestaurantModal extends React.Component {
@@ -299,14 +299,7 @@ class RestaurantModal extends React.Component {
                                 onChange={this.handleNotesChange}
                             />
                         </div>
-                        <ImageUploader
-                            withIcon={false}
-                            buttonText="Upload images!"
-                            onChange={this.onDrop}
-                            imgExtension={['.jpg', '.gif', '.png', '.gif']}
-                            maxFileSize={5242880}
-                            withPreview={true}
-                        />
+                        <PhotoUpload/>
                     </form>
                 </ModalBody>
                 <ModalFooter>
