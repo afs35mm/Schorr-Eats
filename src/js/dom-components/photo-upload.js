@@ -66,9 +66,9 @@ class PhotoUpload extends Component {
                     <li className="item-holder">
                         <img className="item-image" src="http://via.placeholder.com/350x150" />
                     </li>
-                    <li className="item-holder" />
-                    <li className="item-holder" />
-                    <li className="item-holder" />
+                    <li className="item-holder">
+                        <img className="item-image" src="http://via.placeholder.com/350x150" />
+                    </li>
                 </ul>
             </div>
         );
