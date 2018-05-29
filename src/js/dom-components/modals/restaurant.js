@@ -299,7 +299,7 @@ class RestaurantModal extends React.Component {
                                 onChange={this.handleNotesChange}
                             />
                         </div>
-                        <PhotoUpload/>
+                        <PhotoUpload />
                     </form>
                 </ModalBody>
                 <ModalFooter>

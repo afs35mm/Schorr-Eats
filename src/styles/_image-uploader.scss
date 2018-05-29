@@ -1,0 +1,19 @@
+.photo-uploader {
+    .images-list {
+        margin-top: 25px;
+        list-style-type: none;
+        padding: 0;
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: space-between;
+
+        .item-holder {
+            flex: 0 0 24%;
+            margin-bottom: 1%;
+        }
+
+        .item-image {
+            width: 100%;
+        }
+    }
+}
