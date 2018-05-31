@@ -2,9 +2,9 @@
 const Restaurant = require('./models/restaurant');
 const User = require('./models/user');
 const LocalStrategy = require('passport-local').Strategy;
-const multer = require('multer')
+const multer = require('multer');
 
-const upload = multer({dest: __dirname + '/uploads/'});
+const upload = multer({ dest: `uploads/` });
 
 function getRestaurants(res) {
     Restaurant.find((err, restaurants) => {
@@ -156,7 +156,7 @@ module.exports = function(app, passport) {
                             // meh
                             return res.status(200).json({});
                         }
-                    },
+                    }
                 );
             } else {
                 res.status(500).send({
