@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { Z_SYNC_FLUSH } from 'zlib';
 
 class PhotoUpload extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            imgs: [],
-        };
+    // constructor(props) {
+    //     super(props);
+    // }
+
+    deleteImg(i) {
+        this.props.removeImg(i);
     }
 
     handleChange(e) {
@@ -21,17 +21,20 @@ class PhotoUpload extends Component {
             reader.readAsDataURL(file);
             return readerP;
         });
-        Promise.all(pFiles).then(images => {
-            this.setState({ imgs: this.state.imgs.concat(images) });
+        Promise.all(pFiles).then(imgs => {
+            this.props.onDrop(imgs);
         });
     }
 
     render() {
-        const imgs = this.state.imgs.length ? (
-            this.state.imgs.map((imgInfo, i) => (
+        const imgs = this.props.imgs.length ? (
+            this.props.imgs.map((imgInfo, i) => (
                 <li key={i} className="item-holder">
                     <img className="item-image" src={imgInfo.img} />
                     <svg
+                        onClick={() => {
+                            this.deleteImg(i);
+                        }}
                         xlinkHref="http://www.w3.org/2000/svg"
                         className="svg-icon"
                         viewBox="0 0 20 20">

@@ -24,7 +24,7 @@ class RestaurantModal extends React.Component {
             toggleModal: props.toggleModal,
             user: props.user,
             error: false,
-            pictures: [],
+            imgs: [],
         };
         this.handleNameChange = this.handleNameChange.bind(this);
         this.handleLocationChange = this.handleLocationChange.bind(this);
@@ -33,19 +33,20 @@ class RestaurantModal extends React.Component {
         this.onCuisineChange = this.onCuisineChange.bind(this);
         this.submitRestaurant = this.submitRestaurant.bind(this);
         this.deleteRestaurant = this.deleteRestaurant.bind(this);
-        this.onDrop = this.onDrop.bind(this);
         this.setRating = this.setRating.bind(this);
+        this.onDrop = this.onDrop.bind(this);
+        this.removeImg = this.removeImg.bind(this);
     }
-
+    onDrop(imgs) {
+        this.setState({ imgs: this.state.imgs.concat(imgs) });
+    }
     setRating(rating) {
         this.setState({ rating });
     }
-    onDrop(pictureFiles, pictureDataURLs) {
-        console.log(this);
-        // e.preventDefault();
-        this.setState({
-            pictures: this.state.pictures.concat(pictureFiles),
-        });
+    removeImg(i) {
+        const imgs = this.state.imgs;
+        imgs.splice(i, 1);
+        this.setState({ imgs });
     }
     handleNameChange(e) {
         this.setState({ name: e.target.value });
@@ -89,16 +90,24 @@ class RestaurantModal extends React.Component {
             alert('Your restaurant needs a name!');
             return;
         }
-        const payload = {
-            name: this.state.name,
-            location: this.state.location,
-            cuisine: this.state.cuisine,
-            // dateReadable: this.state.date.format('MMM D YYYY'),
-            date: this.state.date.format(),
+        const formData = new FormData();
+        const { name, location, cuisine, notes, rating } = this.state;
+        const data = {
+            name,
+            location,
+            cuisine,
+            notes,
+            rating,
             user: this.state.user.prettyUsername,
-            notes: this.state.notes,
-            rating: this.state.rating,
         };
+
+        for (const [key, value] of Object.entries(data)) {
+            formData.append(key, value);
+        }
+        this.state.imgs.forEach((img) => {
+            formData.append('imgs[]', img.file, img.file.name);
+        })
+
         const method = this.props.curRestaurant ? 'PUT' : 'POST';
         const url =
             method === 'PUT'
@@ -108,16 +117,11 @@ class RestaurantModal extends React.Component {
         fetch(url, {
             method,
             credentials: 'same-origin',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(payload),
+            body: formData,
         })
             .then(resp => {
                 if (resp.status === 200) {
                     // window.location = '/'; // TODO meh, this sucks
-                    console.log(resp);
                 } else {
                     this.setState({ error: true });
                 }
@@ -299,7 +303,11 @@ class RestaurantModal extends React.Component {
                                 onChange={this.handleNotesChange}
                             />
                         </div>
-                        <PhotoUpload />
+                        <PhotoUpload
+                            removeImg={this.removeImg}
+                            onDrop={this.onDrop}
+                            imgs={this.state.imgs}
+                        />
                     </form>
                 </ModalBody>
                 <ModalFooter>

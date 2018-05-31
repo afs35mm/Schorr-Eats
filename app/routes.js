@@ -1,7 +1,10 @@
-const _ = require('lodash');
+// const _ = require('lodash');
 const Restaurant = require('./models/restaurant');
 const User = require('./models/user');
 const LocalStrategy = require('passport-local').Strategy;
+const multer = require('multer')
+
+const upload = multer({dest: __dirname + '/uploads/'});
 
 function getRestaurants(res) {
     Restaurant.find((err, restaurants) => {
@@ -98,7 +101,8 @@ module.exports = function(app, passport) {
         );
     });
 
-    app.put('/api/restaurant/:id', (req, res) => {
+    app.put('/api/restaurant/:id', upload.array('imgs[]', 25), (req, res) => {
+        console.log(req.files);
         Restaurant.findOne({ _id: req.params.id }, (err, data) => {
             // TODO so much logic, put in seperate method
             if (data) {
