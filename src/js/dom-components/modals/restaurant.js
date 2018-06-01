@@ -85,6 +85,7 @@ class RestaurantModal extends React.Component {
             });
     }
     submitRestaurant() {
+        console.log(this.state);
         if (!this.state.name) {
             // TODO alert, le sigh...
             alert('Your restaurant needs a name!');
@@ -102,11 +103,12 @@ class RestaurantModal extends React.Component {
         };
 
         for (const [key, value] of Object.entries(data)) {
+            console.log(key, value);
             formData.append(key, value);
         }
         this.state.imgs.forEach((img) => {
             formData.append('imgs[]', img.file, img.file.name);
-        })
+        });
 
         const method = this.props.curRestaurant ? 'PUT' : 'POST';
         const url =

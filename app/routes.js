@@ -63,7 +63,7 @@ module.exports = function(app, passport) {
         getRestaurants(res);
     });
 
-    app.post('/api/restaurant', (req, res) => {
+    app.post('/api/restaurant', upload.array('imgs[]', 25), (req, res) => {
         const reqInfo = {
             name: req.body.name,
             location: req.body.location,
@@ -102,7 +102,6 @@ module.exports = function(app, passport) {
     });
 
     app.put('/api/restaurant/:id', upload.array('imgs[]', 25), (req, res) => {
-        console.log(req.files);
         Restaurant.findOne({ _id: req.params.id }, (err, data) => {
             // TODO so much logic, put in seperate method
             if (data) {
