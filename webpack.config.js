@@ -59,7 +59,7 @@ module.exports = (env, options) => {
             }),
         ],
         output: {
-            path: path.resolve(__dirname, 'dist'),
+            path: path.resolve(__dirname, 'public'),
             filename: 'index.js',
         },
         entry: {

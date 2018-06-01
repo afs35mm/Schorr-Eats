@@ -17,6 +17,7 @@ class RatingsTable extends Component {
     }
 
     render() {
+        console.log(this.state);
         const rows = this.state.restaurants.length
             ? this.state.restaurants.map(rest => {
                   const dateReadable = rest.date ? moment(rest.date).format('MMM D YYYY') : '';

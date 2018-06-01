@@ -1,10 +1,34 @@
-// const _ = require('lodash');
+const fs = require('fs');
+const utils = require('./utils');
 const Restaurant = require('./models/restaurant');
-const User = require('./models/user');
-const LocalStrategy = require('passport-local').Strategy;
 const multer = require('multer');
 
-const upload = multer({ dest: `uploads/` });
+const storage = multer.diskStorage({
+    destination(req, file, cb) {
+        const imagesDirName = utils.formatNameForDir(req.body.name);
+        const dir = `public/images/${imagesDirName}`;
+        if (!fs.existsSync(dir)) {
+            fs.mkdirSync(dir);
+        }
+        if (typeof req.body.images === 'undefined') {
+            req.body.images = {};
+        }
+
+        if (typeof req.body.images.imagesDirName === 'undefined') {
+            req.body.images.imagesDirName = imagesDirName;
+        }
+        cb(null, dir);
+    },
+    filename(req, file, cb) {
+        const fileName = `${Date.now()}-${file.originalname}`;
+        if (typeof req.body.images.imageFileNames === 'undefined') {
+            req.body.images.imageFileNames = [];
+        }
+        req.body.images.imageFileNames.push(fileName);
+        cb(null, fileName);
+    },
+});
+const upload = multer({ storage });
 
 function getRestaurants(res) {
     Restaurant.find((err, restaurants) => {
@@ -131,10 +155,13 @@ module.exports = function(app, passport) {
                 }
 
                 const { location, name, cuisine, date } = req.body;
+                const { imagesDirName, imageFileNames } = req.body.images;
                 data.location = location;
                 data.name = name;
                 data.cuisine = cuisine;
                 data.date = date;
+                data.imagesDirName = imagesDirName;
+                data.imageFileNames = imageFileNames;
 
                 const options = {
                     upsert: false,
