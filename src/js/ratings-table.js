@@ -8,9 +8,11 @@ class RatingsTable extends Component {
         super(props);
         this.state = {
             restaurants: [],
-            sortedAscending: null,
+            sortedDateAscending: null,
+            sortedNameAscending: null,
         };
         this.sortByDate = this.sortByDate.bind(this);
+        this.sortByName = this.sortByName.bind(this);
     }
 
     componentDidMount() {
@@ -19,16 +21,32 @@ class RatingsTable extends Component {
             .then(restaurants => this.setState({ restaurants }));
     }
 
-    sortByDate() {
-        let restaurants = this.state.restaurants;
+    sortByName(e) {
+        e.preventDefault();
+        let { restaurants } = this.state;
         restaurants = restaurants.sort((a, b) => {
-            if (this.state.sortedAscending) {
-                return new Date(a.date) - new Date(b.date);
-            } else {
-                return new Date(b.date) - new Date(a.date);
+            if (this.state.sortedNameAscending) {
+                if (a.name < b.name) return -1;
+                if (a.name > b.name) return 1;
+                return 0;
             }
+            if (a.name < b.name) return 1;
+            if (a.name > b.name) return -1;
+            return 0;
         });
-        this.setState({ restaurants, sortedAscending: !this.state.sortedAscending });
+        this.setState({ restaurants, sortedNameAscending: !this.state.sortedNameAscending });
+    }
+
+    sortByDate(e) {
+        e.preventDefault();
+        let { restaurants } = this.state;
+        restaurants = restaurants.sort((a, b) => {
+            if (this.state.sortedDateAscending) {
+                return new Date(a.date) - new Date(b.date);
+            }
+            return new Date(b.date) - new Date(a.date);
+        });
+        this.setState({ restaurants, sortedDateAscending: !this.state.sortedDateAscending });
     }
 
     render() {
@@ -82,7 +100,11 @@ class RatingsTable extends Component {
             <table className="table table-sm main-table">
                 <thead>
                     <tr>
-                        <th>Name</th>
+                        <th>
+                            <a href="#" onClick={this.sortByName}>
+                                Name
+                            </a>
+                        </th>
                         <th>Location</th>
                         <th>Cuisine</th>
                         <th>
