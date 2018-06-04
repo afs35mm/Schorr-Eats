@@ -39,7 +39,7 @@ const navBar = ({ toggleModal, isLoggedIn, user }) => (
             />
         </svg>
         <a className="navbar-brand" href="#">
-            {/* SchorrEats.com */}
+            SchorrEats.com
         </a>
         <span className="navbar-text ml-auto text-white">
             {isLoggedIn ? (

@@ -6816,18 +6816,16 @@ a.text-dark:hover, a.text-dark:focus {
   flex-flow: row wrap; }
 
 .item-holder {
-  flex: 0 0 24%;
+  flex: 0 0 19%;
   margin: 1% 1% 0 0;
-  height: 120px;
+  height: 85px;
   object-fit: cover;
   position: relative; }
   .photos-row .item-holder {
-    flex: 0 0 120px;
+    flex: 0 0 60px;
+    height: 60px;
+    border-radius: 3px;
     margin: 5px 5px 5px 0; }
-    .photos-row .item-holder:nth-child(4n + 4) {
-      margin-right: 5px; }
-  .item-holder:nth-child(4n + 4) {
-    margin-right: 0; }
   .item-holder svg {
     top: -7px;
     position: absolute;
@@ -6840,6 +6838,7 @@ a.text-dark:hover, a.text-dark:focus {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border-radius: 3px;
     cursor: pointer; }
 
 .pizzalogo {
@@ -6861,7 +6860,8 @@ a.text-dark:hover, a.text-dark:focus {
   .main-table .rest-row > td:nth-child(5) {
     width: 70%; }
   .main-table .photos-row {
-    width: 100%; }
+    width: 100%;
+    border-top: none; }
     .main-table .photos-row .images-list {
       margin: 0; }
   .main-table .comments-cell {

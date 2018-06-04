@@ -8,7 +8,9 @@ class RatingsTable extends Component {
         super(props);
         this.state = {
             restaurants: [],
+            sortedAscending: null,
         };
+        this.sortByDate = this.sortByDate.bind(this);
     }
 
     componentDidMount() {
@@ -17,7 +19,26 @@ class RatingsTable extends Component {
             .then(restaurants => this.setState({ restaurants }));
     }
 
+    sortByDate() {
+        this.setState({ sortedAscending: !!this.state.sortedAscending });
+        let restaurants = this.state.restaurants;
+        restaurants = restaurants.sort((a, b) => {
+            console.log(a.date, b.date);
+            if (!a.date || !b.date) {
+                return Infinity;
+            } else {
+                if (this.state.sortedAscending) {
+                    return new Date(a.date) - new Date(b.date)
+                } else {
+                    new Date(b.date) - new Date(a.date)
+                }
+            }
+        });
+        this.setState({ restaurants });
+    }
+
     render() {
+        console.log(this.state.restaurants);
         const rows = this.state.restaurants.length
             ? this.state.restaurants.map((rest, i) => {
                   const dateReadable = rest.date ? moment(rest.date).format('MMM D YYYY') : '';
@@ -34,7 +55,9 @@ class RatingsTable extends Component {
                       : null;
                   return [
                       <tr key={rest._id} className="rest-row">
-                          <td>{rest.name}</td>
+                          <td>
+                              <strong>{rest.name}</strong>
+                          </td>
                           <td>{rest.location}</td>
                           <td>{rest.cuisine}</td>
                           <td>{dateReadable}</td>
@@ -69,7 +92,11 @@ class RatingsTable extends Component {
                         <th>Name</th>
                         <th>Location</th>
                         <th>Cuisine</th>
-                        <th>Visited</th>
+                        <th>
+                            <a href="#" onClick={this.sortByDate}>
+                                Visited
+                            </a>
+                        </th>
                         <th>Comments</th>
                         {this.props.isLoggedIn ? <th /> : null}
                     </tr>

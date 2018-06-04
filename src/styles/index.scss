@@ -1,5 +1,4 @@
 @import "~bootstrap/scss/bootstrap.scss";
-// @import "~src/simple-modal-slideshow.scss";
 @import 'star-ratings';
 @import 'image-uploaders';
 
@@ -34,6 +33,7 @@
 
     .photos-row {
         width: 100%;
+        border-top: none;
 
         .images-list {
             margin: 0;
