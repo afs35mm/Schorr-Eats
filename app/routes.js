@@ -147,18 +147,20 @@ module.exports = function(app, passport) {
                     }
                 }
 
-                // new review, push to array
-                if (!isUpdatingExistingReview) {
-                    data.ratings.push({
-                        author: req.body.user,
-                        rating: req.body.rating,
-                        notes: req.body.notes,
-                    });
-                    // updating, update to reviewIdx
-                } else {
-                    const updatingReview = data.ratings[reviewIdx];
-                    updatingReview.notes = req.body.notes;
-                    updatingReview.rating = req.body.rating;
+                if (req.body.rating.trim()) {
+                    // new review, push to array
+                    if (!isUpdatingExistingReview) {
+                        data.ratings.push({
+                            author: req.body.user,
+                            rating: req.body.rating,
+                            notes: req.body.notes,
+                        });
+                        // updating, update to reviewIdx
+                    } else {
+                        const updatingReview = data.ratings[reviewIdx];
+                        updatingReview.notes = req.body.notes;
+                        updatingReview.rating = req.body.rating;
+                    }
                 }
 
                 const { location, name, cuisine, date } = req.body;

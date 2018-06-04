@@ -38,7 +38,6 @@ class RestaurantModal extends React.Component {
         this.onDrop = this.onDrop.bind(this);
         this.removeImg = this.removeImg.bind(this);
         this.deleteAlreadyUploadedImg = this.deleteAlreadyUploadedImg.bind(this);
-        console.log(this.state);
     }
     onDrop(imgs) {
         this.setState({ imgs: this.state.imgs.concat(imgs) });
