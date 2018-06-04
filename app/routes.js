@@ -155,13 +155,43 @@ module.exports = function(app, passport) {
                 }
 
                 const { location, name, cuisine, date } = req.body;
-                const { imagesDirName, imageFileNames } = req.body.images;
+
+                // we're trying to add more images
+                if (typeof req.body.images !== 'undefined') {
+                    const { imagesDirName, imageFileNames } = req.body.images;
+                    data.imagesDirName = imagesDirName;
+                    data.imageFileNames = data.imageFileNames.concat(imageFileNames);
+                }
+
+                if (req.body.imgsToDelete) {
+                    const imgsToDelete = JSON.parse(req.body.imgsToDelete);
+                    if (imgsToDelete.length) {
+                        data.imageFileNames = data.imageFileNames.filter(
+
+                            img => !imgsToDelete.includes(img)
+                        );
+                        // remove from filesystem
+                        const dirName = utils.formatNameForDir(req.body.name);
+                        imgsToDelete.forEach(imgToDelete => {
+                            fs.unlink(`public/images/${dirName}/${imgToDelete}`, err => {
+                                if (err && err.code === 'ENOENT') {
+                                    console.info("File doesn't exist, won't remove it.");
+                                } else if (err) {
+                                    // other errors, e.g. maybe we don't have enough permission
+                                    console.error('Error occurred while trying to remove file');
+                                } else {
+                                    console.info(`removed`);
+                                }
+                            });
+                        });
+                    }
+                }
+                // TODO deal with name of restaurant changes :/
+
                 data.location = location;
                 data.name = name;
                 data.cuisine = cuisine;
                 data.date = date;
-                data.imagesDirName = imagesDirName;
-                data.imageFileNames = imageFileNames;
 
                 const options = {
                     upsert: false,

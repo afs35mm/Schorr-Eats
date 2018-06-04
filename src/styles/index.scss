@@ -1,6 +1,7 @@
 @import "~bootstrap/scss/bootstrap.scss";
+// @import "~src/simple-modal-slideshow.scss";
 @import 'star-ratings';
-@import 'image-uploader';
+@import 'image-uploaders';
 
 .pizzalogo {
     margin-right: 5px;
@@ -28,6 +29,14 @@
         }
         > td:nth-child(5) {
             width: 70%;
+        }
+    }
+
+    .photos-row {
+        width: 100%;
+
+        .images-list {
+            margin: 0;
         }
     }
 

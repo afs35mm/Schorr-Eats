@@ -20,9 +20,16 @@ class SchorrEats extends React.Component {
             curRestaurant: null,
         };
         this.toggleModal = this.toggleModal.bind(this);
+        this.deleteAlreadyUploadedImg = this.deleteAlreadyUploadedImg.bind(this);
     }
     setLoggedInUser(user) {
         this.setState({ user, isLoggedIn: true });
+    }
+
+    deleteAlreadyUploadedImg(imgName, i) {
+        const curRest = this.state.curRestaurant;
+        curRest.existingPhotos.imgs.splice(curRest.existingPhotos.imgs.indexOf(imgName), 1);
+        this.setState({ curRestaurant: curRest });
     }
 
     toggleModal(modalType) {
@@ -43,8 +50,6 @@ class SchorrEats extends React.Component {
             .then(resp => {
                 const { cuisine, date, dateReadable, location, name, _id } = resp;
                 const rating = _.find(resp.ratings, { author: this.state.user.shortName });
-                // console.log(userRatingInfo);
-                // const rating = userRatingInfo ? userRatingInfo.rating : null;
                 this.setState({
                     curRestaurant: {
                         cuisine,
@@ -54,6 +59,10 @@ class SchorrEats extends React.Component {
                         name,
                         rating,
                         _id,
+                        existingPhotos: {
+                            imgs: resp.imageFileNames,
+                            imagesDirName: resp.imagesDirName,
+                        },
                     },
                 });
                 this.toggleModal('restaurant');
@@ -91,6 +100,7 @@ class SchorrEats extends React.Component {
                     user={this.state.user}
                     rating={this.state.rating}
                     curRestaurant={this.state.curRestaurant}
+                    deleteAlreadyUploadedImg={this.deleteAlreadyUploadedImg}
                 />
                 <NavBar
                     toggleModal={this.toggleModal}

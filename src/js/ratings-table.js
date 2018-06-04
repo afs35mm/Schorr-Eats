@@ -1,6 +1,7 @@
 import moment from 'moment';
 import React, { Component } from 'react';
 import StarRating from './star-rating';
+import ImagesLineup from './dom-components/images-lineup';
 
 class RatingsTable extends Component {
     constructor(props) {
@@ -17,9 +18,8 @@ class RatingsTable extends Component {
     }
 
     render() {
-        console.log(this.state);
         const rows = this.state.restaurants.length
-            ? this.state.restaurants.map(rest => {
+            ? this.state.restaurants.map((rest, i) => {
                   const dateReadable = rest.date ? moment(rest.date).format('MMM D YYYY') : '';
                   const ratings = rest.ratings
                       ? rest.ratings.map(rating => (
@@ -32,7 +32,7 @@ class RatingsTable extends Component {
                             </tr>
                         ))
                       : null;
-                  return (
+                  return [
                       <tr key={rest._id} className="rest-row">
                           <td>{rest.name}</td>
                           <td>{rest.location}</td>
@@ -53,8 +53,13 @@ class RatingsTable extends Component {
                                   </button>
                               </td>
                           ) : null}
-                      </tr>
-                  );
+                      </tr>,
+                      <ImagesLineup
+                          key={i}
+                          dirName={rest.imagesDirName}
+                          images={rest.imageFileNames}
+                      />,
+                  ];
               })
             : null;
         return (

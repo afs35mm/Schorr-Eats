@@ -18,13 +18,14 @@ class RestaurantModal extends React.Component {
             name: curRest ? curRest.name : '',
             location: curRest ? curRest.location : '',
             cuisine: curRest ? curRest.cuisine : '',
-            date: curRest ? moment(curRest.date) : moment(),
+            date: curRest.date ? moment(curRest.date) : null,
             rating: curRest && curRest.rating ? curRest.rating : null,
             notes: curRest && curRest.rating ? curRest.rating.notes : [],
             toggleModal: props.toggleModal,
             user: props.user,
             error: false,
             imgs: [],
+            imgsToDelete: [],
         };
         this.handleNameChange = this.handleNameChange.bind(this);
         this.handleLocationChange = this.handleLocationChange.bind(this);
@@ -36,12 +37,19 @@ class RestaurantModal extends React.Component {
         this.setRating = this.setRating.bind(this);
         this.onDrop = this.onDrop.bind(this);
         this.removeImg = this.removeImg.bind(this);
+        this.deleteAlreadyUploadedImg = this.deleteAlreadyUploadedImg.bind(this);
     }
     onDrop(imgs) {
         this.setState({ imgs: this.state.imgs.concat(imgs) });
     }
     setRating(rating) {
         this.setState({ rating });
+    }
+    deleteAlreadyUploadedImg(imgName, i) {
+        this.props.deleteAlreadyUploadedImg(imgName, i);
+        const imgsToDelete = this.state.imgsToDelete;
+        imgsToDelete.push(imgName);
+        this.setState({ imgsToDelete });
     }
     removeImg(i) {
         const imgs = this.state.imgs;
@@ -90,6 +98,7 @@ class RestaurantModal extends React.Component {
             alert('Your restaurant needs a name!');
             return;
         }
+
         const formData = new FormData();
         const { name, location, cuisine, notes, rating } = this.state;
         const data = {
@@ -101,10 +110,14 @@ class RestaurantModal extends React.Component {
             user: this.state.user.prettyUsername,
         };
 
+        if (this.props.curRestaurant && this.state.imgsToDelete.length) {
+            data.imgsToDelete = JSON.stringify(this.state.imgsToDelete);
+        }
+
         for (const [key, value] of Object.entries(data)) {
             formData.append(key, value);
         }
-        this.state.imgs.forEach((img) => {
+        this.state.imgs.forEach(img => {
             formData.append('imgs[]', img.file, img.file.name);
         });
 
@@ -113,7 +126,6 @@ class RestaurantModal extends React.Component {
             method === 'PUT'
                 ? `/api/restaurant/${this.props.curRestaurant._id}`
                 : '/api/restaurant';
-
         fetch(url, {
             method,
             credentials: 'same-origin',
@@ -121,7 +133,7 @@ class RestaurantModal extends React.Component {
         })
             .then(resp => {
                 if (resp.status === 200) {
-                    // window.location = '/'; // TODO meh, this sucks
+                    window.location = '/'; // TODO meh, this sucks
                 } else {
                     this.setState({ error: true });
                 }
@@ -305,8 +317,10 @@ class RestaurantModal extends React.Component {
                         </div>
                         <PhotoUpload
                             removeImg={this.removeImg}
+                            deleteAlreadyUploadedImg={this.deleteAlreadyUploadedImg}
                             onDrop={this.onDrop}
                             imgs={this.state.imgs}
+                            existingPhotos={this.props.curRestaurant.existingPhotos}
                         />
                     </form>
                 </ModalBody>
