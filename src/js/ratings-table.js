@@ -20,25 +20,18 @@ class RatingsTable extends Component {
     }
 
     sortByDate() {
-        this.setState({ sortedAscending: !!this.state.sortedAscending });
         let restaurants = this.state.restaurants;
         restaurants = restaurants.sort((a, b) => {
-            console.log(a.date, b.date);
-            if (!a.date || !b.date) {
-                return Infinity;
+            if (this.state.sortedAscending) {
+                return new Date(a.date) - new Date(b.date);
             } else {
-                if (this.state.sortedAscending) {
-                    return new Date(a.date) - new Date(b.date)
-                } else {
-                    new Date(b.date) - new Date(a.date)
-                }
+                return new Date(b.date) - new Date(a.date);
             }
         });
-        this.setState({ restaurants });
+        this.setState({ restaurants, sortedAscending: !this.state.sortedAscending });
     }
 
     render() {
-        console.log(this.state.restaurants);
         const rows = this.state.restaurants.length
             ? this.state.restaurants.map((rest, i) => {
                   const dateReadable = rest.date ? moment(rest.date).format('MMM D YYYY') : '';
