@@ -14,11 +14,12 @@ class RestaurantModal extends React.Component {
         super(props);
         const curRest = props.curRestaurant;
         // TODO anti pattern, figure out a better way to take this out of state
+        console.log(this.props);
         this.state = {
             name: curRest ? curRest.name : '',
             location: curRest ? curRest.location : '',
             cuisine: curRest ? curRest.cuisine : '',
-            date: curRest.date ? moment(curRest.date) : null,
+            date: curRest ? moment(curRest.date) : null,
             rating: curRest && curRest.rating ? curRest.rating : null,
             notes: curRest && curRest.rating ? curRest.rating.notes : [],
             toggleModal: props.toggleModal,
@@ -38,6 +39,7 @@ class RestaurantModal extends React.Component {
         this.onDrop = this.onDrop.bind(this);
         this.removeImg = this.removeImg.bind(this);
         this.deleteAlreadyUploadedImg = this.deleteAlreadyUploadedImg.bind(this);
+        console.log(this.state);
     }
     onDrop(imgs) {
         this.setState({ imgs: this.state.imgs.concat(imgs) });
@@ -83,7 +85,7 @@ class RestaurantModal extends React.Component {
         })
             .then(resp => {
                 if (resp.status === 200) {
-                    // window.location = '/'; // TODO meh, this sucks
+                    window.location = '/'; // TODO meh, this sucks
                 } else {
                     this.setState({ error: true });
                 }
@@ -121,7 +123,7 @@ class RestaurantModal extends React.Component {
             formData.append('imgs[]', img.file, img.file.name);
         });
 
-        const method = this.props.curRestaurant ? 'PUT' : 'POST';
+        const method = this.props.curRestaurant.name ? 'PUT' : 'POST';
         const url =
             method === 'PUT'
                 ? `/api/restaurant/${this.props.curRestaurant._id}`
@@ -351,4 +353,13 @@ RestaurantModal.propTypes = {
         shortName: PropTypes.string,
         username: PropTypes.string,
     }).isRequired,
+    curRestaurant: PropTypes.shape({
+        existingPhotos: PropTypes.array,
+    }),
+};
+
+RestaurantModal.defaultProps = {
+    curRestaurant: {
+        existingPhotos: [],
+    },
 };

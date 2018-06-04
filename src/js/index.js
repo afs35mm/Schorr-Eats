@@ -17,7 +17,7 @@ class SchorrEats extends React.Component {
             modalType: null,
             isLoggedIn: !!props.dataBs.user,
             user: props.dataBs.user,
-            curRestaurant: null,
+            // curRestaurant: null,
         };
         this.toggleModal = this.toggleModal.bind(this);
         this.deleteAlreadyUploadedImg = this.deleteAlreadyUploadedImg.bind(this);
