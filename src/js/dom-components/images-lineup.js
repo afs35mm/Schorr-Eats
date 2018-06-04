@@ -54,7 +54,6 @@ class ImagesLineup extends Component {
                                     src={`/images/${this.props.dirName}/${imgSrc}`}
                                     onClick={() => {
                                         this.setState({ lightboxIsOpen: true, currentImage: i });
-                                        console.log(i);
                                     }}
                                 />
                             </li>
