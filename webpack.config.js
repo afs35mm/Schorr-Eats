@@ -5,7 +5,7 @@ const webpack = require('webpack');
 module.exports = (env, options) => {
     const isProduction = options.mode === 'production';
     return {
-        devtool: 'cheap-eval-source-map',
+        devtool: 'inline-cheap-source-map',
         module: {
             rules: [
                 {

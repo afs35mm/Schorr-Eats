@@ -17,7 +17,6 @@ class SchorrEats extends React.Component {
             modalType: null,
             isLoggedIn: !!props.dataBs.user,
             user: props.dataBs.user,
-            // curRestaurant: null,
         };
         this.toggleModal = this.toggleModal.bind(this);
         this.deleteAlreadyUploadedImg = this.deleteAlreadyUploadedImg.bind(this);
@@ -39,7 +38,16 @@ class SchorrEats extends React.Component {
             showModal,
         };
         if (!modalType && typeof this.state.curRestaurant === 'object') {
-            newState.curRestaurant = null;
+            // TODO: ew
+            newState.curRestaurant = {
+                existingPhotos: {
+                    imgs: [],
+                    imagesDirName: '',
+                },
+                name: '',
+                location: '',
+                cuisine: '',
+            };
         }
         this.setState(newState);
     }

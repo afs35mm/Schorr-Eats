@@ -33,7 +33,6 @@ module.exports = mongoose.createConnection(process.env.RESTAURANTS_DB).model(
         },
         date: {
             type: Date,
-            default: '',
         },
         imagesDirName: {
             type: String,

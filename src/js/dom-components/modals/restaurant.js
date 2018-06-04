@@ -14,12 +14,11 @@ class RestaurantModal extends React.Component {
         super(props);
         const curRest = props.curRestaurant;
         // TODO anti pattern, figure out a better way to take this out of state
-        console.log(this.props);
         this.state = {
-            name: curRest ? curRest.name : '',
-            location: curRest ? curRest.location : '',
-            cuisine: curRest ? curRest.cuisine : '',
-            date: curRest ? moment(curRest.date) : null,
+            name: this.props.curRestaurant.name,
+            location: this.props.curRestaurant.location,
+            cuisine: this.props.curRestaurant.cuisine,
+            date: this.props.curRestaurant.date ? moment(this.props.curRestaurant.date) : null,
             rating: curRest && curRest.rating ? curRest.rating : null,
             notes: curRest && curRest.rating ? curRest.rating.notes : [],
             toggleModal: props.toggleModal,
@@ -100,15 +99,15 @@ class RestaurantModal extends React.Component {
             alert('Your restaurant needs a name!');
             return;
         }
-
         const formData = new FormData();
-        const { name, location, cuisine, notes, rating } = this.state;
+        const { name, location, cuisine, notes, rating, date } = this.state;
         const data = {
             name,
             location,
             cuisine,
             notes,
             rating,
+            date,
             user: this.state.user.prettyUsername,
         };
 
@@ -123,6 +122,7 @@ class RestaurantModal extends React.Component {
             formData.append('imgs[]', img.file, img.file.name);
         });
 
+        // TODO, should be ID
         const method = this.props.curRestaurant.name ? 'PUT' : 'POST';
         const url =
             method === 'PUT'
@@ -150,7 +150,8 @@ class RestaurantModal extends React.Component {
                 uh oh, something's not working, tell Andrew...
             </div>
         ) : null;
-        const deleteBtn = this.props.curRestaurant ? (
+        // TODO, should be ID
+        const deleteBtn = this.props.curRestaurant.name ? (
             <Button color="danger" className="mr-auto" onClick={this.deleteRestaurant}>
                 Delete
             </Button>
@@ -354,12 +355,22 @@ RestaurantModal.propTypes = {
         username: PropTypes.string,
     }).isRequired,
     curRestaurant: PropTypes.shape({
-        existingPhotos: PropTypes.array,
+        existingPhotos: PropTypes.shape({
+            imgs: PropTypes.array,
+            imagesDirName: PropTypes.string,
+        }),
+        name: PropTypes.string,
     }),
 };
 
 RestaurantModal.defaultProps = {
     curRestaurant: {
-        existingPhotos: [],
+        existingPhotos: {
+            imgs: [],
+            imagesDirName: '',
+        },
+        name: '',
+        location: '',
+        cuisine: '',
     },
 };

@@ -102,8 +102,15 @@ module.exports = function(app, passport) {
                 },
             ],
         };
+        // we're trying to add more images
+        if (typeof req.body.images !== 'undefined') {
+            const { imagesDirName, imageFileNames } = req.body.images;
+            reqInfo.imagesDirName = imagesDirName;
+            reqInfo.imageFileNames = imageFileNames;
+        }
         Restaurant.create(reqInfo, (err, restaurant) => {
             if (err) {
+                console.log(err);
                 return res.status(500).json({});
             }
             return res.status(200).json({});
@@ -167,7 +174,6 @@ module.exports = function(app, passport) {
                     const imgsToDelete = JSON.parse(req.body.imgsToDelete);
                     if (imgsToDelete.length) {
                         data.imageFileNames = data.imageFileNames.filter(
-
                             img => !imgsToDelete.includes(img)
                         );
                         // remove from filesystem
