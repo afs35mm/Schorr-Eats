@@ -35,11 +35,10 @@ class ImagesLineup extends Component {
         }
         return (
             <tr>
-                <td className="photos-row" >
+                <td className="photos-row" colSpan="7">
                     <Lightbox
                         currentImage={this.state.currentImage}
                         images={this.props.images.map(src => ({
-
                             src: `/images/${this.props.dirName}/${src}`,
                         }))}
                         isOpen={this.state.lightboxIsOpen}
