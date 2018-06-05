@@ -34,35 +34,34 @@ class ImagesLineup extends Component {
             return null;
         }
         return (
-            // <tr>
-            //     <td className="photos-row" >
-            //         <Lightbox
-            //             currentImage={this.state.currentImage}
-            //             images={this.props.images.map(src => ({
+            <tr>
+                <td className="photos-row" >
+                    <Lightbox
+                        currentImage={this.state.currentImage}
+                        images={this.props.images.map(src => ({
 
-            //                 src: `/images/${this.props.dirName}/${src}`,
-            //             }))}
-            //             isOpen={this.state.lightboxIsOpen}
-            //             onClickNext={this.gotoNext}
-            //             onClickPrev={this.gotoPrevious}
-            //             onClose={this.closeLightbox}
-            //         />
-            //         <ul className="images-list">
-            //             {this.props.images.map((imgSrc, i) => (
-            //                 <li key={i} className="item-holder">
-            //                     <img
-            //                         className="item-image"
-            //                         src={`/images/${this.props.dirName}/${imgSrc}`}
-            //                         onClick={() => {
-            //                             this.setState({ lightboxIsOpen: true, currentImage: i });
-            //                         }}
-            //                     />
-            //                 </li>
-            //             ))}
-            //         </ul>
-            //     </td>
-            // </tr>
-            null
+                            src: `/images/${this.props.dirName}/${src}`,
+                        }))}
+                        isOpen={this.state.lightboxIsOpen}
+                        onClickNext={this.gotoNext}
+                        onClickPrev={this.gotoPrevious}
+                        onClose={this.closeLightbox}
+                    />
+                    <ul className="images-list">
+                        {this.props.images.map((imgSrc, i) => (
+                            <li key={i} className="item-holder">
+                                <img
+                                    className="item-image"
+                                    src={`/images/${this.props.dirName}/${imgSrc}`}
+                                    onClick={() => {
+                                        this.setState({ lightboxIsOpen: true, currentImage: i });
+                                    }}
+                                />
+                            </li>
+                        ))}
+                    </ul>
+                </td>
+            </tr>
         );
     }
 }
