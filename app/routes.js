@@ -147,7 +147,7 @@ module.exports = function(app, passport) {
                     }
                 }
 
-                if (req.body.rating.trim()) {
+                if (req.body.rating.notes()) {
                     // new review, push to array
                     if (!isUpdatingExistingReview) {
                         data.ratings.push({
